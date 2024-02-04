@@ -6,13 +6,15 @@ import Uploadweb from './components/uploadPro.vue';
 import ProduceIn from './components/ProduceInfo.vue'
 import SignUp from './components/SignUp.vue'
 import SignIn from './components/SignIn.vue'
+import userInf from './components/userInformation.vue'
 
 const routes = [
   { path: '', component: ProduceUp },
   { path: '/uploadPro', component: Uploadweb },
   { path: '/pro-info', component:ProduceIn},
   { path: '/signup', component:SignUp},
-  { path: '/signin', component:SignIn}
+  { path: '/signin', component:SignIn},
+  { path: '/p-information', component:userInf}
 ];
 
 const router = createRouter({

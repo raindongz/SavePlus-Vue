@@ -51,7 +51,10 @@
       <div>
       <input type="text" v-model="email" placeholder="Email address" class="signup1"/>
     </div>
-  
+    
+    <div>
+      <input type="text" v-model="address" placeholder="Address" class="signup1"/>
+    </div>
       
  
       <div>
@@ -95,6 +98,7 @@
           email: '', 
           createpass: '',
           confirmpass:'', 
+          address:'',
           passwordsMatch: false,
           showMessage: false,
           savedFields: {}, // 用于保存多个字段的对象
@@ -135,6 +139,7 @@
         this.savedFields.phone = this.phone;
         this.savedFields.createpass = this.createpass;
         this.savedFields.confirmpass = this.confirmpass;
+        this.savedFields.address = this.address;
         // 清空输入框以便用户输入下一组字段
         this.firstname = '';
         this.lastname = '';
@@ -143,6 +148,7 @@
         this.confirmpass = '';
         this.createpass = '';
         this.phone = '';
+        this.address = '';
       },
 
       comparePasswords() {

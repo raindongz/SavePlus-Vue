@@ -5,7 +5,7 @@
         <img class="logo" alt="saveplus logo" src="../assets/logo.png">
         <li><RouterLink to="/signin" class="shop">Home</RouterLink></li>
       
-        <li><RouterLink to="/signup" class="Myprofile">My profile</RouterLink></li>
+        <li><RouterLink to="/p-information" class="Myprofile">My profile</RouterLink></li>
         <RouterLink to="/uploadPro">
           <button class="upload-button" >UPLOAD</button>
         </RouterLink>

@@ -7,7 +7,7 @@
       
         <li><RouterLink to="/signup" class="Myprofile">My profile</RouterLink></li>
         <RouterLink to="/uploadPro">
-        <button class="upload-button" >UPLOAD</button>
+          <button class="upload-button" >UPLOAD</button>
         </RouterLink>
      
       
@@ -141,11 +141,12 @@
   
   /* 设置元素的位置和样式 */
   .upload-button {
+    
     position: absolute; /* 将元素定位为绝对定位 */
     width: 126px;
     height: 48px;
-    left: 1300px;
-    top: 30px;
+    right: 115px;
+    top: 35px;
     font-family: 'Inter';
     font-style: normal;
     font-weight: 600;

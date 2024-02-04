@@ -227,8 +227,8 @@
     position: absolute; /* 将元素定位为绝对定位 */
     width: 126px;
     height: 48px;
-    left: 1300px;
-    top: 30px;
+    right: 115px;
+    top: 35px;
     font-family: 'Inter';
     font-style: normal;
     font-weight: 600;

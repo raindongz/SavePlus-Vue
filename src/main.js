@@ -7,14 +7,16 @@ import ProduceIn from './components/ProduceInfo.vue'
 import SignUp from './components/SignUp.vue'
 import SignIn from './components/SignIn.vue'
 import userInf from './components/userInformation.vue'
+import ProduceList from './components/ProduceList.vue'
 
 const routes = [
-  { path: '', component: ProduceUp },
+  { path: '/produceUp', component: ProduceUp },
   { path: '/uploadPro', component: Uploadweb },
   { path: '/pro-info', component:ProduceIn},
   { path: '/signup', component:SignUp},
   { path: '/signin', component:SignIn},
-  { path: '/p-information', component:userInf}
+  { path: '/p-information', component:userInf},
+  { path: '', component: ProduceList},
 ];
 
 const router = createRouter({

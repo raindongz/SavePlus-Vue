@@ -3,9 +3,10 @@
   <nav>
     <ul>
       <img class="logo" alt="saveplus logo" src="@/assets/logo.png">
-      <li><a href="shop" class="shop">Home</a></li>
-      <li><a href="My profile" class="Myprofile">My profile</a></li>
-      <RouterLink to="/">
+      <li><RouterLink to="/" class="shop">Home</RouterLink></li>
+      
+      <li><RouterLink to="/p-information" class="Myprofile">My profile</RouterLink></li>
+      <RouterLink to="/produceUp">
       <button class="back-button" >Back</button>
       </RouterLink>
     
@@ -209,7 +210,7 @@ nav ul {
   width: 126px;
   height: 48px;
   right: 115px;
-  top: 35px;
+    top: 35px;
   font-family: 'Inter';
   font-style: normal;
   font-weight: 600;

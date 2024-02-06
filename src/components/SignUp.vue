@@ -3,9 +3,9 @@
     <nav>
       <ul>
         <img class="logo" alt="saveplus logo" src="@/assets/logo.png">
-        <li><a href="shop" class="shop">Home</a></li>
+        <RouterLink to="/"><li><a href="shop" class="shop">Home</a></li></RouterLink>
         <li><a href="My profile" class="Myprofile">My profile</a></li>
-        <RouterLink to="/">
+        <RouterLink to="/signin">
         <button class="back-button" >Back</button>
         </RouterLink>
       

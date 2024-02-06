@@ -3,7 +3,7 @@
     <nav>
       <ul>
         <img class="logo" alt="saveplus logo" src="../assets/logo.png">
-        <li><RouterLink to="/signin" class="shop">Home</RouterLink></li>
+        <li><RouterLink to="/" class="shop">Home</RouterLink></li>
       
         <li><RouterLink to="/p-information" class="Myprofile">My profile</RouterLink></li>
         <RouterLink to="/uploadPro">
@@ -19,7 +19,7 @@
   
     <body>
       <header>
-        <h1 class="produce"> Produce </h1>
+        <h1 class="produce"> Items </h1>
         <div class="time">
           {{ formattedDate }}
         </div>

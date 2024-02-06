@@ -3,11 +3,12 @@
     <nav>
       <ul>
         <img class="logo" alt="saveplus logo" src="@/assets/logo.png">
-        <li><a href="shop" class="shop">Home</a></li>
-        <li><a href="My profile" class="Myprofile">My profile</a></li>
-        <RouterLink to="/">
-        <button class="back-button" >Back</button>
-        </RouterLink>
+        <li><RouterLink to="/" class="shop">Home</RouterLink></li>
+      
+      <li><RouterLink to="/p-information" class="Myprofile">My profile</RouterLink></li>
+      <RouterLink to="/produceUp">
+      <button class="back-button" >Back</button>
+      </RouterLink>
       
      
       
@@ -19,7 +20,7 @@
   
     <body>
       <header>
-        <h1 class="produce"> Produce </h1>
+        <h1 class="produce"> Product </h1>
         <div class="time">
           {{ formattedDate }}
         </div>

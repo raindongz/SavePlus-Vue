@@ -3,11 +3,9 @@
     <nav>
       <ul>
         <img class="logo" alt="saveplus logo" src="../assets/logo.png">
-        <li><RouterLink to="/signin" class="shop">Home</RouterLink></li>
       
-        <li><RouterLink to="/signup" class="Myprofile">My profile</RouterLink></li>
-        <RouterLink to="/uploadPro">
-          <button class="upload-button" >UPLOAD</button>
+        <RouterLink to="/">
+          <button class="upload-button" >Shop</button>
         </RouterLink>  
       </ul>
     </nav>
@@ -20,7 +18,7 @@
 
     <div>
         <button class="in-e" @click="handleButtonClick">Edit Profile</button>
-        <RouterLink to="/">
+        <RouterLink to="/produceUp">
             <button class="in-m">My Items</button>
         </RouterLink>
         <RouterLink to="/uploadPro">

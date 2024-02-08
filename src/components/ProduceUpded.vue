@@ -114,9 +114,10 @@
 
 .product-item {
   width: calc(33.33% - 10px); /* 每行显示三个产品项，减去间距 */
-  margin-bottom: 20px; /* 设置产品项之间的垂直间距 */
+  margin-bottom: 50px; /* 设置产品项之间的垂直间距 */
   margin-left: 100px;
-  margin-right: 50px;
+  margin-right: 60px;
+  
   width: 300px;
   height: 330px;
   background-color: #E6E6E6;

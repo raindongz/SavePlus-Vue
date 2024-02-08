@@ -3,12 +3,12 @@
   <nav>
     <ul>
       <img class="logo" alt="saveplus logo" src="@/assets/logo.png">
-      <li><RouterLink to="/" class="shop">Home</RouterLink></li>
-      
-      <li><RouterLink to="/p-information" class="Myprofile">My profile</RouterLink></li>
-      <RouterLink to="/produceUp">
-      <button class="back-button" >Back</button>
-      </RouterLink>
+       <li><RouterLink to="/" class="shop">Home</RouterLink></li>
+    
+    <li><RouterLink to="/p-information" class="Myprofile">My profile</RouterLink></li>
+    <RouterLink to="/produceUp">
+    <button class="back-button" >Back</button>
+    </RouterLink>
     
    
     
@@ -20,7 +20,7 @@
 
   <body>
     <header>
-      <h1 class="produce"> Produce </h1>
+      <h1 class="produce"> Product </h1>
       <div class="time">
         {{ formattedDate }}
       </div>
@@ -28,20 +28,24 @@
     <div class="divider"></div>
   </body>
 
-  <div>
+  <div class="image-container">
     
+    <img @click="openFileInput" src="@/assets/add.png" class="imagechange">
     
-    <button @click="openFileInput" class="choose">Choose Image</button>
     <input type="file" id="fileInput" ref="fileInput" @change="handleFileChange" accept="image/*" multiple style="display: none;" />
-    <div v-for="(image, index) in uploadedImages" :key="index">
-      <img :src="image" alt="Uploaded Image" class="choosephoto" />
-    </div>
+    <!-- <div v-for="(image, index) in uploadedImages" :key="index" class="image-wrapper">
+      <img :src="image" alt="Uploaded Image"  class="up-choosephoto" />
+    </div> -->
+
+    <img v-if="uploadedImages.length > 0"  @click="openFileInput" :src="currentImage" alt="Uploaded Image" class="up-choosephoto" />
+    <button @click="prevImage" class="pre">Previous</button>
+    <button @click="nextImage" class="nex">Next</button>
     
   </div>
 
   <div>
     <div>
-      <h1 class="ttext1">Type:</h1>
+      <h1 class="utext1">Type:</h1>
       </div>
     <div>
     
@@ -71,6 +75,19 @@
     <div>
     <input type="text" v-model="address" placeholder="Enter address..." class="vaddress"/>
   </div>
+  <body class="pxb"></body>
+  <div>
+      <label for="selectItem" class="ttext3">State:</label>
+  </div>
+  <div>
+      <select v-model="selectedItem" id="selectItem" class="vstate">
+          <option value="item1">Available</option>
+          <option value="item2">In progress</option>
+          <option value="item3">Completed</option>
+      </select>
+  </div>
+
+
 
     <button @click="saveFields" class="savebutton">Save</button>
     
@@ -95,21 +112,43 @@
         price: '',
         address: '', // 用于保存地址
         phone: '', // 用于保存电话号码
+        upimage: '',
+        selectedItem: '',
         savedFields: {}, // 用于保存多个字段的对象
+        currentIndex: 0,
       };
      
     },
+    
+
+    
     created() {
       const options = { year: 'numeric', month: 'long', day: 'numeric' };
       const currentDate = new Date();
       this.formattedDate = currentDate.toLocaleDateString(undefined, options);
     },
+
+    computed: {
+    currentImage() {
+      return this.uploadedImages[this.currentIndex];
+    }
+  },
+
+
     methods:{
+      prevImage() {
+        this.currentIndex = (this.currentIndex - 1 + this.uploadedImages.length) % this.uploadedImages.length;
+      },
+      nextImage() {
+        this.currentIndex = (this.currentIndex + 1) % this.uploadedImages.length;
+      },
       openFileInput() {
       // 点击按钮时触发文件上传输入框的点击事件
       this.$refs.fileInput.click();
     },
     handleFileChange(event) {
+      this.uploadedImages=[];
+      this.currentIndex = 0;
       const files = event.target.files;
       if (files.length > 0) {
         for (let i = 0; i < files.length; i++) {
@@ -126,17 +165,21 @@
 
     saveFields() {
       // 当用户点击保存按钮时，将用户输入的字段保存到 savedFields 对象中
+
       this.savedFields.name = this.name;
       this.savedFields.describe = this.describe;
       this.savedFields.price = this.price;
       this.savedFields.address = this.address;
       this.savedFields.phone = this.phone;
+      this.savedFields.selectedItem = this.selectedItem;
+      
       // 清空输入框以便用户输入下一组字段
       this.name = '';
       this.discribe = '';
       this.price = '';
       this.address = '';
       this.phone = '';
+      this.selectedItem = '';
     },
 
     },
@@ -147,9 +190,64 @@
 </script>
 
 <style>
+.up-choosephoto{
+  position: absolute;
+  top: 250px;
+  margin-left: 30%;
+  height: 300px;
+  width: 450px;
+  display: flex;
+}
 
+.pre{
+  position: absolute;
+    width: 140px;
+    height: 40px;
+    left: 520px;
+    
+    top:580px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 130%;
+    /* identical to box height, or 26px */
+    display: flex;
+    
+    align-items: center;
+    justify-content: center; /* 水平居中对齐文本 */
+    text-align: center;
+    border-radius: 20px;
+}
 
+.nex{
+  position: absolute;
+    width: 150px;
+    height: 40px;
+    left: 710px;
+    top:580px;
+  
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 130%;
+    /* identical to box height, or 26px */
+    display: flex;
+    
+    align-items: center;
+    justify-content: center; /* 水平居中对齐文本 */
+    text-align: center;
+    border-radius: 20px;
+}
 
+.imagechange{
+  position: absolute;
+  top: 250px;
+  margin-left: 30%;
+  height: 300px;
+  width: 450px;
+}
 
 nav ul {
   list-style-type: none; /* 去掉列表项的标记（点点） */
@@ -210,7 +308,7 @@ nav ul {
   width: 126px;
   height: 48px;
   right: 115px;
-    top: 35px;
+  top: 35px;
   font-family: 'Inter';
   font-style: normal;
   font-weight: 600;
@@ -226,7 +324,9 @@ nav ul {
 button {
   background-color: orange;
   color: white; 
+  border: 0;
 }
+
 button:hover{
   background-color: rgba(255, 166, 0, 0.649);
 }
@@ -282,14 +382,6 @@ button:hover{
   border-radius: 10px;
 }
 
-.choosephoto{
-  position: absolute;
-  width: 300px;
-  height: 200px;
-  left: 400px;
-  object-fit: contain; 
-  border-radius: 10px;
-}
 
 .blankphoto{
   position: absolute;
@@ -298,28 +390,17 @@ button:hover{
   left: 400px;
   object-fit: contain; 
 }
-.choose{
-  position: absolute;
-  width: 200px;
-  height: 40px;
-  left: 200px;
-  
 
+
+.utext1{
+  margin-top:400px;
+  margin-left: 200px;
   font-family: 'Inter';
   font-style: normal;
   font-weight: 400;
-  font-size: 20px;
+  font-size: 16px;
   line-height: 130%;
-  /* identical to box height, or 26px */
-  display: flex;
-  
-  align-items: center;
-  justify-content: center; /* 水平居中对齐文本 */
-  text-align: center;
-  border-radius: 20px;
-
 }
-
 
 .ttext2{
   margin-top:20px;
@@ -330,6 +411,20 @@ button:hover{
   font-size: 16px;
   line-height: 130%;
 }
+.ttext3{
+  margin-top: 10px;
+  margin-left:200px;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 130%;
+}
+
+.pxb{
+  height: 5px;
+}
+
 
 .vname{
   width: 300px;
@@ -386,6 +481,9 @@ button:hover{
   line-height: 130%;
   text-align: start;
 }
+nav ul {
+  list-style-type: none; /* 去掉列表项的标记（点点） */
+}
 
 
 .vaddress{
@@ -401,7 +499,19 @@ button:hover{
   line-height: 130%;
   text-align: start;
 }
-
+.vstate{
+  width: 300px;
+  height: 40px;
+ 
+  margin-left: 200px;
+  border-radius: 20px;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 130%;
+  text-align: start;
+}
 .savebutton{
   position: absolute;
   width: 100px;
@@ -410,9 +520,11 @@ button:hover{
   margin-left:75%;
   object-fit: contain; 
   border-radius: 10px;
+  text-align: center;
 }
 .blankb{
   height: 100px;
 }
+
 </style>
 

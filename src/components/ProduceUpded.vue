@@ -157,7 +157,9 @@
   clear: both;
 } */
   
-
+.product-item:hover {
+  background-color: orange; /* 鼠标悬停时的背景颜色 */
+}
   
   nav ul {
     list-style-type: none; /* 去掉列表项的标记（点点） */
@@ -173,7 +175,10 @@
     backdrop-filter: blur(2px);
   }
   
-  
+  .shop:hover,
+.Myprofile:hover {
+  color: orange; /* 鼠标悬停时的颜色 */
+}
   .shop {
     position: absolute;
     width: 39px;

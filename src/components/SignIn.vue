@@ -8,6 +8,19 @@
       </RouterLink>
       
     </ul>
+
+
+    <div>
+
+      <div v-if="userData">
+        <h2>User Information</h2>
+        <p>First Name: {{ userData.firstName }}</p>
+        <p>Last Name: {{ userData.lastName }}</p>
+      </div>
+      <div v-else>
+        <h2>No user data available.</h2>
+      </div>
+    </div>
     <div class="box">
      
           <img alt="userimg" class="userimg" src="@/assets/user1.png">
@@ -27,11 +40,12 @@
   </nav>
   </div>
   
-   
+ 
   </template>
   
 
 <script>
+  import axios from 'axios';
    export default {
       
       data() {
@@ -39,6 +53,7 @@
           username: '',
           pass:'',
           savedFields: {}, // 用于保存多个字段的对象
+          userData: null,
         };
 
        
@@ -52,7 +67,31 @@
         this.username = '';
         this.pass = '';
       },
-    }
+
+      loginUser() {
+        const baseUrl = 'http://api.saveplus.link';
+        const requestData = {
+          username: 'Fred',
+          fullName: 'Flintstone'
+        };
+
+        axios.post(`${baseUrl}/post/unInterest`, requestData)
+        .then(response => {
+            this.userData = response.data;
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+      }
+
+     
+    },
+
+      mounted() {
+        this.loginUser();
+      }
+
+     
 
 
 
@@ -120,7 +159,25 @@
   .signin1:focus {
   background-color: #fff; /* 点击输入框时背景颜色变为白色 */
   }
-
+  .upload-button {
+    
+    position: absolute; /* 将元素定位为绝对定位 */
+    width: 126px;
+    height: 48px;
+    right: 115px;
+    top: 35px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 130%;
+    display: flex;
+    align-items: center;
+    justify-content: center; /* 水平居中对齐文本 */
+    text-align: center;
+    border-radius: 10px;
+    
+  }
 
   .signin2{
     position: absolute;

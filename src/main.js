@@ -8,6 +8,7 @@ import SignUp from './components/SignUp.vue'
 import SignIn from './components/SignIn.vue'
 import userInf from './components/userInformation.vue'
 import ProduceList from './components/ProduceList.vue'
+import interPro from './components/InteProduct.vue'
 
 const routes = [
   { path: '/produceUp', component: ProduceUp },
@@ -17,6 +18,7 @@ const routes = [
   { path: '/signin', component:SignIn},
   { path: '/p-information', component:userInf},
   { path: '', component: ProduceList},
+  { path: '/interest', component:interPro},
 ];
 
 const router = createRouter({

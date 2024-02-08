@@ -6,8 +6,8 @@
         <li><RouterLink to="/" class="shop">Home</RouterLink></li>
       
         <li><RouterLink to="/p-information" class="Myprofile">My profile</RouterLink></li>
-        <RouterLink to="/uploadPro">
-          <button class="upload-button" >UPLOAD</button>
+        <RouterLink to="/produceUp">
+          <button class="upload-button" >My Items</button>
         </RouterLink>
      
       
@@ -19,7 +19,7 @@
   
     <body>
       <header>
-        <h1 class="produce"> Items </h1>
+        <h1 class="produce"> Interest </h1>
         <div class="time">
           {{ formattedDate }}
         </div>

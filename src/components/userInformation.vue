@@ -24,6 +24,9 @@
         <RouterLink to="/uploadPro">
             <button class="in-u">Upload Item</button>
         </RouterLink>
+        <RouterLink to="/interest">
+            <button class="in-interst">Interst List</button>
+        </RouterLink>
     </div>
     
     <div v-if="edit" >
@@ -159,7 +162,7 @@
         width: 126px;
         height: 48px;
         left: 190px;
-        top: 450px;
+        top: 420px;
         font-family: 'Inter';
         font-style: normal;
         font-weight: 600;
@@ -183,7 +186,7 @@
         width: 126px;
         height: 48px;
         left: 190px;
-        top: 520px;
+        top: 490px;
         font-family: 'Inter';
         font-style: normal;
         font-weight: 600;
@@ -201,7 +204,7 @@
         width: 126px;
         height: 48px;
         left: 190px;
-        top: 590px;
+        top: 560px;
         font-family: 'Inter';
         font-style: normal;
         font-weight: 600;
@@ -228,6 +231,24 @@
         font-size: 16px;
         line-height: 130%;
         text-align: center;
+  }
+
+  .in-interst {
+    position: absolute; /* 将元素定位为绝对定位 */
+        width: 126px;
+        height: 48px;
+        left: 190px;
+        top: 630px;
+        font-family: 'Inter';
+        font-style: normal;
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 130%;
+        display: flex;
+        align-items: center;
+        justify-content: center; /* 水平居中对齐文本 */
+        text-align: center;
+        border-radius: 10px; 
   }
 
   .i-savebutton{

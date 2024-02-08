@@ -454,7 +454,7 @@
     };
 </script>
 
-<style>
+<style scoped>
     /* newadd */
     .pl-signin {
     position: absolute; /* 将元素定位为绝对定位 */
@@ -479,7 +479,7 @@
     color: #353535;
     font-family: 'Open Sans', sans-serif;
     font-weight: 400;
-    background: #f3f6ff;
+    
 }
 
 a {

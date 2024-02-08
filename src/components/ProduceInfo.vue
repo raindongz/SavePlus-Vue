@@ -3,7 +3,7 @@
     <nav>
       <ul>
         <img class="logo" alt="saveplus logo" src="@/assets/logo.png">
-        <li><RouterLink to="/" class="shop">Home</RouterLink></li>
+         <li><RouterLink to="/" class="shop">Home</RouterLink></li>
       
       <li><RouterLink to="/p-information" class="Myprofile">My profile</RouterLink></li>
       <RouterLink to="/produceUp">
@@ -173,7 +173,7 @@
   <style>
   
   
-  
+ 
   
   nav ul {
     list-style-type: none; /* 去掉列表项的标记（点点） */
@@ -250,7 +250,9 @@
   button {
     background-color: orange;
     color: white; 
+    border: 0;
   }
+  
   button:hover{
     background-color: rgba(255, 166, 0, 0.649);
   }
@@ -432,6 +434,9 @@
     font-size: 16px;
     line-height: 130%;
     text-align: start;
+  }
+  nav ul {
+    list-style-type: none; /* 去掉列表项的标记（点点） */
   }
   
   

@@ -1,3 +1,4 @@
+
 <template>
     <div class="page-container">
     <nav>
@@ -8,15 +9,11 @@
       <li><RouterLink to="/p-information" class="Myprofile">My profile</RouterLink></li>
       <RouterLink to="/produceUp">
       <button class="back-button" >Back</button>
-      </RouterLink>
-      
-     
-      
-      
+      </RouterLink>     
       </ul>
     </nav>
-    
-  
+  </div>    
+
   
     <body>
       <header>
@@ -27,74 +24,72 @@
       </header>
       <div class="divider"></div>
     </body>
-  
-    <div>
-      
-      
-      <button @click="openFileInput" class="choose">Choose Image</button>
-      <input type="file" id="fileInput" ref="fileInput" @change="handleFileChange" accept="image/*" multiple style="display: none;" />
-      <div v-for="(image, index) in uploadedImages" :key="index">
-        <img :src="image" alt="Uploaded Image" class="choosephoto" />
-      </div>
-      
-    </div>
-  
-    <div>
-      <div>
-        <h1 class="ttext1">Type:</h1>
-        </div>
-      <div>
-      
-      <input type="text" v-model="name" placeholder="Enter Type..." class="vname"/>
-      </div>
-      <div>
-        <h1 class="ttext2">Decribe:</h1>
-        </div>
-      <div>
-      <textarea type="text" v-model="describe" placeholder="Enter describe..." class="vdescribe"/>
-    </div>
-    <div>
-        <h1 class="ttext2">Price:</h1>
-        </div>
-      <div>
-      <input type="text" v-model="price" placeholder="Enter price..." class="vprice"/>
-    </div>
-    <div>
-        <h1 class="ttext2">Phone Number:</h1>
-        </div>
-      <div>
-      <input type="text" v-model="phone" placeholder="Enter phone number..." class="vphone"/>
-    </div>
-    <div>
-        <h1 class="ttext2">Address:</h1>
-        </div>
-      <div>
-      <input type="text" v-model="address" placeholder="Enter address..." class="vaddress"/>
-    </div>
-    <body class="pxb"></body>
-    <div>
-        <label for="selectItem" class="ttext3">State:</label>
-    </div>
-    <div>
-        <select v-model="selectedItem" id="selectItem" class="vstate">
-            <option value="item1">Available</option>
-            <option value="item2">In progress</option>
-            <option value="item3">Completed</option>
-        </select>
-    </div>
+    
 
 
 
-
-
-
-
-
-      <button @click="saveFields" class="savebutton">Save</button>
-      
+  <body>
+    <div class="container">
+      <div class="image"> <img src="https://i.pinimg.com/564x/3e/54/2d/3e542d8f4b6d42dc3292b3cf270adac6.jpg" alt="This is first image." height="150px" width="200px"/> </div> 
+      <div class="image"> <img src="https://i.pinimg.com/736x/34/41/8d/34418d4eea1a15625d6c3b3748de495f.jpg" alt="This is my second image." height="150px" width="200px" /> </div> 
+      <div class="image"> <img src="https://i.pinimg.com/736x/27/41/08/274108a5f7134d48d8829c98255f0b76.jpg" alt="My third image." height="150px" width="200px"/> </div> 
+      <div class="image"> <img src="https://i.pinimg.com/564x/3e/54/2d/3e542d8f4b6d42dc3292b3cf270adac6.jpg" alt="This is fourth image." height="150px" width="200px"/> </div> 
+      <div class="image"> <img src="https://i.pinimg.com/736x/34/41/8d/34418d4eea1a15625d6c3b3748de495f.jpg" alt="This is my fifth image." height="150px" width="200px"/> </div> 
+      <div class="image"> <img src="https://i.pinimg.com/736x/27/41/08/274108a5f7134d48d8829c98255f0b76.jpg" alt="My sixth image." height="150px" width="200px"/> </div> 
     </div>
     
-  </div>
+      <div>
+        <h1 class="ttext1">Type:</h1>
+      </div>
+
+      <div> 
+        <input type="text" v-model="name" placeholder="Clothing" class="vname"  readonly/>
+      </div>
+
+      <div>
+        <h1 class="ttext2">Decribe:</h1>
+      </div>
+
+      <div>
+        <textarea type="text" v-model="describe" placeholder="This dress is a must-have for fashion-forward individuals who appreciate both style and sustainability!" class="vdescribe" readonly/>
+      </div>
+
+      <div>
+        <h1 class="ttext2">Price:</h1>
+      </div>
+
+      <div>
+        <input type="text" v-model="price" placeholder="77" class="vprice" readonly/>
+      </div>
+
+      <div>
+        <h1 class="ttext2">Phone Number:</h1>
+      </div>
+
+      <div>
+        <input type="text" v-model="phone" placeholder="123-456-789" class="vphone" readonly/>
+      </div>
+
+      <div>
+        <h1 class="ttext2">Address:</h1>
+      </div>
+
+      <div>
+        <input type="text" v-model="address" placeholder="123 Main Street Anytown, USA 12345" class="vaddress" readonly/>
+      </div>
+
+      <body class="pxb"></body>
+
+      <div>
+        <label for="selectItem" class="ttext3">State:</label>
+      </div>
+
+      <div>
+        <input type="text" v-model="state" placeholder="In progress" class="vstate" readonly/>
+      </div>
+
+    </body>
+
   
   <body class="blankb"></body>
   
@@ -172,12 +167,18 @@
   
   <style>
   
-  
- 
-  
   nav ul {
     list-style-type: none; /* 去掉列表项的标记（点点） */
   }
+
+  .container {
+  display: grid;
+  grid-template-columns:10% 10% 10% 10% 10% 10%;
+  align-items: center;
+
+}
+
+
   .logo{
     width: 125px; /* 修改图片宽度 */
     height: auto; /* 保持高度与宽度的比例 */
@@ -185,6 +186,9 @@
     margin-top: 15px;
     display: block; /* 让图片居中生效 */
     backdrop-filter: blur(2px);
+  }
+  .image{
+    margin-left: 80px;
   }
   .shop {
     position: absolute;
@@ -347,7 +351,7 @@
   }
   
   .ttext1{
-    margin-top:350px;
+    margin-top:20px;
     margin-left: 200px;
     font-family: 'Inter';
     font-style: normal;

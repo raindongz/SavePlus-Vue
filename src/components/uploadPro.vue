@@ -74,13 +74,13 @@
         />
       </div>
       <div>
-        <h1 class="ttext2">Decribe:</h1>
+        <h1 class="ttext2">Description:</h1>
       </div>
       <div>
         <textarea
           type="text"
           v-model="describe"
-          placeholder="Enter describe..."
+          placeholder="Enter description..."
           class="vdescribe"
         />
       </div>

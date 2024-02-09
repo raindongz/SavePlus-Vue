@@ -47,11 +47,11 @@
       </div>
 
       <div>
-        <h1 class="ttext2">Decribe:</h1>
+        <h1 class="ttext2">Description:</h1>
       </div>
 
       <div>
-        <textarea type="text" v-model="describe" placeholder="This dress is a must-have for fashion-forward individuals who appreciate both style and sustainability!" class="vdescribe" readonly/>
+        <textarea type="text" v-model="description" placeholder="This dress is a must-have for fashion-forward individuals who appreciate both style and sustainability!" class="vdescribe" readonly/>
       </div>
 
       <div>

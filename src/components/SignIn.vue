@@ -9,7 +9,15 @@
       
     </ul>
 
-
+    <body>
+      <header>
+        <h1 class="produce"> Welcome!</h1>
+        <div class="time">
+          {{ formattedDate }}
+        </div>
+      </header>
+      <div class="divider"></div>
+    </body>
     <div>
 
       <div v-if="userData">
@@ -58,7 +66,11 @@
 
        
       },
-
+      created() {
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        const currentDate = new Date();
+        this.formattedDate = currentDate.toLocaleDateString(undefined, options);
+      },
       methods:{
       saveFields() {
         this.savedFields.username = this.username;
@@ -91,16 +103,54 @@
         this.loginUser();
       }
 
-     
-
-
-
 
     }
 
 </script>
 
 <style>
+  .produce{
+    position: absolute;
+    width: 227px;
+    height: 77px;
+    left: 100px;
+    top: 110px;
+  
+    font-family: 'Newsreader';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 43px;
+    line-height: 120%;
+    /* identical to box height, or 77px */
+    display: flex;
+    align-items: flex-end;
+    letter-spacing: -0.02em;
+  
+    color: #000000;
+  }
+  .time{
+    position: absolute;
+    width: 300px;
+    height: 26px;
+    left: 347px;
+    top: 190px;
+  
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 130%;
+    /* identical to box height, or 26px */
+    display: flex;
+    align-items: flex-end;
+  
+    color: #000000;
+  }
+  .divider {
+    height: 2px; /* 设置分隔线的高度 */
+    background-color: #E6E6E6; /* 设置分隔线的背景颜色 */
+    margin: 100px; /* 可选：设置分隔线上下的间距 */
+  }
   .box{
     position: relative;
     height: 350px;
@@ -215,6 +265,23 @@
   .tosignup:hover{
     color: rgba(255, 166, 0, 0.649);
   }
-
+  .time{
+    position: absolute;
+    width: 300px;
+    height: 26px;
+    left: 347px;
+    top: 190px;
+  
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 130%;
+    /* identical to box height, or 26px */
+    display: flex;
+    align-items: flex-end;
+  
+    color: #000000;
+  }
 
 </style>

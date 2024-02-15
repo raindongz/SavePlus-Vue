@@ -50,9 +50,14 @@
             <RouterLink to="/p-information" class="Myprofile"
               >My profile</RouterLink
             >
-            <RouterLink to="/signin">
-              <button class="pl-signin">Sign in</button>
-            </RouterLink>
+            <div v-if="token == '' || token == null">
+              <RouterLink to="/signin">
+                <button class="pl-signin">Sign in</button>
+              </RouterLink>
+            </div>
+            <div v-else>
+              <button @click="logout" class="pl-signin">log out</button>
+            </div>
           </div>
         </div>
       </div>
@@ -190,9 +195,11 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   data() {
     return {
+      token: JSON.parse(localStorage.getItem("token")),
       formattedDate: "",
       uploadedImages: [], // 存储已上传的图片
       name: "", // 用于保存姓名
@@ -213,6 +220,11 @@ export default {
     this.formattedDate = currentDate.toLocaleDateString(undefined, options);
   },
   methods: {
+    logout() {
+      localStorage.removeItem("token");
+      axios.defaults.headers.common["Authorization"] = "";
+      this.token = "";
+    },
     openFileInput() {
       // 点击按钮时触发文件上传输入框的点击事件
       this.$refs.fileInput.click();
@@ -253,6 +265,18 @@ export default {
       this.selectedItem1 = "";
       this.selectedItem2 = "";
       this.selectedItem3 = "";
+    },
+
+    beforeMount() {
+      if (localStorage.getItem("reloaded")) {
+        // The page was just reloaded. Clear the value from local storage
+        // so that it will reload the next time this page is visited.
+        localStorage.removeItem("reloaded");
+      } else {
+        // Set a flag so that we know not to reload the page twice.
+        localStorage.setItem("reloaded", "1");
+        location.reload();
+      }
     },
   },
 };

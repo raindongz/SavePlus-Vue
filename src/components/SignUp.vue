@@ -189,11 +189,11 @@ export default {
     submitFields() {
       this.v$.$validate();
       // 当用户点击保存按钮时，将用户输入的字段保存到 savedFields 对象中
-      const baseUrl = "http://api.saveplus.link";
       var md5 = require("js-md5");
 
-      axios
-        .post(baseUrl + "/user/create", {
+      const instance = axios.create();
+      instance
+        .post("/user/create", {
           username: this.username,
           password: md5(this.createpass),
           email: this.email,

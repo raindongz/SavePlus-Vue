@@ -16,7 +16,7 @@ if (token) {
   console.log(token);
   axios.defaults.headers.common["Authorization"] = "Bearer " + token;
 }
-axios.defaults.baseURL = "http://api.saveplus.link";
+axios.defaults.baseURL = "https://api.saveplus.link";
 
 const routes = [
   { path: "/produceUp", component: ProduceUp },

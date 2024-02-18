@@ -30,7 +30,7 @@
     <link href="lib/slick/slick-theme.css" rel="stylesheet"/>
 
     <!-- Template Stylesheet -->
-    <link href="css/style.css" rel="stylesheet"/>
+    <link href="../css/style.css" rel="stylesheet"/>
   </head>
 
   <body>
@@ -208,7 +208,7 @@ export default {
       name: "", // 用于保存姓名
       discribe: "",
       price: "",
-      address: "321", // 用于保存地址
+      address: "1", // 用于保存地址
       phone: "", // 用于保存电话号码
       upimage: "",
       selectedItem1: "",

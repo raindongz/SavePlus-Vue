@@ -10,7 +10,9 @@ import userInf from "./components/userInformation.vue";
 import ProduceList from "./components/ProduceList.vue";
 import interPro from "./components/InteProduct.vue";
 import axios from "axios";
-import 'bootstrap/dist/css/bootstrap.min.css';
+import '@/css/custom.css';
+import 'jquery/src/jquery.js'
+import 'bootstrap/dist/js/bootstrap.min.js'
 
 
 let token = JSON.parse(localStorage.getItem("token"));
@@ -18,8 +20,8 @@ if (token) {
     console.log(token);
     axios.defaults.headers.common["Authorization"] = "Bearer " + token;
 }
-axios.defaults.baseURL = "http://api.saveplus.link";
-
+// axios.defaults.baseURL = "http://saveplus.link";
+//
 const routes = [
     {path: "/produceUp", component: ProduceUp},
     {path: "/uploadPro", component: Uploadweb},
@@ -39,5 +41,6 @@ const router = createRouter({
 const app = createApp(App);
 app.use(router);
 app.mount("#app");
+
 
 export default router;

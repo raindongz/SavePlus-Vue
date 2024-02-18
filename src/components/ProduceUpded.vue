@@ -37,18 +37,7 @@
         </RouterLink>
     
     </body> -->
-    <div>
-    <!-- 使用v-for遍历productList并展示产品信息 -->
-    <!-- <div v-for="product in productList1" :key="product.id">
-      <h3>{{ product.title }}</h3>
-      <p>{{ item.content }}</p>
-      <img :src="item.images" alt="item title" />
-      <p>Total Price: ${{ item.total_price }}</p>
-      <p>Area: {{ item.area }}</p>
-    </div> -->
-    {{ productList1 }}
-
-  </div>
+   
     
     <div class="product-container" v-if="dataFromServer">
     <div v-for="item in dataFromServer" :key="item.id" class="product-item">
@@ -72,33 +61,21 @@
     
 
   <div class="col-md-12">
-            <nav aria-label="Page navigation example">
-              <ul class="pagination justify-content-center">
-                <li class="page-item disabled">
-                  <div v-if=" this.currentPage === 1">
-                    <a class="page-link" href="#" tabindex="-1" @click="decpage" >Previous</a>
-                  </div>
-                  <div v-else>
-                    <a class="page-link" href="#" tabindex="-1" >Previous</a>
-                  </div>
-                </li>
-                <li class="page-item active">
-                  <a class="page-link" href="#">1</a>
-                </li>
-                <li class="page-item">
-                  <a class="page-link" href="#">2</a>
-                </li>
-                <li class="page-item">
-                  <a class="page-link" href="#">3</a>
-                </li>
-                <li class="page-item">
-                  <a class="page-link" href="#">Next</a>
-                </li>
-              </ul>
-            </nav>
-          </div>
-
-
+  <nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center">
+      <li class="page-item" :class="{ disabled: currentPage === 1 }">
+        <a class="page-link" href="#" @click.prevent="changePage(currentPage - 1)" tabindex="-1">Previous</a>
+      </li>
+      <!-- 动态生成分页项，这里只是示例 -->
+      
+        <a class="page-link" href="#">{{ currentPage}}</a>
+ 
+      <li class="page-item" :class="{ disabled: currentPage === totalPages }">
+        <a class="page-link" href="#" @click.prevent="changePage(currentPage + 1)">Next</a>
+      </li>
+    </ul>
+  </nav>
+</div>
 
   <body class="test">
     
@@ -121,13 +98,7 @@
           dataFromServer: null,
           currentPage: 1, // 当前页码
           pageSize: 10, // 每页数据量
-          productList: [
-        { id: 1, name: 'Product 1', address: 'New York', price: '$10', imageUrl: require('@/assets/logo.png') },
-        { id: 2, name: 'Product 2', address: 'Boston', price: '$20', imageUrl: require('@/assets/logo.png') },
-        { id: 3, name: 'Product 3', address: 'LA', price: '$10', imageUrl: require('@/assets/logo.png') },
-        { id: 4, name: 'Product 4', address: 'China', price: '$20', imageUrl: require('@/assets/logo.png') },
-        // Add more products as needed
-        ]
+          totalPages:3,
 
         };
       },
@@ -155,6 +126,7 @@
         });
       },
       changePage(pageNum) {
+        this.dataFromServer = null;
         this.currentPage = pageNum;
         this.getData(); 
       },
@@ -206,7 +178,7 @@
  .product-container {
   display: flex;
   flex-wrap: wrap; /* 允许产品项换行 */
-  justify-content: space-between; /* 在每行上均匀分布产品项 */
+ 
 }
 
 .product-item {

@@ -8,9 +8,11 @@ const baseUrl = "/api"
  */
 axios.interceptors.request.use(function (config) {
     config.headers.set('X-Trace-Id', v4())
-    config.withCredentials = true
     return config
-})
+}, function (error) {
+    // 请求错误时做些什么
+    return Promise.reject(error);
+});
 
 /**
  * 获取商品的详细信息
@@ -24,7 +26,6 @@ export async function getProductDetailInfo(postId) {
         params: {
             id: postId
         },
-        withCredentials: false
     })
 }
 
@@ -40,7 +41,7 @@ export async function getProductList(pageNum) {
         url: baseUrl + "/post/list",
         params: {
             page_size: 10,
-            page_num: 1,
+            page_num: pageNum,
         }
     })
 }

@@ -6,6 +6,9 @@
         <RouterLink to="/">
           <button class="back-button">Back</button>
         </RouterLink>
+        <RouterLink to="/p-information">
+          <button class="back-button">Back</button>
+        </RouterLink>
       </ul>
 
       <body>
@@ -43,8 +46,8 @@
             {{ v$.pass.$errors[0].$message }}
           </span>
           <button @click="loginUser" class="signinbutton">Login</button>
-          <RouterLink to="/signup" class="tosignup"
-            >Click here to Sign Up</RouterLink
+          <RouterLink to="/signup" class="tosignup">
+            Click here to Sign Up</RouterLink
           >
         </div>
       </div>
@@ -203,11 +206,11 @@ export default {
 
 .userlogin {
   position: absolute;
-
   height: 50px;
   width: 200px;
   margin-left: 370px; /* 调整间距以适应需求 */
   margin-top: 50px;
+  font-size: 25px;
 }
 
 .signin1 {

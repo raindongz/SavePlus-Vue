@@ -14,4 +14,25 @@
 body {
   background-color: white;
 }
+
+.produce{
+    position: absolute;
+    width: 227px;
+    height: 77px;
+    left: 100px;
+    top: 110px;
+    margin-top: 30px;
+  
+    font-family: 'Newsreader';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 64px;
+    line-height: 120%;
+    /* identical to box height, or 77px */
+    display: flex;
+    align-items: flex-end;
+    letter-spacing: -0.02em;
+  
+    color: #000000;
+  }
 </style>

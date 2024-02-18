@@ -6,6 +6,9 @@
         <RouterLink to="/">
           <button class="back-button">Back</button>
         </RouterLink>
+        <RouterLink to="/p-information">
+          <button class="back-button">Back</button>
+        </RouterLink>
       </ul>
 
       <body>
@@ -17,16 +20,7 @@
         </header>
         <div class="divider"></div>
       </body>
-      <div>
-        <div v-if="userData">
-          <h2>User Information</h2>
-          <p>First Name: {{ userData.firstName }}</p>
-          <p>Last Name: {{ userData.lastName }}</p>
-        </div>
-        <div v-else>
-          <h2>No user data available.</h2>
-        </div>
-      </div>
+      
       <div class="box">
         <img alt="userimg" class="userimg" src="@/assets/user1.png" />
 
@@ -45,9 +39,8 @@
             class="signin2"
           />
           <button @click="loginUser" class="signinbutton">Login</button>
-          <RouterLink to="/signup" class="tosignup"
-            >Click here to Sign Up</RouterLink
-          >
+          <RouterLink to="/signup" class="tosignup">
+            Click here to Sign Up</RouterLink>
         </div>
       </div>
     </nav>
@@ -194,11 +187,11 @@ export default {
 
 .userlogin {
   position: absolute;
-
   height: 50px;
   width: 200px;
   margin-left: 370px; /* 调整间距以适应需求 */
   margin-top: 50px;
+  font-size: 25px;
 }
 
 .signin1 {

@@ -304,7 +304,14 @@ export default {
   text-align: center;
   border-radius: 10px;
 }
-
+.logo {
+  width: 125px; /* 修改图片宽度 */
+  height: auto; /* 保持高度与宽度的比例 */
+  margin-left: 50px;
+  margin-top: 15px;
+  display: block; /* 让图片居中生效 */
+  backdrop-filter: blur(2px);
+}
 body {
   color: #353535;
   font-family: "Open Sans", sans-serif;

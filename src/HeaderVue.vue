@@ -5,13 +5,12 @@
 <template>
   <div id="header">
     <div class="left-area">
-      <img src="@/assets/logo1.png" alt="loading">
+      <img src="@/assets/logo.png" alt="loading" class="logo">
     </div>
     <div class="right-area">
       <div class="btn-area">
-        <button class="btn btn-light">Home</button>
-        <button class="btn btn-light">Back</button>
-        <button class="btn btn-light">My Profile</button>
+        <li><RouterLink to="/" class="shop">Home</RouterLink></li>
+        <li><RouterLink to="/p-information" class="Myprofile">My profile</RouterLink></li>
       </div>
     </div>
   </div>
@@ -21,10 +20,18 @@
 #header {
   width: 100%;
   height: 200px;
-  background-color: black;
+  background-color: white;
   display: flex;
 }
 
+.logo{
+    width: 125px; /* 修改图片宽度 */
+    height: auto; /* 保持高度与宽度的比例 */
+    margin-left: 50px;
+    margin-top: 15px;
+    display: block; /* 让图片居中生效 */
+    backdrop-filter: blur(2px);
+  }
 .left-area {
   height: 100%;
   width: 300px;

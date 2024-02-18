@@ -2,7 +2,7 @@
   <div class="page-container">
     <nav>
       <ul>
-        <img class="logo" alt="saveplus logo" src="../assets/logo.png" />
+        
 
         <RouterLink to="/">
           <button class="upload-button">Shop</button>
@@ -28,7 +28,7 @@
       <button class="in-interst">Interst List</button>
     </RouterLink>
   </div>
-
+  <div class="allblank">
   <div v-if="edit">
     <div>
       <input type="text" v-model="fullname" placeholder="Name" class="i-t" />
@@ -83,6 +83,7 @@
         class="i-t"
       />
     </div>
+  </div>
   </div>
 </template>
 
@@ -154,6 +155,9 @@ export default {
 </script>
 
 <style>
+.allblank{
+  margin-top: 100px;
+}
 .uinform {
   position: absolute;
   height: 200px;
@@ -178,7 +182,7 @@ export default {
   width: 126px;
   height: 48px;
   left: 190px;
-  top: 420px;
+  top: 490px;
   font-family: "Inter";
   font-style: normal;
   font-weight: 600;
@@ -202,7 +206,7 @@ export default {
   width: 126px;
   height: 48px;
   left: 190px;
-  top: 490px;
+  top: 560px;
   font-family: "Inter";
   font-style: normal;
   font-weight: 600;
@@ -220,7 +224,7 @@ export default {
   width: 126px;
   height: 48px;
   left: 190px;
-  top: 560px;
+  top: 630px;
   font-family: "Inter";
   font-style: normal;
   font-weight: 600;
@@ -252,7 +256,7 @@ export default {
   width: 126px;
   height: 48px;
   left: 190px;
-  top: 630px;
+  top: 700px;
   font-family: "Inter";
   font-style: normal;
   font-weight: 600;

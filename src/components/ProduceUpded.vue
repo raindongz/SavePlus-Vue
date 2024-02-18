@@ -2,7 +2,7 @@
     <div class="page-container">
     <nav>
       <ul>
-        <img class="logo" alt="saveplus logo" src="../assets/logo.png">
+
         <li><RouterLink to="/" class="shop">Home</RouterLink></li>
       
         <li><RouterLink to="/p-information" class="Myprofile">My profile</RouterLink></li>
@@ -328,24 +328,6 @@
   
 
   
-  .time{
-    position: absolute;
-    width: 300px;
-    height: 26px;
-    left: 347px;
-    top: 190px;
-  
-    font-family: 'Inter';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 20px;
-    line-height: 130%;
-    /* identical to box height, or 26px */
-    display: flex;
-    align-items: flex-end;
-  
-    color: #000000;
-  }
   
   .divider {
     height: 2px; /* 设置分隔线的高度 */

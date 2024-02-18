@@ -2,7 +2,7 @@
   <div class="page-container">
     <nav>
       <ul>
-        <img class="logo" alt="saveplus logo" src="@/assets/logo.png" />
+        
         <li><RouterLink to="/" class="shop">Home</RouterLink></li>
 
         <li>
@@ -25,6 +25,7 @@
       </header>
       <div class="divider"></div>
     </body>
+
 
     <div class="image-container">
       <img @click="openFileInput" src="@/assets/add.png" class="imagechange" />
@@ -251,6 +252,9 @@ export default {
 </script>
 
 <style>
+.changenew{
+  margin-top:200px;
+}
 .up-choosephoto {
   position: absolute;
   top: 250px;
@@ -264,9 +268,9 @@ export default {
   position: absolute;
   width: 140px;
   height: 40px;
-  left: 520px;
+  left: 300px;
 
-  top: 580px;
+  top: 500px;
   font-family: "Inter";
   font-style: normal;
   font-weight: 400;
@@ -285,8 +289,8 @@ export default {
   position: absolute;
   width: 150px;
   height: 40px;
-  left: 710px;
-  top: 580px;
+  left: 930px;
+  top: 500px;
 
   font-family: "Inter";
   font-style: normal;
@@ -304,7 +308,7 @@ export default {
 
 .imagechange {
   position: absolute;
-  top: 250px;
+  top: 370px;
   margin-left: 30%;
   height: 300px;
   width: 450px;
@@ -390,43 +394,8 @@ button {
 button:hover {
   background-color: rgba(255, 166, 0, 0.649);
 }
-.produce {
-  position: absolute;
-  width: 227px;
-  height: 77px;
-  left: 100px;
-  top: 110px;
 
-  font-family: "Newsreader";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 64px;
-  line-height: 120%;
-  /* identical to box height, or 77px */
-  display: flex;
-  align-items: flex-end;
-  letter-spacing: -0.02em;
 
-  color: #000000;
-}
-.time {
-  position: absolute;
-  width: 300px;
-  height: 26px;
-  left: 347px;
-  top: 190px;
-
-  font-family: "Inter";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 20px;
-  line-height: 130%;
-  /* identical to box height, or 26px */
-  display: flex;
-  align-items: flex-end;
-
-  color: #000000;
-}
 .divider {
   height: 2px; /* 设置分隔线的高度 */
   background-color: #e6e6e6; /* 设置分隔线的背景颜色 */

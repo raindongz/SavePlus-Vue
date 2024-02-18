@@ -38,7 +38,7 @@
   <div class="bottom-bar">
     <div class="container-fluid">
       <div class="row align-items-center">
-        <img class="logo" alt="saveplus logo" src="@/assets/logo.png"/>
+        
 
         <div class="col-md-6">
           <div class="search">

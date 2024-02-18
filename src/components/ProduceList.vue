@@ -38,8 +38,6 @@
   <div class="bottom-bar">
     <div class="container-fluid">
       <div class="row align-items-center">
-        
-
         <div class="col-md-6">
           <div class="search">
             <input type="text" placeholder="Search"/>
@@ -75,38 +73,20 @@
                 <div class="row"></div>
               </div>
             </div>
-
+            
             <!-- product list starts here  -->
-            <div class="col-md-4">
+            
+            
+            <div class="col-md-4" v-for="item in dataFromServer" :key="item.id">
               <div class="product-item">
                 <div class="product-title">
                   <!--                  传入物品id-->
-                  <router-link :to="{ name: 'proInfo', query: { prod: this.address } }">Product Name</router-link>
+                  <router-link :to="{ name: 'proInfo', query: { prod: this.address } }">{{ item.title }}</router-link>
                 </div>
-                <div class="product-image">
-                  <a href="product-detail.html">
-                    <img src="@/assets/product-1.jpg" alt="Product Image"/>
-                  </a>
-                  <div class="product-action">
-                    <a href="#"><i class="fa fa-heart"></i></a>
-                    <a href="#"><i class="fa fa-search"></i></a>
-                  </div>
-                </div>
-                <div class="product-price">
-                  <h3><span>$</span>99</h3>
 
-                  <h3 class="btn">New York</h3>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="product-item">
-                <div class="product-title">
-                  <a href="#">Product Name</a>
-                </div>
                 <div class="product-image">
                   <a href="product-detail.html">
-                    <img src="@/assets/product-2.jpg" alt="Product Image"/>
+                    <img src="item.images" alt="Product Image"/>
                   </a>
                   <div class="product-action">
                     <a href="#"><i class="fa fa-heart"></i></a>
@@ -114,12 +94,18 @@
                   </div>
                 </div>
                 <div class="product-price">
-                  <h3><span>$</span>99</h3>
-                  <h3 class="btn">New York</h3>
+                  <h3><span>$</span>{{ item.total_price }}</h3>
+
+                  <h3 class="btn">{{ item.area }}</h3>
                 </div>
               </div>
             </div>
+            
+           
           </div>
+
+          
+        
           <!-- product list ends here  -->
 
           <!-- Pagination Start -->
@@ -198,6 +184,7 @@
 
 <script>
 import axios from "axios";
+import {getProductList} from "@/utils/product.info";
 
 export default {
   data() {
@@ -215,6 +202,8 @@ export default {
       selectedItem2: "",
       selectedItem3: "",
       savedFields: {}, // 用于保存多个字段的对象
+      dataFromServer:null,
+      currentPage: 1,
     };
   },
   created() {
@@ -223,6 +212,25 @@ export default {
     this.formattedDate = currentDate.toLocaleDateString(undefined, options);
   },
   methods: {
+
+
+    getData() {
+       getProductList(this.currentPage)
+        .then((response) => {
+          this.dataFromServer = response.data;
+        })
+        .catch((error) => {
+          console.error('Request error:', error);
+        });
+      },
+
+
+
+      changePage(pageNum) {
+        this.dataFromServer = null;
+        this.currentPage = pageNum;
+        this.getData(); 
+      },
     logout() {
       localStorage.removeItem("token");
       axios.defaults.headers.common["Authorization"] = "";
@@ -282,7 +290,14 @@ export default {
       }
     },
   },
+
+  mounted() {   
+    this.getData(); // 在组件挂载后调用获取数据的方法
+  },
+       
 };
+
+
 </script>
 
 <style scoped>

@@ -3,9 +3,7 @@
     <nav>
       <ul>
 
-        <li><RouterLink to="/" class="shop">Home</RouterLink></li>
-      
-        <li><RouterLink to="/p-information" class="Myprofile">My profile</RouterLink></li>
+       
         <RouterLink to="/uploadPro">
           <button class="upload-button" >UPLOAD</button>
         </RouterLink>
@@ -130,15 +128,6 @@
         this.currentPage = pageNum;
         this.getData(); 
       },
-      addpage(){
-        this.currentPage = this.currentPage + 1;
-        this.getData();
-      },
-      decpage(){
-        this.currentPage = this.currentPage - 1;
-        this.getData();
-      }
-
      
     },
 
@@ -147,16 +136,7 @@
         
          this.getData(); // 在组件挂载后调用获取数据的方法
       },
-    
-      // mounted() {
-      //   getProductList(1) // 假设我们想获取第一页的数据
-      //     .then(response => {
-      //       this.productList1 = response.data; // 假设返回的数据在response.data中
-      //     })
-      //     .catch(error => {
-      //       console.error("Error fetching product list:", error);
-      //     });
-      // },
+
       
     };
   

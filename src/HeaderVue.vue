@@ -17,6 +17,18 @@
 </template>
 
 <style scoped>
+
+li {
+  list-style-type: none;
+}
+
+li a {
+  text-decoration: none; /* Removes underline from links */
+}
+
+li a:hover {
+  color: orange; /* Changes link color on hover */
+}
 #header {
   width: 100%;
   height: 200px;

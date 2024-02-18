@@ -45,3 +45,15 @@ export async function getProductList(pageNum) {
         }
     })
 }
+
+/**
+ * 获取商品目录
+ * 
+ * @returns {Promise<void>}
+ */
+export async function getProductIntest() {
+    return axios({
+        method: "get",
+        url: baseUrl + "/user/viewMyInterestList",
+    })
+}

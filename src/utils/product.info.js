@@ -1,7 +1,7 @@
 import axios from "axios";
 import {v4} from 'uuid'
 
-const baseUrl = "http://api.saveplus.link"
+const baseUrl = "/api"
 
 /**
  * 添加trace id
@@ -20,9 +20,10 @@ axios.interceptors.request.use(function (config) {
 export async function getProductDetailInfo(postId) {
     return axios({
         method: "get",
-        url: baseUrl + "/posts/getPostInfo",
+        url: baseUrl + "/post/infoNoAuth",
         params: {
-            postId: postId
-        }
+            id: postId
+        },
+        withCredentials: false
     })
 }

@@ -186,8 +186,7 @@ export default {
       }
     },
 
-    submitFields() {
-      this.v$.$validate();
+    signupRequest() {
       // 当用户点击保存按钮时，将用户输入的字段保存到 savedFields 对象中
       var md5 = require("js-md5");
 
@@ -216,6 +215,12 @@ export default {
       this.confirmpass = "";
       this.createpass = "";
       this.phone = "";
+    },
+    submitFields() {
+      this.v$.$validate();
+      if (this.v$.$errors.length == 0) {
+        this.signupRequest();
+      }
     },
 
     comparePasswords() {

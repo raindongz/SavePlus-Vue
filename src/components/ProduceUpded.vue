@@ -37,42 +37,90 @@
         </RouterLink>
     
     </body> -->
+    <div>
+    <!-- 使用v-for遍历productList并展示产品信息 -->
+    <!-- <div v-for="product in productList1" :key="product.id">
+      <h3>{{ product.title }}</h3>
+      <p>{{ item.content }}</p>
+      <img :src="item.images" alt="item title" />
+      <p>Total Price: ${{ item.total_price }}</p>
+      <p>Area: {{ item.area }}</p>
+    </div> -->
+    {{ productList1 }}
+
+  </div>
     
-    <div class="product-container">
-    <div v-for="(product, index) in productList" :key="index" class="product-item">
-      <!-- 商品图片 -->
+    <div class="product-container" v-if="dataFromServer">
+    <div v-for="item in dataFromServer" :key="item.id" class="product-item">
+      
       <RouterLink to="/pro-info">
-      <img :src="product.imageUrl" alt="Product Image" class="product-image" />
-      <!-- 商品信息 -->
+      <img :src="item.images" alt="Product Image" class="product-image" />
+ 
       <div class="product-info">
-        <h3 class="name">{{ product.name }}</h3>
-        <p class="price">{{ product.price }}</p>
-        <span class="address">{{ product.address }}</span>
+        <h3 class="name">{{ item.title }}</h3>
+        <p class="price">${{ item.total_price }}</p>
+        <span class="address">{{ item.area }}</span>
       </div>
       </RouterLink>
     </div>
   </div>
-    
-
-
-    
+  <div v-else>
+      
+    <div>
+    </div>
   </div>
+    
+
+  <div class="col-md-12">
+            <nav aria-label="Page navigation example">
+              <ul class="pagination justify-content-center">
+                <li class="page-item disabled">
+                  <div v-if=" this.currentPage === 1">
+                    <a class="page-link" href="#" tabindex="-1" @click="decpage" >Previous</a>
+                  </div>
+                  <div v-else>
+                    <a class="page-link" href="#" tabindex="-1" >Previous</a>
+                  </div>
+                </li>
+                <li class="page-item active">
+                  <a class="page-link" href="#">1</a>
+                </li>
+                <li class="page-item">
+                  <a class="page-link" href="#">2</a>
+                </li>
+                <li class="page-item">
+                  <a class="page-link" href="#">3</a>
+                </li>
+                <li class="page-item">
+                  <a class="page-link" href="#">Next</a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+
+
 
   <body class="test">
     
 
   </body>
-  
+  </div>
   </template>
   
-  <script>
-
+  <script >
+  // import { getProductList } from "@/utils/product.info";
+  import axios from 'axios';
+  import {getProductList} from "@/utils/product.info";
     export default {
       
       data() {
         return {
           formattedDate: '' ,
+          productList1: null,
           testimg:'../assets/logo.png',
+          dataFromServer: null,
+          currentPage: 1, // 当前页码
+          pageSize: 10, // 每页数据量
           productList: [
         { id: 1, name: 'Product 1', address: 'New York', price: '$10', imageUrl: require('@/assets/logo.png') },
         { id: 2, name: 'Product 2', address: 'Boston', price: '$20', imageUrl: require('@/assets/logo.png') },
@@ -87,7 +135,56 @@
         const options = { year: 'numeric', month: 'long', day: 'numeric' };
         const currentDate = new Date();
         this.formattedDate = currentDate.toLocaleDateString(undefined, options);
+      },
+      methods:{
+          saveFields() {
+            this.savedFields.username = this.username;
+            this.savedFields.pass = this.pass;
+
+            this.username = '';
+        this.pass = '';
+      },
+
+        getData() {
+         getProductList(this.currentPage)
+        .then((response) => {
+          this.dataFromServer = response.data;
+        })
+        .catch((error) => {
+          console.error('Request error:', error);
+        });
+      },
+      changePage(pageNum) {
+        this.currentPage = pageNum;
+        this.getData(); 
+      },
+      addpage(){
+        this.currentPage = this.currentPage + 1;
+        this.getData();
+      },
+      decpage(){
+        this.currentPage = this.currentPage - 1;
+        this.getData();
       }
+
+     
+    },
+
+      mounted() {
+        
+        
+         this.getData(); // 在组件挂载后调用获取数据的方法
+      },
+    
+      // mounted() {
+      //   getProductList(1) // 假设我们想获取第一页的数据
+      //     .then(response => {
+      //       this.productList1 = response.data; // 假设返回的数据在response.data中
+      //     })
+      //     .catch(error => {
+      //       console.error("Error fetching product list:", error);
+      //     });
+      // },
       
     };
   
@@ -257,25 +354,7 @@
   
   
   
-  .produce{
-    position: absolute;
-    width: 227px;
-    height: 77px;
-    left: 100px;
-    top: 110px;
-  
-    font-family: 'Newsreader';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 64px;
-    line-height: 120%;
-    /* identical to box height, or 77px */
-    display: flex;
-    align-items: flex-end;
-    letter-spacing: -0.02em;
-  
-    color: #000000;
-  }
+
   
   .time{
     position: absolute;
@@ -354,6 +433,7 @@
     height: 26px;
     left: 24px;
     top: 245px;
+    margin-top: 10px;
   
     font-family: 'Inter';
     font-style: normal;

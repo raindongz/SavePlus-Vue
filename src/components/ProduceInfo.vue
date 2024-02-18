@@ -1,5 +1,5 @@
 <script setup>
-import {onMounted, reactive, ref} from "vue";
+import {computed, onBeforeMount, onMounted, reactive, ref} from "vue";
 import {useRoute} from "vue-router";
 import {getProductDetailInfo} from "@/utils/product.info";
 import ErrorIconBlack from "@/assets/ErrorIconBlack.vue";
@@ -7,17 +7,23 @@ import ToastMsg from "@/components/tools/ToastMsg.vue";
 import 'bootstrap/js/src/carousel';
 import 'bootstrap'
 
-let data = reactive({
+const data = reactive({
   proId: "",
 })
 
-let productDetailInfo = reactive({})
+const productDetailInfo = reactive({
+  data: {}
+})
 
 let errorToastRef = ref(null)
 
-onMounted(() => {
+onBeforeMount(() => {
+
+})
+
+onMounted(async () => {
   fillBasicInfo()
-  fillProductDetailInfo()
+  await fillProductDetailInfo()
 })
 
 /**
@@ -28,6 +34,10 @@ function fillBasicInfo() {
   data.proId = route.query.prod
 }
 
+const negotiable = computed(() => {
+  return productDetailInfo.data['negotiable'] === 0 ? 'No' : 'Yes';
+})
+
 /**
  * get product info by server
  */
@@ -37,7 +47,7 @@ async function fillProductDetailInfo() {
     if (prodInfoRes['status'] !== 200 || !prodInfoRes['data']) {
       errorToastRef.value['showToast']('Whoops! Something wrong!')
     } else {
-      productDetailInfo = prodInfoRes['data']
+      productDetailInfo.data = prodInfoRes['data']
     }
   } catch (e) {
     console.error('something wrong in get product info', e)
@@ -53,124 +63,124 @@ async function fillProductDetailInfo() {
     </template>
   </toast-msg>
   <div class="container-xxl">
-    <!--    left-->
-    <div class="left-area">
-      <!--      carrousel-->
-      <div class="carrousel-area">
-        <img class="carrousel" src="@/assets/hhkb.jpeg" alt="loading...">
-      </div>
-      <!--      product details-->
-      <div class="product-info-detail">
-        <div class="real-product-info">
-          <h1 class="title-text">Title</h1>
-          <div class="desc-text">This is some content to describe the this product for seller. You can type anything for
-            others to browser your product.
+    <div class="row align-items-start g-0">
+      <!--    left-->
+      <div class="left-area col-md-6 col-8">
+        <!--      carrousel-->
+        <div class="carrousel-area">
+          <img class="carrousel" src="@/assets/hhkb.jpeg" alt="loading...">
+        </div>
+        <!--      product details-->
+        <div class="product-info-detail">
+          <div class="real-product-info">
+            <h1 class="title-text">{{ productDetailInfo.data['title'] }}</h1>
+            <div class="desc-text">{{ productDetailInfo.data['content'] }}</div>
+            <div class="single-detail-area">
+              <div class="single-card">
+                <div class="single-key">Price</div>
+                <div class="single-value">{{ productDetailInfo.data['total_price'] }}</div>
+              </div>
+              <div class="single-card">
+                <div class="single-key">Area</div>
+                <div class="single-value">{{ productDetailInfo.data['area'] }}</div>
+              </div>
+              <div class="single-card">
+                <div class="single-key">Delivery</div>
+                <div class="single-value">{{ productDetailInfo.data['delivery_type'] }}</div>
+              </div>
+              <div class="single-card">
+                <div class="single-key">Negotiable</div>
+                <div class="single-value">{{ negotiable }}</div>
+              </div>
+            </div>
           </div>
-          <div class="single-detail-area">
-            <div class="single-card">
-              <div class="single-key">Single Key</div>
-              <div class="single-value">Single Value</div>
+        </div>
+      </div>
+      <!--    middle-->
+      <div class="middle-area col-md-3 col-4">
+        <div class="profile-area">
+          <div class="profile-info">
+            <img src="@/assets/logo.png" alt="loading" class="avatar">
+          </div>
+          <div class="profile-other">
+            <span class="info-title">Contact me</span>
+            <span class="info-value">nioliu@bu.edu</span>
+            <span class="info-title">Rating</span>
+            <span class="info-value">⭐️️⭐️⭐️</span>
+          </div>
+        </div>
+        <div class="comments-area">
+          <div class="comment-title">Comments</div>
+          <div class="comment-details">
+            <div class="single-comment">
+              <div>These are some real comment paragraphs, for users to type any comments...</div>
             </div>
-            <div class="single-card">
-              <div class="single-key">Single Key</div>
-              <div class="single-value">Single Value</div>
+            <div class="single-comment">
+              <div>These are some real comment paragraphs, for users to type any comments...</div>
             </div>
-            <div class="single-card">
-              <div class="single-key">Single Key</div>
-              <div class="single-value">Single Value</div>
+            <div class="single-comment">
+              <div>These are some real comment paragraphs, for users to type any comments...</div>
             </div>
-            <div class="single-card">
-              <div class="single-key">Single Key</div>
-              <div class="single-value">Single Value</div>
+            <div class="single-comment">
+              <div>These are some real comment paragraphs, for users to type any comments...</div>
+            </div>
+            <div class="single-comment">
+              <div>These are some real comment paragraphs, for users to type any comments...</div>
+            </div>
+            <div class="single-comment">
+              <div>These are some real comment paragraphs, for users to type any comments...</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="right-area col-md-3">
+        <div class="recommend-area">
+          <div class="recommend-title">Recommendations for you</div>
+          <div class="recommend-items">
+            <div class="single-item">
+              <img src="@/assets/alienware.jpg" alt="loading">
+            </div>
+            <div class="single-item">
+              <img src="@/assets/avalon.jpeg" alt="loading">
+            </div>
+            <div class="single-item">
+              <img src="@/assets/hhkb.jpeg" alt="loading">
+            </div>
+            <div class="single-item">
+              <img src="@/assets/benq.jpeg" alt="loading">
+            </div>
+            <div class="single-item">
+              <img src="@/assets/fanslin.jpeg" alt="loading">
             </div>
           </div>
         </div>
       </div>
     </div>
-    <!--    middle-->
-    <div class="middle-area">
-      <div class="profile-area">
-        <div class="profile-info">
-          <img src="@/assets/logo.png" alt="loading" class="avatar">
-        </div>
-        <div class="profile-other">
-          <span class="info-title">Contact me</span>
-          <span class="info-value">nioliu@bu.edu</span>
-          <span class="info-title">Rating</span>
-          <span class="info-value">⭐️️⭐️⭐️</span>
-        </div>
-      </div>
-      <div class="comments-area">
-        <div class="comment-title">Comments</div>
-        <div class="comment-details">
-          <div class="single-comment">
-            <div>These are some real comment paragraphs, for users to type any comments...</div>
-          </div>
-          <div class="single-comment">
-            <div>These are some real comment paragraphs, for users to type any comments...</div>
-          </div>
-          <div class="single-comment">
-            <div>These are some real comment paragraphs, for users to type any comments...</div>
-          </div>
-          <div class="single-comment">
-            <div>These are some real comment paragraphs, for users to type any comments...</div>
-          </div>
-          <div class="single-comment">
-            <div>These are some real comment paragraphs, for users to type any comments...</div>
-          </div>
-          <div class="single-comment">
-            <div>These are some real comment paragraphs, for users to type any comments...</div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="right-area">
-      <div class="recommend-area">
-        <div class="recommend-title">Recommendations for you</div>
-        <div class="recommend-items">
-          <div class="single-item">
-            <img src="@/assets/alienware.jpg" alt="loading">
-          </div>
-          <div class="single-item">
-            <img src="@/assets/avalon.jpeg" alt="loading">
-          </div>
-          <div class="single-item">
-            <img src="@/assets/hhkb.jpeg" alt="loading">
-          </div>
-          <div class="single-item">
-            <img src="@/assets/benq.jpeg" alt="loading">
-          </div>
-          <div class="single-item">
-            <img src="@/assets/fanslin.jpeg" alt="loading">
-          </div>
-        </div>
-      </div>
-    </div>
+
   </div>
 </template>
 <style scoped>
 .container-xxl {
   display: flex;
-  max-height: 750px;
+  max-height: 1000px;
+  overflow: hidden;
 }
 
-.container-xxl > div {
+.row > div {
   display: flex;
   flex-direction: column;
-  align-items: center;
 }
 
 .left-area {
-  flex-grow: 1;
+  height: 100%;
 }
 
 .middle-area {
-  flex-grow: 1;
+  height: 100%;
 }
 
 .right-area {
-  flex-grow: 1;
-  flex-shrink: 0;
+  height: 100%;
 }
 
 .carrousel-area {
@@ -201,6 +211,9 @@ async function fillProductDetailInfo() {
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  /* set all text in the children in the center/*/
+  word-break: break-all;
+  text-align: center;
 }
 
 .product-info-detail {
@@ -208,6 +221,8 @@ async function fillProductDetailInfo() {
   border: 1px solid black;
   border-top: none;
   flex-grow: 1;
+
+  overflow-y: auto;
 }
 
 .desc-text {
@@ -251,7 +266,7 @@ async function fillProductDetailInfo() {
 }
 
 .profile-info {
-  height: 60%;
+  height: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -267,7 +282,6 @@ async function fillProductDetailInfo() {
 
 .profile-other {
   width: 100%;
-  height: 40%;
   border-top: 1px solid black;
   box-sizing: border-box;
   display: grid;
@@ -275,11 +289,16 @@ async function fillProductDetailInfo() {
   grid-template-rows: 30px 30px;
   grid-row-gap: 10px;
   padding-top: 10px;
+  align-content: center;
+  word-break: break-all;
+  height: 50%;
 }
 
-@media (max-width: 700px) {
-  .right-area {
-    display: none !important;
+@media (max-width: 768px) {
+  .profile-other {
+    grid-template-columns: auto;
+    justify-content: center;
+    align-content: start;
   }
 
   .middle-area {
@@ -374,5 +393,9 @@ async function fillProductDetailInfo() {
   top: 0;
   width: 100%;
   height: 100%;
+}
+
+.title-text {
+
 }
 </style>

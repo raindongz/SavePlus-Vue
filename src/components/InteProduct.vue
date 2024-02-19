@@ -83,7 +83,7 @@
 </template>
 
 <script >
-// import { getProductList } from "@/utils/product.info";
+import { getProductList } from "@/utils/product.info";
 import axios from 'axios';
 import { getProductIntest } from "@/utils/product.info";
 export default {
@@ -115,6 +115,7 @@ export default {
 
     getData() {
       getProductIntest()
+      // getProductList(1)
         .then((response) => {
           this.dataFromServer = response.data;
         })
@@ -122,6 +123,10 @@ export default {
           console.error('Request error:', error);
         });
     },
+
+
+
+
     changePage(pageNum) {
       this.dataFromServer = null;
       this.currentPage = pageNum;

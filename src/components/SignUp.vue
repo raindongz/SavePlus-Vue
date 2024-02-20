@@ -193,10 +193,10 @@ export default {
       const instance = axios.create();
       instance
         .post("/user/create", {
-          username: this.username,
-          password: md5(this.createpass),
-          email: this.email,
-          phone: this.phone,
+          username: this.state.username,
+          password: md5(this.state.createpass),
+          email: this.state.email,
+          phone: this.state.phone,
           gender: 1,
           // avatar: "www.baidu.com",
         })

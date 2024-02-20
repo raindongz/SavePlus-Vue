@@ -93,10 +93,12 @@ export default {
   methods: {
     logInUserApiCall() {
       var md5 = require("js-md5");
+      console.log("haha: " + this.state.email);
+      console.log("haha: " + this.state.pass);
       // Store hash in your password DB.
       const requestData = {
-        email: this.email,
-        password: md5(this.pass),
+        email: this.state.email,
+        password: md5(this.state.pass),
       };
       const instance = axios.create();
       instance

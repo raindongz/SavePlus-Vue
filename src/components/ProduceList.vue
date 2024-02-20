@@ -1,198 +1,200 @@
 <template>
   <!DOCTYPE html>
   <html lang="en">
-  <head>
-    <meta charset="utf-8"/>
-    <title>save plus</title>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <meta content="eCommerce HTML Template Free Download" name="keywords"/>
-    <meta
+    <head>
+      <meta charset="utf-8" />
+      <title>save plus</title>
+      <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+      <meta content="eCommerce HTML Template Free Download" name="keywords" />
+      <meta
         content="eCommerce HTML Template Free Download"
         name="description"
-    />
+      />
 
-    <!-- Google Fonts -->
-    <link
+      <!-- Google Fonts -->
+      <link
         href="https://fonts.googleapis.com/css?family=Open+Sans:300,400|Source+Code+Pro:700,900&display=swap"
         rel="stylesheet"
-    />
+      />
 
-    <!-- CSS Libraries -->
-    <link
+      <!-- CSS Libraries -->
+      <link
         href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
         rel="stylesheet"
-    />
-    <link
+      />
+      <link
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
         rel="stylesheet"
-    />
-    <link href="lib/slick/slick.css" rel="stylesheet"/>
-    <link href="lib/slick/slick-theme.css" rel="stylesheet"/>
+      />
+      <!-- <link href="lib/slick/slick.css" rel="stylesheet" />
+      <link href="lib/slick/slick-theme.css" rel="stylesheet" /> -->
 
-    <!-- Template Stylesheet -->
-    <link href="css/style.css" rel="stylesheet"/>
-  </head>
+      <!-- Template Stylesheet -->
+      <!-- <link href="css/style.css" rel="stylesheet" /> -->
+    </head>
 
-  <body>
-  <!-- Bottom Bar Start -->
-  <div class="bottom-bar">
-    <div class="container-fluid">
-      <div class="row align-items-center">
-        <img class="logo" alt="saveplus logo" src="@/assets/logo.png"/>
+    <body>
+      <!-- Bottom Bar Start -->
+      <div class="bottom-bar">
+        <div class="container-fluid">
+          <div class="row align-items-center">
+            <img class="logo" alt="saveplus logo" src="@/assets/logo.png" />
 
-        <div class="col-md-6">
-          <div class="search">
-            <input type="text" placeholder="Search"/>
-            <button><i class="fa fa-search"></i></button>
+            <div class="col-md-6">
+              <div class="search">
+                <input type="text" placeholder="Search" />
+                <button><i class="fa fa-search"></i></button>
+              </div>
+            </div>
+
+            <RouterLink to="/p-information" class="Myprofile"
+              >My profile
+            </RouterLink>
+            <div v-if="token == '' || token == null">
+              <RouterLink to="/signin">
+                <button class="pl-signin">Sign in</button>
+              </RouterLink>
+            </div>
+            <div v-else>
+              <button @click="logout" class="pl-signin">log out</button>
+            </div>
           </div>
         </div>
-
-        <RouterLink to="/p-information" class="Myprofile"
-        >My profile
-        </RouterLink
-        >
-        <div v-if="token == '' || token == null">
-          <RouterLink to="/signin">
-            <button class="pl-signin">Sign in</button>
-          </RouterLink>
-        </div>
-        <div v-else>
-          <button @click="logout" class="pl-signin">log out</button>
-        </div>
       </div>
-    </div>
-  </div>
-  <!-- Bottom Bar End -->
+      <!-- Bottom Bar End -->
 
-  <!-- Product List Start -->
-  <div class="product-view">
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-lg-8">
+      <!-- Product List Start -->
+      <div class="product-view">
+        <div class="container-fluid">
           <div class="row">
-            <div class="col-md-12">
-              <div class="product-view-top">
-                <div class="row"></div>
-              </div>
-            </div>
-
-            <!-- product list starts here  -->
-            <div class="col-md-4">
-              <div class="product-item">
-                <div class="product-title">
-                  <!--                  传入物品id-->
-                  <router-link :to="{ name: 'proInfo', query: { prod: this.address } }">Product Name</router-link>
-                </div>
-                <div class="product-image">
-                  <a href="product-detail.html">
-                    <img src="@/assets/product-1.jpg" alt="Product Image"/>
-                  </a>
-                  <div class="product-action">
-                    <a href="#"><i class="fa fa-heart"></i></a>
-                    <a href="#"><i class="fa fa-search"></i></a>
+            <div class="col-lg-8">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="product-view-top">
+                    <div class="row"></div>
                   </div>
                 </div>
-                <div class="product-price">
-                  <h3><span>$</span>99</h3>
 
-                  <h3 class="btn">New York</h3>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="product-item">
-                <div class="product-title">
-                  <a href="#">Product Name</a>
-                </div>
-                <div class="product-image">
-                  <a href="product-detail.html">
-                    <img src="@/assets/product-2.jpg" alt="Product Image"/>
-                  </a>
-                  <div class="product-action">
-                    <a href="#"><i class="fa fa-heart"></i></a>
-                    <a href="#"><i class="fa fa-search"></i></a>
+                <!-- product list starts here  -->
+                <div class="col-md-4">
+                  <div class="product-item">
+                    <div class="product-title">
+                      <!--                  传入物品id-->
+                      <router-link
+                        :to="{ name: 'proInfo', query: { prod: this.address } }"
+                        >Product Name</router-link
+                      >
+                    </div>
+                    <div class="product-image">
+                      <a href="product-detail.html">
+                        <img src="@/assets/product-1.jpg" alt="Product Image" />
+                      </a>
+                      <div class="product-action">
+                        <a href="#"><i class="fa fa-heart"></i></a>
+                        <a href="#"><i class="fa fa-search"></i></a>
+                      </div>
+                    </div>
+                    <div class="product-price">
+                      <h3><span>$</span>99</h3>
+
+                      <h3 class="btn">New York</h3>
+                    </div>
                   </div>
                 </div>
-                <div class="product-price">
-                  <h3><span>$</span>99</h3>
-                  <h3 class="btn">New York</h3>
+                <div class="col-md-4">
+                  <div class="product-item">
+                    <div class="product-title">
+                      <a href="#">Product Name</a>
+                    </div>
+                    <div class="product-image">
+                      <a href="product-detail.html">
+                        <img src="@/assets/product-2.jpg" alt="Product Image" />
+                      </a>
+                      <div class="product-action">
+                        <a href="#"><i class="fa fa-heart"></i></a>
+                        <a href="#"><i class="fa fa-search"></i></a>
+                      </div>
+                    </div>
+                    <div class="product-price">
+                      <h3><span>$</span>99</h3>
+                      <h3 class="btn">New York</h3>
+                    </div>
+                  </div>
                 </div>
               </div>
+              <!-- product list ends here  -->
+
+              <!-- Pagination Start -->
+              <div class="col-md-12">
+                <nav aria-label="Page navigation example">
+                  <ul class="pagination justify-content-center">
+                    <li class="page-item disabled">
+                      <a class="page-link" href="#" tabindex="-1">Previous</a>
+                    </li>
+                    <li class="page-item active">
+                      <a class="page-link" href="#">1</a>
+                    </li>
+                    <li class="page-item">
+                      <a class="page-link" href="#">2</a>
+                    </li>
+                    <li class="page-item">
+                      <a class="page-link" href="#">3</a>
+                    </li>
+                    <li class="page-item">
+                      <a class="page-link" href="#">Next</a>
+                    </li>
+                  </ul>
+                </nav>
+              </div>
+              <!-- Pagination Start -->
             </div>
-          </div>
-          <!-- product list ends here  -->
 
-          <!-- Pagination Start -->
-          <div class="col-md-12">
-            <nav aria-label="Page navigation example">
-              <ul class="pagination justify-content-center">
-                <li class="page-item disabled">
-                  <a class="page-link" href="#" tabindex="-1">Previous</a>
-                </li>
-                <li class="page-item active">
-                  <a class="page-link" href="#">1</a>
-                </li>
-                <li class="page-item">
-                  <a class="page-link" href="#">2</a>
-                </li>
-                <li class="page-item">
-                  <a class="page-link" href="#">3</a>
-                </li>
-                <li class="page-item">
-                  <a class="page-link" href="#">Next</a>
-                </li>
-              </ul>
-            </nav>
-          </div>
-          <!-- Pagination Start -->
-        </div>
-
-        <!-- Side Bar Start -->
-        <div class="col-lg-4 sidebar">
-          <div class="sidebar-widget category">
-            <h2 class="title">Category</h2>
-            <nav class="navbar bg-light">
-              <ul class="navbar-nav">
-                <li class="nav-item">
-                  <a class="nav-link" href="#"
-                  ><i class="fa fa-female"></i>Fashion & Beauty</a
-                  >
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#"
-                  ><i class="fa fa-child"></i>Kids & Babies Clothes</a
-                  >
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#"
-                  ><i class="fa fa-tshirt"></i>Men & Women Clothes</a
-                  >
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#"
-                  ><i class="fa fa-mobile-alt"></i>Gadgets &
-                    Accessories</a
-                  >
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#"
-                  ><i class="fa fa-microchip"></i>Electronics &
-                    Accessories</a
-                  >
-                </li>
-              </ul>
-            </nav>
+            <!-- Side Bar Start -->
+            <div class="col-lg-4 sidebar">
+              <div class="sidebar-widget category">
+                <h2 class="title">Category</h2>
+                <nav class="navbar bg-light">
+                  <ul class="navbar-nav">
+                    <li class="nav-item">
+                      <a class="nav-link" href="#"
+                        ><i class="fa fa-female"></i>Fashion & Beauty</a
+                      >
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="#"
+                        ><i class="fa fa-child"></i>Kids & Babies Clothes</a
+                      >
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="#"
+                        ><i class="fa fa-tshirt"></i>Men & Women Clothes</a
+                      >
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="#"
+                        ><i class="fa fa-mobile-alt"></i>Gadgets &
+                        Accessories</a
+                      >
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="#"
+                        ><i class="fa fa-microchip"></i>Electronics &
+                        Accessories</a
+                      >
+                    </li>
+                  </ul>
+                </nav>
+              </div>
+            </div>
+            <!-- Side Bar End -->
           </div>
         </div>
-        <!-- Side Bar End -->
       </div>
-    </div>
-  </div>
-  <!-- Product List End -->
+      <!-- Product List End -->
 
-  <!-- Back to Top -->
-  <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
-  </body>
+      <!-- Back to Top -->
+      <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
+    </body>
   </html>
 </template>
 
@@ -218,7 +220,7 @@ export default {
     };
   },
   created() {
-    const options = {year: "numeric", month: "long", day: "numeric"};
+    const options = { year: "numeric", month: "long", day: "numeric" };
     const currentDate = new Date();
     this.formattedDate = currentDate.toLocaleDateString(undefined, options);
   },

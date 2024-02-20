@@ -20,6 +20,7 @@
         <h1 class="produce"> Items </h1>
         <div class="time">
           {{ formattedDate }}
+         
         </div>
       </header>
       <div class="divider"></div>
@@ -57,7 +58,7 @@
     </div>
   </div>
     
-
+  {{ dataFromServer}}
   <div class="col-md-12">
   <nav aria-label="Page navigation example">
     <ul class="pagination justify-content-center">

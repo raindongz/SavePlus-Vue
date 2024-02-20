@@ -8,7 +8,7 @@
           <button class="upload-button">UPLOAD</button>
         </RouterLink>
 
-
+        
 
       </ul>
     </nav>
@@ -20,6 +20,7 @@
         <h1 class="produce"> Interest </h1>
         <div class="time">
           {{ formattedDate }}
+          
         </div>
       </header>
       <div class="divider"></div>

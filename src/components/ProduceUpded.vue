@@ -85,7 +85,7 @@
   <script >
   // import { getProductList } from "@/utils/product.info";
   import axios from 'axios';
-  import {getProductList} from "@/utils/product.info";
+  import {getProductHis} from "@/utils/product.info";
     export default {
       
       data() {
@@ -115,7 +115,7 @@
       },
 
         getData() {
-         getProductList(this.currentPage)
+         getProductHis()
         .then((response) => {
           this.dataFromServer = response.data;
         })

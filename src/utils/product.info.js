@@ -46,13 +46,31 @@ export async function getProductList(pageNum) {
 }
 
 /**
- * 获取商品目录
+ * 获取兴趣商品目录
  * 
  * @returns {Promise<void>}
  */
 export async function getProductIntest() {
     return axios({
-        method: "get",
+        method: "post",
         url: baseUrl + "/user/viewMyInterestList",
     })
+
+    
+    
+}
+
+/**
+ * 获取历史商品目录
+ * 
+ * @returns {Promise<void>}
+ */
+export async function getProductHis() {
+    return axios({
+        method: "post",
+        url: baseUrl + "/user/getMyPostHistory",
+    })
+
+    
+    
 }

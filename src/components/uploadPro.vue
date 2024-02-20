@@ -2,7 +2,6 @@
   <div class="page-container">
     <nav>
       <ul>
-        
         <li><RouterLink to="/" class="shop">Home</RouterLink></li>
 
         <li>
@@ -25,7 +24,6 @@
       </header>
       <div class="divider"></div>
     </body>
-
 
     <div class="image-container">
       <img @click="openFileInput" src="@/assets/add.png" class="imagechange" />
@@ -64,74 +62,80 @@
 
     <div>
       <div>
-        <h1 class="utext1">Type:</h1>
+        <h1 class="utext1">Title:</h1>
       </div>
       <div>
         <input
           type="text"
-          v-model="name"
-          placeholder="Enter Type..."
+          v-model="this.state.title"
+          placeholder="Enter title..."
           class="vname"
         />
       </div>
       <div>
-        <h1 class="ttext2">Description:</h1>
+        <h1 class="ttext2">Content:</h1>
       </div>
       <div>
         <textarea
           type="text"
-          v-model="describe"
+          v-model="this.state.content"
           placeholder="Enter description..."
           class="vdescribe"
         />
       </div>
       <div>
-        <h1 class="ttext2">Price:</h1>
+        <h1 class="ttext2">TotalPrice:</h1>
       </div>
       <div>
         <input
           type="text"
-          v-model="price"
+          v-model="this.state.price"
           placeholder="Enter price..."
           class="vprice"
         />
       </div>
       <div>
-        <h1 class="ttext2">Phone Number:</h1>
+        <label for="selectItem" class="ttext3">Delivery Method:</label>
       </div>
-
+      <div>
+        <select v-model="deliveryType" id="selectItem" class="vstate">
+          <option value="0">Local Pick Up</option>
+          <option value="1">mail</option>
+        </select>
+      </div>
+      <div>
+        <label for="selectItem" class="ttext3">Negotiable:</label>
+      </div>
+      <div>
+        <select v-model="nigotiable" id="selectItem" class="vstate">
+          <option value="0">nigotiable</option>
+          <option value="1">not nigotiable</option>
+        </select>
+      </div>
+      <div>
+        <h1 class="ttext2">Area:</h1>
+      </div>
       <div>
         <input
           type="text"
-          v-model="phone"
-          placeholder="Enter phone number..."
-          class="vphone"
+          v-model="this.state.area"
+          placeholder="Enter area..."
+          class="vaddress"
         />
       </div>
       <div>
-        <h1 class="ttext2">Address:</h1>
+        <h1 class="ttext2">Item Num:</h1>
       </div>
       <div>
         <input
-          type="text"
-          v-model="address"
-          placeholder="Enter address..."
+          type="number"
+          v-model="itemNum"
+          placeholder="Enter Item Number..."
           class="vaddress"
         />
       </div>
       <body class="pxb"></body>
-      <div>
-        <label for="selectItem" class="ttext3">State:</label>
-      </div>
-      <div>
-        <select v-model="selectedItem" id="selectItem" class="vstate">
-          <option value="item1">Available</option>
-          <option value="item2">In progress</option>
-          <option value="item3">Completed</option>
-        </select>
-      </div>
-
-      <button @click="saveFields" class="savebutton">Save</button>
+      <button @click="createPostReq" class="savebutton">Save</button>
     </div>
   </div>
 
@@ -142,18 +146,45 @@
 import { app } from "./../firebase";
 import { uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { getStorage, ref } from "firebase/storage";
+import useValidate from "@vuelidate/core";
+import { required, email, minLength } from "@vuelidate/validators";
+import { reactive, computed } from "vue";
+import { createPost } from "@/utils/product.create";
+import ToastMsg from "@/components/tools/ToastMsg.vue";
 // import { toRaw } from "vue";
 
 export default {
+  setup() {
+    const state = reactive({
+      title: "", // 用于保存姓名
+      content: "",
+      area: "",
+      price: "",
+    });
+    const rules = computed(() => {
+      return {
+        title: { required },
+        content: { required },
+        area: { required },
+        price: { required },
+      };
+    });
+    const v$ = useValidate(rules, state);
+
+    return { state, v$ };
+  },
   data() {
     return {
       formattedDate: "",
       uploadedImages: [], // 存储已上传的图片
-      name: "", // 用于保存姓名
-      discribe: "",
+      title: "", // 用于保存姓名
+      content: "",
+      area: "",
       price: "",
-      address: "", // 用于保存地址
-      phone: "", // 用于保存电话号码
+      itemNum: 0,
+      deliveryType: 0,
+      nigotiable: 0,
+
       upimage: "",
       selectedItem: "",
       savedFields: {}, // 用于保存多个字段的对象
@@ -174,6 +205,35 @@ export default {
   },
 
   methods: {
+    async createPostReq() {
+      // let errorToastRef = ref(null);
+      const createPostBody = {
+        title: this.state.title,
+        content: this.state.content,
+        area: this.state.area,
+        total_price: this.state.price,
+        delivery_type: this.deliveryType,
+        item_num: this.itemNum,
+        post_status: 0,
+        negotiable: this.nigotiable,
+        images: this.images,
+      };
+
+      try {
+        if (this.v$.$errors.length == 0) {
+          console.log(createPostBody);
+          const response = await createPost(createPostBody);
+          if (response["satus" !== 200] || !response["data"]) {
+            // errorToastRef.value["showToast"]("Whoops! Something wrong!");
+          } else {
+            router.push("/signin");
+          }
+        }
+      } catch (e) {
+        console.error("something wrong in get product info", e);
+        // errorToastRef.value["showToast"]("Whoops! Something wrong!");
+      }
+    },
     prevImage() {
       this.currentIndex =
         (this.currentIndex - 1 + this.uploadedImages.length) %
@@ -229,31 +289,30 @@ export default {
       }
     },
 
-    saveFields() {
-      // 当用户点击保存按钮时，将用户输入的字段保存到 savedFields 对象中
+    // saveFields() {
+    //   // 当用户点击保存按钮时，将用户输入的字段保存到 savedFields 对象中
 
-      this.savedFields.name = this.name;
-      this.savedFields.describe = this.describe;
-      this.savedFields.price = this.price;
-      this.savedFields.address = this.address;
-      this.savedFields.phone = this.phone;
-      this.savedFields.selectedItem = this.selectedItem;
+    //   this.savedFields.title = this.title;
+    //   this.savedFields.content = this.content;
+    //   this.savedFields.price = this.price;
+    //   this.savedFields.area = this.area;
+    //   this.savedFields.phone = this.phone;
+    //   this.savedFields.selectedItem = this.selectedItem;
 
-      // 清空输入框以便用户输入下一组字段
-      this.name = "";
-      this.discribe = "";
-      this.price = "";
-      this.address = "";
-      this.phone = "";
-      this.selectedItem = "";
-    },
+    //   // 清空输入框以便用户输入下一组字段
+    //   this.title = "";
+    //   this.content = "";
+    //   this.price = "";
+    //   this.area = "";
+    //   this.selectedItem = "";
+    // },
   },
 };
 </script>
 
 <style>
-.changenew{
-  margin-top:200px;
+.changenew {
+  margin-top: 200px;
 }
 .up-choosephoto {
   position: absolute;
@@ -394,7 +453,6 @@ button {
 button:hover {
   background-color: rgba(255, 166, 0, 0.649);
 }
-
 
 .divider {
   height: 2px; /* 设置分隔线的高度 */

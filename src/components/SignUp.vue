@@ -2,7 +2,6 @@
   <div class="page-container">
     <nav>
       <ul>
-       
         <RouterLink to="/"
           ><li><a href="shop" class="shop">Home</a></li></RouterLink
         >
@@ -192,7 +191,7 @@ export default {
 
       const instance = axios.create();
       instance
-        .post("/user/create", {
+        .post("api/user/create", {
           username: this.state.username,
           password: md5(this.state.createpass),
           email: this.state.email,

@@ -29,7 +29,6 @@ export async function getProductDetailInfo(postId) {
     })
 }
 
-
 /**
  * 获取商品目录
  * @param pageNum

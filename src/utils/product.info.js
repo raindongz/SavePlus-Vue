@@ -1,9 +1,7 @@
 import axios from "axios";
-import {v4} from 'uuid'
+import { v4 } from "uuid";
 
-const baseUrl = "http://saveplus.link"
-
-
+const baseUrl = "https://saveplus.link";
 
 /**
  * 获取商品的详细信息
@@ -11,15 +9,14 @@ const baseUrl = "http://saveplus.link"
  * @returns {Promise<void>}
  */
 export async function getProductDetailInfo(postId) {
-    return axios({
-        method: "get",
-        url: baseUrl + "/posts/getPostInfo",
-        params: {
-            postId: postId
-        }
-    })
+  return axios({
+    method: "get",
+    url: baseUrl + "/posts/getPostInfo",
+    params: {
+      postId: postId,
+    },
+  });
 }
-
 
 /**
  * 获取商品目录
@@ -27,12 +24,12 @@ export async function getProductDetailInfo(postId) {
  * @returns {Promise<void>}
  */
 export async function getProductList(pageNum) {
-    return axios({
-        method: "get",
-        url: baseUrl + "/post/list",
-        params: {
-            page_size: 10,
-            page_num: 1,
-        }
-    })
+  return axios({
+    method: "get",
+    url: baseUrl + "/post/list",
+    params: {
+      page_size: 10,
+      page_num: 1,
+    },
+  });
 }

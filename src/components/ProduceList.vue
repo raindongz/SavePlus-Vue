@@ -38,7 +38,7 @@
       <div class="bottom-bar">
         <div class="container-fluid">
           <div class="row align-items-center">
-            <img class="logo" alt="saveplus logo" src="@/assets/logo.png" />
+            
 
             <div class="col-md-6">
               <div class="search">
@@ -69,83 +69,35 @@
           <div class="row">
             <div class="col-lg-8">
               <div class="row">
-                <div class="col-md-12">
-                  <div class="product-view-top">
-                    <div class="row"></div>
-                  </div>
-                </div>
+                
 
                 <!-- product list starts here  -->
-                <div class="col-md-4">
-                  <div class="product-item">
-                    <div class="product-title">
-                      <!--                  传入物品id-->
-                      <router-link
-                        :to="{ name: 'proInfo', query: { prod: this.address } }"
-                        >Product Name</router-link
-                      >
-                    </div>
-                    <div class="product-image">
-                      <a href="product-detail.html">
-                        <img src="@/assets/product-1.jpg" alt="Product Image" />
-                      </a>
-                      <div class="product-action">
-                        <a href="#"><i class="fa fa-heart"></i></a>
-                        <a href="#"><i class="fa fa-search"></i></a>
-                      </div>
-                    </div>
-                    <div class="product-price">
-                      <h3><span>$</span>99</h3>
+                <div class="col-md-4" v-for="item in dataFromServer" :key="item.id">
+              <div class="product-item">
+                <div class="product-title">
+                  <!--                  传入物品id-->
+                  <router-link :to="{ name: 'proInfo', query: { prod: this.address } }">{{ item.title }}</router-link>
+                </div>
 
-                      <h3 class="btn">New York</h3>
-                    </div>
+                <div class="product-image">
+                  <a href="product-detail.html">
+                    <img src="item.images" alt="Product Image"/>
+                  </a>
+                  <div class="product-action">
+                    <a href="#"><i class="fa fa-heart"></i></a>
+                    <a href="#"><i class="fa fa-search"></i></a>
                   </div>
                 </div>
-                <div class="col-md-4">
-                  <div class="product-item">
-                    <div class="product-title">
-                      <a href="#">Product Name</a>
-                    </div>
-                    <div class="product-image">
-                      <a href="product-detail.html">
-                        <img src="@/assets/product-2.jpg" alt="Product Image" />
-                      </a>
-                      <div class="product-action">
-                        <a href="#"><i class="fa fa-heart"></i></a>
-                        <a href="#"><i class="fa fa-search"></i></a>
-                      </div>
-                    </div>
-                    <div class="product-price">
-                      <h3><span>$</span>99</h3>
-                      <h3 class="btn">New York</h3>
-                    </div>
-                  </div>
+                <div class="product-price">
+                  <h3><span>$</span>{{ item.total_price }}</h3>
+
+                  <h3 class="btn">{{ item.area }}</h3>
                 </div>
               </div>
-              <!-- product list ends here  -->
-
-              <!-- Pagination Start -->
-              <div class="col-md-12">
-                <nav aria-label="Page navigation example">
-                  <ul class="pagination justify-content-center">
-                    <li class="page-item disabled">
-                      <a class="page-link" href="#" tabindex="-1">Previous</a>
-                    </li>
-                    <li class="page-item active">
-                      <a class="page-link" href="#">1</a>
-                    </li>
-                    <li class="page-item">
-                      <a class="page-link" href="#">2</a>
-                    </li>
-                    <li class="page-item">
-                      <a class="page-link" href="#">3</a>
-                    </li>
-                    <li class="page-item">
-                      <a class="page-link" href="#">Next</a>
-                    </li>
-                  </ul>
-                </nav>
-              </div>
+            </div>
+            
+           
+          </div>
               <!-- Pagination Start -->
             </div>
 
@@ -194,12 +146,32 @@
 
       <!-- Back to Top -->
       <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
+
+      <div class="col-md-12">
+  <nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center">
+      <li class="page-item" :class="{ disabled: currentPage === 1 }">
+        <a class="page-link" href="#" @click.prevent="changePage(currentPage - 1)" tabindex="-1">Previous</a>
+      </li>
+      <!-- 动态生成分页项，这里只是示例 -->
+      
+        <a class="page-link" href="#">{{ currentPage}}</a>
+ 
+      <li class="page-item" :class="{ disabled: currentPage === totalPages }">
+        <a class="page-link" href="#" @click.prevent="changePage(currentPage + 1)">Next</a>
+      </li>
+    </ul>
+  </nav>
+</div>
     </body>
+
   </html>
 </template>
 
 <script>
 import axios from "axios";
+
+import {getProductList} from "@/utils/product.info";
 
 export default {
   data() {
@@ -217,6 +189,8 @@ export default {
       selectedItem2: "",
       selectedItem3: "",
       savedFields: {}, // 用于保存多个字段的对象
+      dataFromServer:null,
+      currentPage: 1,
     };
   },
   created() {
@@ -225,6 +199,24 @@ export default {
     this.formattedDate = currentDate.toLocaleDateString(undefined, options);
   },
   methods: {
+    getData() {
+       getProductList(this.currentPage)
+        .then((response) => {
+          this.dataFromServer = response.data;
+        })
+        .catch((error) => {
+          console.error('Request error:', error);
+        });
+      },
+
+
+
+      changePage(pageNum) {
+        this.dataFromServer = null;
+        this.currentPage = pageNum;
+        this.getData(); 
+      },
+
     logout() {
       localStorage.removeItem("token");
       axios.defaults.headers.common["Authorization"] = "";
@@ -284,8 +276,16 @@ export default {
       }
     },
   },
+  mounted() {   
+    this.getData(); // 在组件挂载后调用获取数据的方法
+  },
 };
+
+
 </script>
+
+
+
 
 <style scoped>
 /* newadd */
@@ -533,6 +533,7 @@ h2 {
     text-align: center;
     margin-bottom: 15px;
   }
+
 
   .bottom-bar .user {
     margin-bottom: 0;

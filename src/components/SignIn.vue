@@ -2,7 +2,7 @@
   <div class="page-container">
     <nav>
       <ul>
-        <img class="logo" alt="saveplus logo" src="@/assets/logo.png" />
+        
         <RouterLink to="/">
           <button class="back-button">Back</button>
         </RouterLink>
@@ -61,7 +61,9 @@ import router from "./../main.js";
 import useValidate from "@vuelidate/core";
 import { required, email, minLength } from "@vuelidate/validators";
 import { reactive, computed } from "vue";
+const baseUrl = "/api"
 export default {
+  
   setup() {
     const state = reactive({
       email: "",
@@ -102,7 +104,7 @@ export default {
       };
       const instance = axios.create();
       instance
-        .post("/user/login", requestData, {
+        .post(baseUrl + "/user/login", requestData, {
           headers: {
             Authorization: null,
           },
@@ -139,7 +141,7 @@ export default {
   width: 227px;
   height: 77px;
   left: 100px;
-  top: 110px;
+  top: 200px;
 
   font-family: "Newsreader";
   font-style: normal;
@@ -158,7 +160,7 @@ export default {
   width: 300px;
   height: 26px;
   left: 347px;
-  top: 190px;
+  margin-top: 75px;
 
   font-family: "Inter";
   font-style: normal;
@@ -304,22 +306,5 @@ export default {
 .tosignup:hover {
   color: rgba(255, 166, 0, 0.649);
 }
-.time {
-  position: absolute;
-  width: 300px;
-  height: 26px;
-  left: 347px;
-  top: 190px;
 
-  font-family: "Inter";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 20px;
-  line-height: 130%;
-  /* identical to box height, or 26px */
-  display: flex;
-  align-items: flex-end;
-
-  color: #000000;
-}
 </style>

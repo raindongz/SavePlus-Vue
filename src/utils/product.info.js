@@ -70,7 +70,19 @@ export async function getProductHis() {
         method: "post",
         url: baseUrl + "/user/getMyPostHistory",
     })
-
-    
-    
 }
+
+    /**
+ * 删除商品
+ * 
+ * @returns {Promise<void>}
+ */
+    export async function DeletProduct(item_id) {
+        return axios({
+            method: "post",
+            url: baseUrl + "/post/delete",
+            data: {
+                post_id: item_id
+            }
+        })
+    }

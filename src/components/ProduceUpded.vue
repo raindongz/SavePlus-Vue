@@ -53,7 +53,7 @@
         <div class="thr">
         <button class="team1">Update</button>
       <button class="team1">Sold out</button>
-      <button class="team1">Delet</button>
+      <button class="team1" @click="deletData(item.id)">Delet</button>
         </div>
       </div>
       
@@ -93,6 +93,7 @@
 // import { getProductList } from "@/utils/product.info";
 import axios from 'axios';
 import { getProductHis } from "@/utils/product.info";
+import { DeletProduct } from "@/utils/product.info";
 export default {
 
   data() {
@@ -120,7 +121,16 @@ export default {
       this.username = '';
       this.pass = '';
     },
-
+    deletData(item_id){
+      DeletProduct(item_id)
+        .then((response) => {
+          console.log('Product deleted successfully', response);
+        })
+        .catch((error) => {
+          console.error('Request error:', error);
+        });
+        this.getData();
+    },
     getData() {
       getProductHis()
         .then((response) => {

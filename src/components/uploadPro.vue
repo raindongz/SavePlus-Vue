@@ -71,6 +71,9 @@
           placeholder="Enter title..."
           class="vname"
         />
+        <span v-if="v$.title.$error">
+          {{ v$.title.$errors[0].$message }}
+        </span>
       </div>
       <div>
         <h1 class="ttext2">Content:</h1>
@@ -82,6 +85,9 @@
           placeholder="Enter description..."
           class="vdescribe"
         />
+        <span v-if="v$.content.$error">
+          {{ v$.content.$errors[0].$message }}
+        </span>
       </div>
       <div>
         <h1 class="ttext2">TotalPrice:</h1>
@@ -93,6 +99,9 @@
           placeholder="Enter price..."
           class="vprice"
         />
+        <span v-if="v$.price.$error">
+          {{ v$.price.$errors[0].$message }}
+        </span>
       </div>
       <div>
         <label for="selectItem" class="ttext3">Delivery Method:</label>
@@ -122,6 +131,9 @@
           placeholder="Enter area..."
           class="vaddress"
         />
+        <span v-if="v$.area.$error">
+          {{ v$.area.$errors[0].$message }}
+        </span>
       </div>
       <div>
         <h1 class="ttext2">Item Num:</h1>
@@ -149,8 +161,9 @@ import { getStorage, ref } from "firebase/storage";
 import useValidate from "@vuelidate/core";
 import { required, email, minLength } from "@vuelidate/validators";
 import { reactive, computed } from "vue";
-import { createPost } from "@/utils/product.create";
-import ToastMsg from "@/components/tools/ToastMsg.vue";
+import { createPost } from "@/utils/product.create.js";
+// import ToastMsg from "@/components/tools/ToastMsg.vue";
+import router from "./../main.js";
 // import { toRaw } from "vue";
 
 export default {
@@ -163,10 +176,10 @@ export default {
     });
     const rules = computed(() => {
       return {
-        title: { required },
-        content: { required },
-        area: { required },
-        price: { required },
+        title: { required, minLength: minLength(6) },
+        content: { required, minLength: minLength(6) },
+        area: { required, minLength: minLength(2) },
+        price: { required, minLength: minLength(6) },
       };
     });
     const v$ = useValidate(rules, state);
@@ -181,7 +194,7 @@ export default {
       content: "",
       area: "",
       price: "",
-      itemNum: 0,
+      itemNum: 1,
       deliveryType: 0,
       nigotiable: 0,
 
@@ -216,23 +229,20 @@ export default {
         item_num: this.itemNum,
         post_status: 0,
         negotiable: this.nigotiable,
-        images: this.images,
+        images: this.uploadedImages.join(","),
       };
+      this.v$.$validate();
 
-      try {
-        if (this.v$.$errors.length == 0) {
-          console.log(createPostBody);
-          const response = await createPost(createPostBody);
-          if (response["satus" !== 200] || !response["data"]) {
-            // errorToastRef.value["showToast"]("Whoops! Something wrong!");
-          } else {
-            router.push("/signin");
-          }
+      if (this.v$.$errors.length == 0) {
+        console.log(createPostBody);
+        const response = await createPost(createPostBody);
+        if (response.status !== 200 || !response["data"]) {
+          // errorToastRef.value["showToast"]("Whoops! Something wrong!");
+        } else {
+          router.push("/produceUp");
         }
-      } catch (e) {
-        console.error("something wrong in get product info", e);
-        // errorToastRef.value["showToast"]("Whoops! Something wrong!");
       }
+      // errorToastRef.value["showToast"]("Whoops! Something wrong!");
     },
     prevImage() {
       this.currentIndex =
@@ -316,7 +326,7 @@ export default {
 }
 .up-choosephoto {
   position: absolute;
-  top: 250px;
+  top: 370px;
   margin-left: 30%;
   height: 300px;
   width: 450px;

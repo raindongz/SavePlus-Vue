@@ -20,6 +20,7 @@
         <h1 class="produce"> Items </h1>
         <div class="time">
           {{ formattedDate }}
+         
         </div>
       </header>
       <div class="divider"></div>
@@ -57,7 +58,7 @@
     </div>
   </div>
     
-
+  {{ dataFromServer}}
   <div class="col-md-12">
   <nav aria-label="Page navigation example">
     <ul class="pagination justify-content-center">
@@ -85,7 +86,7 @@
   <script >
   // import { getProductList } from "@/utils/product.info";
   import axios from 'axios';
-  import {getProductList} from "@/utils/product.info";
+  import {getProductHis} from "@/utils/product.info";
     export default {
       
       data() {
@@ -115,7 +116,7 @@
       },
 
         getData() {
-         getProductList(this.currentPage)
+         getProductHis()
         .then((response) => {
           this.dataFromServer = response.data;
         })

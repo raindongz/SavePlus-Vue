@@ -21,9 +21,12 @@ axios.interceptors.request.use(
  * create post
  */
 export async function createPost(body) {
-  return axios({
-    method: "post",
-    url: baseUrl + "/post",
-    body: body,
-  });
+  try {
+    const response = await axios.post(baseUrl + "/post", body);
+    console.log;
+    return response;
+  } catch (error) {
+    // Handle error here if needed
+    console.error("Error creating post:", error);
+  }
 }

@@ -2,30 +2,21 @@
   <div class="page-container">
     <nav>
       <ul>
-
-
         <RouterLink to="/uploadPro">
           <button class="upload-button">UPLOAD</button>
         </RouterLink>
-
-
-
       </ul>
     </nav>
 
-
-
     <body>
       <header>
-        <h1 class="produce"> Items </h1>
+        <h1 class="produce">Items</h1>
         <div class="time">
           {{ formattedDate }}
-
         </div>
       </header>
       <div class="divider"></div>
     </body>
-
 
     <!-- <body class="show">
         <RouterLink to="/pro-info">
@@ -37,10 +28,8 @@
     
     </body> -->
 
-
     <div class="product-container" v-if="dataFromServer">
       <div v-for="item in dataFromServer" :key="item.id" class="product-item">
-
         <RouterLink to="/pro-info">
           <img :src="item.images" alt="Product Image" class="product-image" />
 
@@ -51,65 +40,78 @@
           </div>
         </RouterLink>
         <div class="thr">
-        <button class="team1">Update</button>
-      <button class="team1">Sold out</button>
-      <button class="team1" @click="deletData(item.id)">Delet</button>
+          <button
+            class="team1"
+            @click="
+              $router.push({ name: 'createProduct', state: { id: item.id } })
+            "
+          >
+            Update
+          </button>
+          <button class="team1">Sold out</button>
+          <button class="team1" @click="deletData(item.id)">Delet</button>
         </div>
       </div>
-      
     </div>
 
-
     <div v-else>
-         
-          <div>
-            </div>
+               
+      <div>   </div>
     </div>
     <div class="col-md-12">
       <nav aria-label="Page navigation example">
         <ul class="pagination justify-content-center">
           <li class="page-item" :class="{ disabled: currentPage === 1 }">
-            <a class="page-link" href="#" @click.prevent="changePage(currentPage - 1)" tabindex="-1">Previous</a>
+            <a
+              class="page-link"
+              href="#"
+              @click.prevent="changePage(currentPage - 1)"
+              tabindex="-1"
+              >Previous</a
+            >
           </li>
           <!-- 动态生成分页项，这里只是示例 -->
 
           <a class="page-link" href="#">{{ currentPage }}</a>
 
-          <li class="page-item" :class="{ disabled: currentPage === totalPages }">
-            <a class="page-link" href="#" @click.prevent="changePage(currentPage + 1)">Next</a>
+          <li
+            class="page-item"
+            :class="{ disabled: currentPage === totalPages }"
+          >
+            <a
+              class="page-link"
+              href="#"
+              @click.prevent="changePage(currentPage + 1)"
+              >Next</a
+            >
           </li>
         </ul>
       </nav>
     </div>
 
-    <body class="test">
-
-
-    </body>
+    <body class="test"></body>
   </div>
 </template>
-  
-<script >
+
+<script>
 // import { getProductList } from "@/utils/product.info";
-import axios from 'axios';
+import axios from "axios";
 import { getProductHis } from "@/utils/product.info";
 import { DeletProduct } from "@/utils/product.info";
 export default {
-
   data() {
     return {
-      formattedDate: '',
+      formattedDate: "",
       productList1: null,
-      testimg: '../assets/logo.png',
+      testimg: "../assets/logo.png",
       dataFromServer: null,
       currentPage: 1, // 当前页码
       pageSize: 10, // 每页数据量
       totalPages: 3,
-
     };
   },
   created() {
-    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    const options = { year: "numeric", month: "long", day: "numeric" };
     const currentDate = new Date();
     this.formattedDate = currentDate.toLocaleDateString(undefined, options);
   },
@@ -118,18 +120,18 @@ export default {
       this.savedFields.username = this.username;
       this.savedFields.pass = this.pass;
 
-      this.username = '';
-      this.pass = '';
+      this.username = "";
+      this.pass = "";
     },
-    deletData(item_id){
+    deletData(item_id) {
       DeletProduct(item_id)
         .then((response) => {
-          console.log('Product deleted successfully', response);
+          console.log("Product deleted successfully", response);
         })
         .catch((error) => {
-          console.error('Request error:', error);
+          console.error("Request error:", error);
         });
-        this.getData();
+      this.getData();
     },
     getData() {
       getProductHis()
@@ -137,7 +139,7 @@ export default {
           this.dataFromServer = response.data.post_list;
         })
         .catch((error) => {
-          console.error('Request error:', error);
+          console.error("Request error:", error);
         });
     },
     changePage(pageNum) {
@@ -145,47 +147,36 @@ export default {
       this.currentPage = pageNum;
       this.getData();
     },
-
   },
 
   mounted() {
-
-
     this.getData(); // 在组件挂载后调用获取数据的方法
   },
-
-
 };
-
-
-
 </script>
-  
+
 <style scoped>
-.team1{
+.team1 {
   border: 0.2px solid black;
   border-radius: 8px;
 }
-.thr{
+.thr {
   position: absolute;
   right: 0;
   bottom: 0;
 }
 .show {
-
   width: 300px;
   height: 330px;
-  background-color: #E6E6E6;
+  background-color: #e6e6e6;
 
   border-radius: 10px;
 }
-
 
 .product-container {
   display: flex;
   flex-wrap: wrap;
   /* 允许产品项换行 */
-
 }
 
 .product-item {
@@ -198,7 +189,7 @@ export default {
 
   width: 300px;
   height: 330px;
-  background-color: #E6E6E6;
+  background-color: #e6e6e6;
   position: relative;
 }
 
@@ -226,7 +217,6 @@ export default {
 } */
 
 .product-image {
-
   position: absolute;
   width: 300px;
   height: 200px;
@@ -247,7 +237,6 @@ nav ul {
   list-style-type: none;
   /* 去掉列表项的标记（点点） */
 }
-
 
 .logo {
   width: 125px;
@@ -274,7 +263,7 @@ nav ul {
   right: 379px;
   top: 45px;
 
-  font-family: 'Inter';
+  font-family: "Inter";
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
@@ -296,7 +285,7 @@ nav ul {
   right: 270px;
   top: 45px;
 
-  font-family: 'Inter';
+  font-family: "Inter";
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
@@ -313,14 +302,13 @@ nav ul {
 
 /* 设置元素的位置和样式 */
 .upload-button {
-
   position: absolute;
   /* 将元素定位为绝对定位 */
   width: 126px;
   height: 48px;
   right: 115px;
   top: 35px;
-  font-family: 'Inter';
+  font-family: "Inter";
   font-style: normal;
   font-weight: 600;
   font-size: 16px;
@@ -331,7 +319,6 @@ nav ul {
   /* 水平居中对齐文本 */
   text-align: center;
   border-radius: 10px;
-
 }
 
 button {
@@ -344,30 +331,20 @@ button:hover {
   background-color: rgba(255, 166, 0, 0.649);
 }
 
-
-
-
-
-
 .divider {
   height: 2px;
   /* 设置分隔线的高度 */
-  background-color: #E6E6E6;
+  background-color: #e6e6e6;
   /* 设置分隔线的背景颜色 */
   margin: 100px;
   /* 可选：设置分隔线上下的间距 */
 }
-
-
-
-
 
 .pro1 {
   position: absolute;
   width: 300px;
   height: 200px;
   object-fit: contain;
-
 }
 
 .name {
@@ -377,12 +354,11 @@ button:hover {
   left: 24px;
   top: 220px;
 
-  font-family: 'Inter';
+  font-family: "Inter";
   font-style: normal;
   font-weight: 600;
   font-size: 20px;
   line-height: 130%;
-
 
   color: #000000;
 }
@@ -394,12 +370,11 @@ button:hover {
   left: 24px;
   top: 290px;
 
-  font-family: 'Inter';
+  font-family: "Inter";
   font-style: normal;
   font-weight: 600;
   font-size: 20px;
   line-height: 130%;
-
 
   color: #000000;
 }
@@ -412,23 +387,22 @@ button:hover {
   top: 245px;
   margin-top: 10px;
 
-  font-family: 'Inter';
+  font-family: "Inter";
   font-style: normal;
   font-weight: 600;
   font-size: 20px;
   line-height: 130%;
   /* identical to box height, or 26px */
 
-  color: #426B1F;
-
+  color: #426b1f;
 }
 
 .test {
   height: 700px;
-}</style>
-  
-  
-  <!-- <script setup>
+}
+</style>
+
+<!-- <script setup>
   import { ref } from 'vue'
   
   const text = ref('')

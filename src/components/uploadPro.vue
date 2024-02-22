@@ -287,9 +287,8 @@ export default {
           } else {
             router.push("/produceUp");
           }
-        } catch (error) {
-          console.log(error);
-        }
+        } catch (error) {}
+        console.log(error);
       }
       // errorToastRef.value["showToast"]("Whoops! Something wrong!");
     },

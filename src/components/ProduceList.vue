@@ -93,107 +93,107 @@
                     </div>
                     <div class="product-price">
                       <h3><span>$</span>{{ item.total_price }}</h3>
-                <div class="product-image">
-                  <a href="product-detail.html">
-                    <img src="item.images" alt="Product Image"/>
-                  </a>
-                  
-                  <div v-if="item.liked === 0" class="product-action">
-                    <a href="#"><i class="fa fa-heart"></i></a>
-                    <a href="#"><i class="fa fa-search"></i></a>
-                  </div>
-                  <div v-else class="product-action1">
-                    <a href="#"><i class="fa fa-heart"></i></a>
-                    <a href="#"><i class="fa fa-search"></i></a>
-                  </div>
-                  
-                </div>
-                <div class="product-price">
-                  <h3><span>$</span>{{ item.total_price }}</h3>
+                      <div class="product-image">
+                        <a href="product-detail.html">
+                          <img src="item.images" alt="Product Image" />
+                        </a>
 
-                      <h3 class="btn">{{ item.area }}</h3>
+                        <div v-if="item.liked === 0" class="product-action">
+                          <a href="#"><i class="fa fa-heart"></i></a>
+                          <a href="#"><i class="fa fa-search"></i></a>
+                        </div>
+                        <div v-else class="product-action1">
+                          <a href="#"><i class="fa fa-heart"></i></a>
+                          <a href="#"><i class="fa fa-search"></i></a>
+                        </div>
+                      </div>
+                      <div class="product-price">
+                        <h3><span>$</span>{{ item.total_price }}</h3>
+
+                        <h3 class="btn">{{ item.area }}</h3>
+                      </div>
                     </div>
                   </div>
                 </div>
+                <!-- Pagination Start -->
               </div>
-              <!-- Pagination Start -->
-            </div>
 
-            <!-- Side Bar Start -->
-            <div class="col-lg-4 sidebar">
-              <div class="sidebar-widget category">
-                <h2 class="title">Category</h2>
-                <nav class="navbar bg-light">
-                  <ul class="navbar-nav">
-                    <li class="nav-item">
-                      <a class="nav-link" href="#"
-                        ><i class="fa fa-female"></i>Fashion & Beauty</a
-                      >
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="#"
-                        ><i class="fa fa-child"></i>Kids & Babies Clothes</a
-                      >
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="#"
-                        ><i class="fa fa-tshirt"></i>Men & Women Clothes</a
-                      >
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="#"
-                        ><i class="fa fa-mobile-alt"></i>Gadgets &
-                        Accessories</a
-                      >
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="#"
-                        ><i class="fa fa-microchip"></i>Electronics &
-                        Accessories</a
-                      >
-                    </li>
-                  </ul>
-                </nav>
+              <!-- Side Bar Start -->
+              <div class="col-lg-4 sidebar">
+                <div class="sidebar-widget category">
+                  <h2 class="title">Category</h2>
+                  <nav class="navbar bg-light">
+                    <ul class="navbar-nav">
+                      <li class="nav-item">
+                        <a class="nav-link" href="#"
+                          ><i class="fa fa-female"></i>Fashion & Beauty</a
+                        >
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="#"
+                          ><i class="fa fa-child"></i>Kids & Babies Clothes</a
+                        >
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="#"
+                          ><i class="fa fa-tshirt"></i>Men & Women Clothes</a
+                        >
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="#"
+                          ><i class="fa fa-mobile-alt"></i>Gadgets &
+                          Accessories</a
+                        >
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="#"
+                          ><i class="fa fa-microchip"></i>Electronics &
+                          Accessories</a
+                        >
+                      </li>
+                    </ul>
+                  </nav>
+                </div>
               </div>
+              <!-- Side Bar End -->
             </div>
-            <!-- Side Bar End -->
           </div>
         </div>
-      </div>
-      <!-- Product List End -->
+        <!-- Product List End -->
 
-      <!-- Back to Top -->
-      <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
+        <!-- Back to Top -->
+        <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
 
-      <div class="col-md-12">
-        <nav aria-label="Page navigation example">
-          <ul class="pagination justify-content-center">
-            <li class="page-item" :class="{ disabled: currentPage === 1 }">
-              <a
-                class="page-link"
-                href="#"
-                @click.prevent="changePage(currentPage - 1)"
-                tabindex="-1"
-                >Previous</a
+        <div class="col-md-12">
+          <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+              <li class="page-item" :class="{ disabled: currentPage === 1 }">
+                <a
+                  class="page-link"
+                  href="#"
+                  @click.prevent="changePage(currentPage - 1)"
+                  tabindex="-1"
+                  >Previous</a
+                >
+              </li>
+              <!-- 动态生成分页项，这里只是示例 -->
+
+              <a class="page-link" href="#">{{ currentPage }}</a>
+
+              <li
+                class="page-item"
+                :class="{ disabled: currentPage === totalPages }"
               >
-            </li>
-            <!-- 动态生成分页项，这里只是示例 -->
-
-            <a class="page-link" href="#">{{ currentPage }}</a>
-
-            <li
-              class="page-item"
-              :class="{ disabled: currentPage === totalPages }"
-            >
-              <a
-                class="page-link"
-                href="#"
-                @click.prevent="changePage(currentPage + 1)"
-                >Next</a
-              >
-            </li>
-          </ul>
-        </nav>
+                <a
+                  class="page-link"
+                  href="#"
+                  @click.prevent="changePage(currentPage + 1)"
+                  >Next</a
+                >
+              </li>
+            </ul>
+          </nav>
+        </div>
       </div>
     </body>
   </html>

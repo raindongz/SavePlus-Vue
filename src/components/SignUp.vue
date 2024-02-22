@@ -2,7 +2,6 @@
   <div class="page-container">
     <nav>
       <ul>
-        <img class="logo" alt="saveplus logo" src="@/assets/logo.png" />
         <RouterLink to="/"
           ><li><a href="shop" class="shop">Home</a></li></RouterLink
         >
@@ -31,28 +30,37 @@
       <div>
         <input
           type="text"
-          v-model="username"
+          v-model="state.username"
           placeholder="Username"
           class="signup1"
         />
+        <span v-if="v$.username.$error">
+          {{ v$.username.$errors[0].$message }}
+        </span>
       </div>
 
       <div>
         <input
           type="text"
-          v-model="phone"
+          v-model="state.phone"
           placeholder="Phone number"
           class="signup1"
         />
+        <span v-if="v$.phone.$error">
+          {{ v$.phone.$errors[0].$message }}
+        </span>
       </div>
 
       <div>
         <input
           type="text"
-          v-model="email"
+          v-model="state.email"
           placeholder="Email address"
           class="signup1"
         />
+        <span v-if="v$.email.$error">
+          {{ v$.email.$errors[0].$message }}
+        </span>
       </div>
 
       <div>
@@ -66,26 +74,32 @@
       <div>
         <input
           type="password"
-          v-model="createpass"
+          v-model="state.createpass"
           placeholder="Create password"
           class="signup1"
         />
+        <span v-if="v$.createpass.$error">
+          {{ v$.createpass.$errors[0].$message }}
+        </span>
       </div>
 
       <div>
         <input
           type="password"
-          v-model="confirmpass"
+          v-model="state.confirmpass"
           placeholder="Confirm password"
           class="signup1"
         />
+        <span v-if="v$.confirmpass.$error">
+          {{ v$.confirmpass.$errors[0].$message }}
+        </span>
       </div>
 
       <button @click="comparePasswords" class="savebutton">Sign Up</button>
-      <!-- <div v-if="showMessage">
+      <div v-if="showMessage">
         <div v-if="passwordsMatch"></div>
-            <div v-else class="conpas">Passwords do not match.</div>
-        </div> -->
+        <div v-else class="conpas">Passwords do not match.</div>
+      </div>
     </div>
   </div>
 
@@ -95,13 +109,36 @@
 <script>
 import axios from "axios";
 import router from "./../main.js";
+import useValidate from "@vuelidate/core";
+import { required, email, minLength } from "@vuelidate/validators";
+import { reactive, computed } from "vue";
+
 export default {
+  setup() {
+    const state = reactive({
+      username: "",
+      phone: "",
+      email: "",
+      createpass: "",
+      confirmpass: "",
+    });
+    const rules = computed(() => {
+      return {
+        email: { required, email },
+        phone: { required },
+        username: { required },
+        createpass: { required, minLength: minLength(6) },
+        confirmpass: { required, minLength: minLength(6) },
+      };
+    });
+    const v$ = useValidate(rules, state);
+
+    return { state, v$ };
+  },
   data() {
     return {
       formattedDate: "",
       uploadedImages: [], // 存储已上传的图片
-      firstname: "", // 用于保存姓名
-      lastname: "",
       username: "",
       phone: "",
       email: "",
@@ -114,6 +151,15 @@ export default {
       savedFields: {}, // 用于保存多个字段的对象
     };
   },
+  // validations() {
+  //   return {
+  //     username: { required },
+  //     email: { required },
+  //     createpass: { required },
+  //     confirmpass: { required },
+  //     phone: { required },
+  //   };
+  // },
   created() {
     const options = { year: "numeric", month: "long", day: "numeric" };
     const currentDate = new Date();
@@ -139,17 +185,17 @@ export default {
       }
     },
 
-    submitFields() {
+    signupRequest() {
       // 当用户点击保存按钮时，将用户输入的字段保存到 savedFields 对象中
-      const baseUrl = "http://api.saveplus.link";
       var md5 = require("js-md5");
 
-      axios
-        .post(baseUrl + "/user/create", {
-          username: this.username,
-          password: md5(this.createpass),
-          email: this.email,
-          phone: this.phone,
+      const instance = axios.create();
+      instance
+        .post("api/user/create", {
+          username: this.state.username,
+          password: md5(this.state.createpass),
+          email: this.state.email,
+          phone: this.state.phone,
           gender: 1,
           // avatar: "www.baidu.com",
         })
@@ -168,6 +214,12 @@ export default {
       this.confirmpass = "";
       this.createpass = "";
       this.phone = "";
+    },
+    submitFields() {
+      this.v$.$validate();
+      if (this.v$.$errors.length == 0) {
+        this.signupRequest();
+      }
     },
 
     comparePasswords() {
@@ -264,43 +316,7 @@ button {
 button:hover {
   background-color: rgba(255, 166, 0, 0.649);
 }
-.produce {
-  position: absolute;
-  width: 227px;
-  height: 77px;
-  left: 100px;
-  top: 110px;
 
-  font-family: "Newsreader";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 64px;
-  line-height: 120%;
-  /* identical to box height, or 77px */
-  display: flex;
-  align-items: flex-end;
-  letter-spacing: -0.02em;
-
-  color: #000000;
-}
-.time {
-  position: absolute;
-  width: 300px;
-  height: 26px;
-  left: 347px;
-  top: 190px;
-
-  font-family: "Inter";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 20px;
-  line-height: 130%;
-  /* identical to box height, or 26px */
-  display: flex;
-  align-items: flex-end;
-
-  color: #000000;
-}
 .divider {
   height: 2px; /* 设置分隔线的高度 */
   background-color: #e6e6e6; /* 设置分隔线的背景颜色 */

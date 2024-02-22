@@ -2,7 +2,6 @@
   <div class="page-container">
     <nav>
       <ul>
-        <img class="logo" alt="saveplus logo" src="@/assets/logo.png" />
         <li><RouterLink to="/" class="shop">Home</RouterLink></li>
 
         <li>
@@ -27,7 +26,11 @@
     </body>
 
     <div class="image-container">
-      <img @click="openFileInput" src="@/assets/add.png" class="imagechange" />
+      <img
+        @click="openFileInput"
+        src="@/assets/upload.png"
+        class="imagechange"
+      />
 
       <input
         type="file"
@@ -63,74 +66,92 @@
 
     <div>
       <div>
-        <h1 class="utext1">Type:</h1>
+        <h1 class="utext1">Title:</h1>
       </div>
       <div>
         <input
           type="text"
-          v-model="name"
-          placeholder="Enter Type..."
+          v-model="this.state.title"
+          placeholder="Enter title..."
           class="vname"
         />
+        <span class="warn" v-if="v$.title.$error">
+          {{ v$.title.$errors[0].$message }}
+        </span>
       </div>
       <div>
-        <h1 class="ttext2">Description:</h1>
+        <h1 class="ttext2">Content:</h1>
       </div>
       <div>
         <textarea
           type="text"
-          v-model="describe"
+          v-model="this.state.content"
           placeholder="Enter description..."
           class="vdescribe"
         />
+        <span class="warn" v-if="v$.content.$error">
+          {{ v$.content.$errors[0].$message }}
+        </span>
       </div>
       <div>
-        <h1 class="ttext2">Price:</h1>
+        <h1 class="ttext2">TotalPrice:</h1>
       </div>
       <div>
         <input
           type="text"
-          v-model="price"
+          v-model="this.state.price"
           placeholder="Enter price..."
           class="vprice"
         />
+        <span class="warn" v-if="v$.price.$error">
+          {{ v$.price.$errors[0].$message }}
+        </span>
       </div>
       <div>
-        <h1 class="ttext2">Phone Number:</h1>
+        <label for="selectItem" class="ttext3">Delivery Method:</label>
       </div>
-
+      <div>
+        <select v-model="deliveryType" id="selectItem" class="vstate">
+          <option value="0">Local Pick Up</option>
+          <option value="1">mail</option>
+        </select>
+      </div>
+      <div>
+        <label for="selectItem" class="ttext3">Negotiable:</label>
+      </div>
+      <div>
+        <select v-model="nigotiable" id="selectItem" class="vstate">
+          <option value="0">nigotiable</option>
+          <option value="1">not nigotiable</option>
+        </select>
+      </div>
+      <div>
+        <h1 class="ttext2">Area:</h1>
+      </div>
       <div>
         <input
           type="text"
-          v-model="phone"
-          placeholder="Enter phone number..."
-          class="vphone"
+          v-model="this.state.area"
+          placeholder="Enter area..."
+          class="vaddress"
         />
+        <span class="warn" v-if="v$.area.$error">
+          {{ v$.area.$errors[0].$message }}
+        </span>
       </div>
       <div>
-        <h1 class="ttext2">Address:</h1>
+        <h1 class="ttext2">Item Num:</h1>
       </div>
       <div>
         <input
-          type="text"
-          v-model="address"
-          placeholder="Enter address..."
+          type="number"
+          v-model="itemNum"
+          placeholder="Enter Item Number..."
           class="vaddress"
         />
       </div>
       <body class="pxb"></body>
-      <div>
-        <label for="selectItem" class="ttext3">State:</label>
-      </div>
-      <div>
-        <select v-model="selectedItem" id="selectItem" class="vstate">
-          <option value="item1">Available</option>
-          <option value="item2">In progress</option>
-          <option value="item3">Completed</option>
-        </select>
-      </div>
-
-      <button @click="saveFields" class="savebutton">Save</button>
+      <button @click="createOrUpdateInfo" class="savebutton">Save</button>
     </div>
   </div>
 
@@ -141,18 +162,52 @@
 import { app } from "./../firebase";
 import { uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { getStorage, ref } from "firebase/storage";
+import useValidate from "@vuelidate/core";
+import { required, email, minLength } from "@vuelidate/validators";
+import { reactive, computed } from "vue";
+import {
+  createPost,
+  updatePost,
+  getPostInfo,
+} from "@/utils/product.operations.js";
+// import ToastMsg from "@/components/tools/ToastMsg.vue";
+import router from "./../main.js";
 // import { toRaw } from "vue";
 
 export default {
+  setup() {
+    const state = reactive({
+      postId: null,
+      title: "", // 用于保存姓名
+      content: "",
+      area: "",
+      price: "",
+    });
+    const rules = computed(() => {
+      return {
+        title: { required, minLength: minLength(6) },
+        content: { required, minLength: minLength(6) },
+        area: { required, minLength: minLength(2) },
+        price: { required, minLength: minLength(1) },
+      };
+    });
+    const v$ = useValidate(rules, state);
+
+    return { state, v$ };
+  },
   data() {
     return {
+      postId: null,
       formattedDate: "",
       uploadedImages: [], // 存储已上传的图片
-      name: "", // 用于保存姓名
-      discribe: "",
+      title: "", // 用于保存姓名
+      content: "",
+      area: "",
       price: "",
-      address: "", // 用于保存地址
-      phone: "", // 用于保存电话号码
+      itemNum: 1,
+      deliveryType: 0,
+      nigotiable: 0,
+
       upimage: "",
       selectedItem: "",
       savedFields: {}, // 用于保存多个字段的对象
@@ -164,6 +219,13 @@ export default {
     const options = { year: "numeric", month: "long", day: "numeric" };
     const currentDate = new Date();
     this.formattedDate = currentDate.toLocaleDateString(undefined, options);
+
+    // check if this is update operation or create operation
+    // if update, call get post info api to fill the post info
+    if (history.state.id) {
+      this.postId = history.state.id;
+      this.getPostInfoReq(this.postId);
+    }
   },
 
   computed: {
@@ -173,6 +235,99 @@ export default {
   },
 
   methods: {
+    createOrUpdateInfo() {
+      if (history.state.id) {
+        this.updatePostReq();
+      } else {
+        this.createPostReq();
+      }
+    },
+
+    async getPostInfoReq(id) {
+      const response = await getPostInfo(id);
+      if (response.status !== 200 || !response["data"]) {
+        // errorToastRef.value["showToast"]("Whoops! Something wrong!");
+        console.log(" get post info error occurs");
+      } else {
+        const data = response.data;
+        this.uploadedImages = data.images.split(",");
+        this.state.postId = data.id;
+        this.state.content = data.content;
+        this.state.area = data.area;
+        this.deliveryType = data.delivery_type;
+        this.nigotiable = data.negotiable;
+        this.state.title = data.title;
+        this.state.price = data.total_price;
+        this.itemNum = data.item_num;
+        console.log(data);
+      }
+    },
+    async updatePostReq() {
+      const createPostBody = {
+        post_id: this.state.postId,
+        title: this.state.title,
+        content: this.state.content,
+        area: this.state.area,
+        total_price: this.state.price,
+        delivery_type: this.deliveryType,
+        item_num: this.itemNum,
+        post_status: 0,
+        negotiable: this.nigotiable,
+        images: this.uploadedImages.join(","),
+      };
+      this.v$.$validate();
+      if (this.uploadedImages.length === 0) {
+        alert("upload at least one image");
+        return;
+      }
+
+      if (this.v$.$errors.length === 0) {
+        console.log("this is update req:  " + createPostBody);
+        try {
+          const response = await createPost(createPostBody);
+          console.log(response);
+          if (response.status !== 200 || !response["data"]) {
+            // errorToastRef.value["showToast"]("Whoops! Something wrong!");
+          } else {
+            router.push("/produceUp");
+          }
+        } catch (error) {}
+        console.log(error);
+      }
+      // errorToastRef.value["showToast"]("Whoops! Something wrong!");
+    },
+
+    async createPostReq() {
+      // let errorToastRef = ref(null);
+      const createPostBody = {
+        title: this.state.title,
+        content: this.state.content,
+        area: this.state.area,
+        total_price: this.state.price,
+        delivery_type: this.deliveryType,
+        item_num: this.itemNum,
+        post_status: 0,
+        negotiable: this.nigotiable,
+        images: this.uploadedImages.join(","),
+      };
+      this.v$.$validate();
+      if (this.uploadedImages.length === 0) {
+        alert("upload at least one image");
+        return;
+      }
+
+      if (this.v$.$errors.length == 0) {
+        console.log("this is create req :    " + createPostBody);
+        const response = await createPost(createPostBody);
+        console.log(response);
+        if (response.status !== 200 || !response["data"]) {
+          // errorToastRef.value["showToast"]("Whoops! Something wrong!");
+        } else {
+          router.push("/produceUp");
+        }
+      }
+      // errorToastRef.value["showToast"]("Whoops! Something wrong!");
+    },
     prevImage() {
       this.currentIndex =
         (this.currentIndex - 1 + this.uploadedImages.length) %
@@ -227,36 +382,23 @@ export default {
         // event.target.value = null;
       }
     },
-
-    saveFields() {
-      // 当用户点击保存按钮时，将用户输入的字段保存到 savedFields 对象中
-
-      this.savedFields.name = this.name;
-      this.savedFields.describe = this.describe;
-      this.savedFields.price = this.price;
-      this.savedFields.address = this.address;
-      this.savedFields.phone = this.phone;
-      this.savedFields.selectedItem = this.selectedItem;
-
-      // 清空输入框以便用户输入下一组字段
-      this.name = "";
-      this.discribe = "";
-      this.price = "";
-      this.address = "";
-      this.phone = "";
-      this.selectedItem = "";
-    },
   },
 };
 </script>
 
 <style>
+.warn {
+  color: crimson;
+}
+.changenew {
+  margin-top: 200px;
+}
 .up-choosephoto {
   position: absolute;
-  top: 250px;
-  margin-left: 30%;
+  top: 370px;
+  margin-left: 35%;
   height: 300px;
-  width: 450px;
+  width: 300px;
   display: flex;
 }
 
@@ -264,9 +406,9 @@ export default {
   position: absolute;
   width: 140px;
   height: 40px;
-  left: 520px;
+  left: 300px;
 
-  top: 580px;
+  top: 500px;
   font-family: "Inter";
   font-style: normal;
   font-weight: 400;
@@ -285,8 +427,8 @@ export default {
   position: absolute;
   width: 150px;
   height: 40px;
-  left: 710px;
-  top: 580px;
+  left: 930px;
+  top: 500px;
 
   font-family: "Inter";
   font-style: normal;
@@ -304,10 +446,10 @@ export default {
 
 .imagechange {
   position: absolute;
-  top: 250px;
-  margin-left: 30%;
+  top: 370px;
+  margin-left: 35%;
   height: 300px;
-  width: 450px;
+  width: 300px;
 }
 
 nav ul {
@@ -390,43 +532,7 @@ button {
 button:hover {
   background-color: rgba(255, 166, 0, 0.649);
 }
-.produce {
-  position: absolute;
-  width: 227px;
-  height: 77px;
-  left: 100px;
-  top: 110px;
 
-  font-family: "Newsreader";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 64px;
-  line-height: 120%;
-  /* identical to box height, or 77px */
-  display: flex;
-  align-items: flex-end;
-  letter-spacing: -0.02em;
-
-  color: #000000;
-}
-.time {
-  position: absolute;
-  width: 300px;
-  height: 26px;
-  left: 347px;
-  top: 190px;
-
-  font-family: "Inter";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 20px;
-  line-height: 130%;
-  /* identical to box height, or 26px */
-  display: flex;
-  align-items: flex-end;
-
-  color: #000000;
-}
 .divider {
   height: 2px; /* 设置分隔线的高度 */
   background-color: #e6e6e6; /* 设置分隔线的背景颜色 */

@@ -260,7 +260,7 @@ async function fillProductDetailInfo() {
 
 .profile-area {
   height: 32%;
-  //border: 1px solid black;
+  border: 1px solid black;
   width: 100%;
   border-top: 1px solid black;
 }

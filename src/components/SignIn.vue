@@ -2,7 +2,7 @@
   <div class="page-container">
     <nav>
       <ul>
-        <img class="logo" alt="saveplus logo" src="@/assets/logo.png" />
+        
         <RouterLink to="/">
           <button class="back-button">Back</button>
         </RouterLink>
@@ -20,27 +20,35 @@
         </header>
         <div class="divider"></div>
       </body>
-      
       <div class="box">
         <img alt="userimg" class="userimg" src="@/assets/user1.png" />
 
         <div>
           <h1 class="userlogin">User Login</h1>
-          <input
-            type="text"
-            v-model="email"
-            placeholder="email"
-            class="signin1"
-          />
+          <div>
+            <input
+              type="text"
+              v-model="state.email"
+              placeholder="email"
+              class="signin1"
+            />
+          </div>
           <input
             type="password"
-            v-model="pass"
+            v-model="state.pass"
             placeholder="Password"
             class="signin2"
           />
+          <span class="validation1" v-if="v$.email.$error">
+            {{ v$.email.$errors[0].$message }}
+          </span>
+          <span class="validation2" v-if="v$.pass.$error">
+            {{ v$.pass.$errors[0].$message }}
+          </span>
           <button @click="loginUser" class="signinbutton">Login</button>
           <RouterLink to="/signup" class="tosignup">
-            Click here to Sign Up</RouterLink>
+            Click here to Sign Up</RouterLink
+          >
         </div>
       </div>
     </nav>
@@ -50,7 +58,27 @@
 <script>
 import axios from "axios";
 import router from "./../main.js";
+import useValidate from "@vuelidate/core";
+import { required, email, minLength } from "@vuelidate/validators";
+import { reactive, computed } from "vue";
+const baseUrl = "/api"
 export default {
+  
+  setup() {
+    const state = reactive({
+      email: "",
+      pass: "",
+    });
+    const rules = computed(() => {
+      return {
+        email: { required, email },
+        pass: { required, minLength: minLength(6) },
+      };
+    });
+    const v$ = useValidate(rules, state);
+
+    return { state, v$ };
+  },
   data() {
     return {
       email: "",
@@ -65,25 +93,18 @@ export default {
     this.formattedDate = currentDate.toLocaleDateString(undefined, options);
   },
   methods: {
-    saveFields() {
-      this.savedFields.email = this.email;
-      this.savedFields.pass = this.pass;
-
-      this.email = "";
-      this.pass = "";
-    },
-
-    loginUser() {
+    logInUserApiCall() {
       var md5 = require("js-md5");
+      console.log("haha: " + this.state.email);
+      console.log("haha: " + this.state.pass);
       // Store hash in your password DB.
       const requestData = {
-        email: this.email,
-        password: md5(this.pass),
+        email: this.state.email,
+        password: md5(this.state.pass),
       };
-
       const instance = axios.create();
       instance
-        .post("/user/login", requestData, {
+        .post(baseUrl + "/user/login", requestData, {
           headers: {
             Authorization: null,
           },
@@ -104,10 +125,12 @@ export default {
           this.pass = "";
         });
     },
-  },
-
-  mounted() {
-    // this.loginUser();
+    loginUser() {
+      this.v$.$validate();
+      if (this.v$.$errors.length == 0) {
+        this.logInUserApiCall();
+      }
+    },
   },
 };
 </script>
@@ -118,7 +141,7 @@ export default {
   width: 227px;
   height: 77px;
   left: 100px;
-  top: 110px;
+  top: 200px;
 
   font-family: "Newsreader";
   font-style: normal;
@@ -137,7 +160,7 @@ export default {
   width: 300px;
   height: 26px;
   left: 347px;
-  top: 190px;
+  margin-top: 75px;
 
   font-family: "Inter";
   font-style: normal;
@@ -206,6 +229,15 @@ export default {
   border: 0;
   transition: background-color 0.3s;
 }
+.validation1 {
+  position: absolute;
+  height: 25px;
+  width: 200px;
+  margin-left: 550px;
+  margin-top: 100px;
+  border-radius: 30px;
+  border: 0;
+}
 
 .signin1:focus {
   background-color: #fff; /* 点击输入框时背景颜色变为白色 */
@@ -241,6 +273,16 @@ export default {
   transition: background-color 0.3s;
 }
 
+.validation2 {
+  position: absolute;
+  height: 25px;
+  width: 200px;
+  margin-left: 550px;
+  margin-top: 155px;
+  border-radius: 30px;
+  border: 0;
+}
+
 .signin2:focus {
   background-color: #fff; /* 点击输入框时背景颜色变为白色 */
 }
@@ -264,22 +306,5 @@ export default {
 .tosignup:hover {
   color: rgba(255, 166, 0, 0.649);
 }
-.time {
-  position: absolute;
-  width: 300px;
-  height: 26px;
-  left: 347px;
-  top: 190px;
 
-  font-family: "Inter";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 20px;
-  line-height: 130%;
-  /* identical to box height, or 26px */
-  display: flex;
-  align-items: flex-end;
-
-  color: #000000;
-}
 </style>

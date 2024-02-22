@@ -22,26 +22,45 @@ function navigateToBack() {
 <template>
   <div id="header">
     <div class="left-area">
-      <img src="@/assets/logo1.png" alt="loading">
+      <img src="@/assets/logo.png" alt="loading" class="logo">
     </div>
     <div class="right-area">
       <div class="btn-area">
-        <button class="btn btn-light" @click="navigateToHome">Home</button>
-        <button class="btn btn-light" @click="navigateToProfile">My Profile</button>
-        <button class="btn btn-light" @click="navigateToBack">Back</button>
+        <li><RouterLink to="/" class="shop">Home</RouterLink></li>
+        <li><RouterLink to="/p-information" class="Myprofile">My profile</RouterLink></li>
       </div>
     </div>
   </div>
 </template>
 
 <style scoped>
+
+li {
+  list-style-type: none;
+}
+
+li a {
+  text-decoration: none; /* Removes underline from links */
+}
+
+li a:hover {
+  color: orange; /* Changes link color on hover */
+}
 #header {
   width: 100%;
   height: 200px;
-  background-color: black;
+  background-color: white;
   display: flex;
 }
 
+.logo{
+    width: 125px; /* 修改图片宽度 */
+    height: auto; /* 保持高度与宽度的比例 */
+    margin-left: 50px;
+    margin-top: 15px;
+    display: block; /* 让图片居中生效 */
+    backdrop-filter: blur(2px);
+  }
 .left-area {
   height: 100%;
   width: 300px;
@@ -64,14 +83,6 @@ function navigateToBack() {
   justify-content: center;
   align-items: flex-end;
   padding-bottom: 10px;
-}
-
-@media (max-width: 600px) {
-  .btn-area {
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
-  }
 }
 
 .btn-area > button {

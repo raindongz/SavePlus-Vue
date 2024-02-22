@@ -1,5 +1,22 @@
 <script setup>
+import router from "@/main";
 
+function navigateToHome() {
+  router.push({
+    path: "/",
+  })
+}
+
+function navigateToProfile() {
+  router.push({
+    path: "/p-information"
+  })
+}
+
+
+function navigateToBack() {
+  router.back();
+}
 </script>
 
 <template>
@@ -9,9 +26,9 @@
     </div>
     <div class="right-area">
       <div class="btn-area">
-        <button class="btn btn-light">Home</button>
-        <button class="btn btn-light">Back</button>
-        <button class="btn btn-light">My Profile</button>
+        <button class="btn btn-light" @click="navigateToHome">Home</button>
+        <button class="btn btn-light" @click="navigateToProfile">My Profile</button>
+        <button class="btn btn-light" @click="navigateToBack">Back</button>
       </div>
     </div>
   </div>
@@ -47,6 +64,14 @@
   justify-content: center;
   align-items: flex-end;
   padding-bottom: 10px;
+}
+
+@media (max-width: 600px) {
+  .btn-area {
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+  }
 }
 
 .btn-area > button {

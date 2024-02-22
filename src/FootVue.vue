@@ -48,4 +48,12 @@
   color: #e5e5e5;
 }
 
+@media (max-width: 600px) {
+  .span-area {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
 </style>

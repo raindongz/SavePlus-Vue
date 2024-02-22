@@ -277,7 +277,7 @@ async function fillProductDetailInfo() {
   overflow: hidden;
   height: 100px;
   border: 1px solid black;
-  border-radius: 100%;
+  border-radius: 50%;
 }
 
 .profile-other {
@@ -316,7 +316,8 @@ async function fillProductDetailInfo() {
   border-radius: 100px;
   font-size: 16px;
   font-weight: 600;
-  width: 150px;
+  width: 90%;
+  max-width: 150px;
   text-align: center;
 }
 

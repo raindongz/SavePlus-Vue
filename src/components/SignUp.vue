@@ -9,6 +9,11 @@
         <RouterLink to="/signin">
           <button class="back-button">Back</button>
         </RouterLink>
+        <button
+          @click="$router.push({ name: 'createProduct', state: { id: 10 } })"
+        >
+          10086
+        </button>
       </ul>
     </nav>
 

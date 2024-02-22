@@ -24,7 +24,7 @@ if (token) {
 
 const routes = [
   { path: "/produceUp", component: ProduceUp },
-  { path: "/uploadPro", component: Uploadweb },
+  { path: "/uploadPro", name: "createProduct", component: Uploadweb },
   { name: "proInfo", path: "/proInfo", component: ProduceIn },
   { path: "/signup", component: SignUp },
   { path: "/signin", component: SignIn },

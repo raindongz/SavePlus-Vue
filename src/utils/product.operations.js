@@ -23,10 +23,36 @@ axios.interceptors.request.use(
 export async function createPost(body) {
   try {
     const response = await axios.post(baseUrl + "/post", body);
-    console.log;
     return response;
   } catch (error) {
-    // Handle error here if needed
     console.error("Error creating post:", error);
+  }
+}
+
+/**
+ * update post
+ */
+export async function updatePost(body) {
+  try {
+    const response = await axios.post(baseUrl + "/post/update", body);
+    return response;
+  } catch (error) {
+    console.error("Error update post:", error);
+  }
+}
+
+/**
+ * get post info
+ */
+export async function getPostInfo(postId) {
+  try {
+    const response = await axios.get(baseUrl + "/post/infoNoAuth", {
+      params: {
+        id: postId,
+      },
+    });
+    return response;
+  } catch (error) {
+    console.error("Error getPostInfo post:", error);
   }
 }

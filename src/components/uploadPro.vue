@@ -26,7 +26,11 @@
     </body>
 
     <div class="image-container">
-      <img @click="openFileInput" src="@/assets/add.png" class="imagechange" />
+      <img
+        @click="openFileInput"
+        src="@/assets/upload.png"
+        class="imagechange"
+      />
 
       <input
         type="file"
@@ -71,7 +75,7 @@
           placeholder="Enter title..."
           class="vname"
         />
-        <span v-if="v$.title.$error">
+        <span class="warn" v-if="v$.title.$error">
           {{ v$.title.$errors[0].$message }}
         </span>
       </div>
@@ -85,7 +89,7 @@
           placeholder="Enter description..."
           class="vdescribe"
         />
-        <span v-if="v$.content.$error">
+        <span class="warn" v-if="v$.content.$error">
           {{ v$.content.$errors[0].$message }}
         </span>
       </div>
@@ -99,7 +103,7 @@
           placeholder="Enter price..."
           class="vprice"
         />
-        <span v-if="v$.price.$error">
+        <span class="warn" v-if="v$.price.$error">
           {{ v$.price.$errors[0].$message }}
         </span>
       </div>
@@ -131,7 +135,7 @@
           placeholder="Enter area..."
           class="vaddress"
         />
-        <span v-if="v$.area.$error">
+        <span class="warn" v-if="v$.area.$error">
           {{ v$.area.$errors[0].$message }}
         </span>
       </div>
@@ -147,7 +151,7 @@
         />
       </div>
       <body class="pxb"></body>
-      <button @click="createPostReq" class="savebutton">Save</button>
+      <button @click="createOrUpdateInfo" class="savebutton">Save</button>
     </div>
   </div>
 
@@ -161,7 +165,11 @@ import { getStorage, ref } from "firebase/storage";
 import useValidate from "@vuelidate/core";
 import { required, email, minLength } from "@vuelidate/validators";
 import { reactive, computed } from "vue";
-import { createPost } from "@/utils/product.create.js";
+import {
+  createPost,
+  updatePost,
+  getPostInfo,
+} from "@/utils/product.operations.js";
 // import ToastMsg from "@/components/tools/ToastMsg.vue";
 import router from "./../main.js";
 // import { toRaw } from "vue";
@@ -169,6 +177,7 @@ import router from "./../main.js";
 export default {
   setup() {
     const state = reactive({
+      postId: null,
       title: "", // 用于保存姓名
       content: "",
       area: "",
@@ -179,7 +188,7 @@ export default {
         title: { required, minLength: minLength(6) },
         content: { required, minLength: minLength(6) },
         area: { required, minLength: minLength(2) },
-        price: { required, minLength: minLength(6) },
+        price: { required, minLength: minLength(1) },
       };
     });
     const v$ = useValidate(rules, state);
@@ -188,6 +197,7 @@ export default {
   },
   data() {
     return {
+      postId: null,
       formattedDate: "",
       uploadedImages: [], // 存储已上传的图片
       title: "", // 用于保存姓名
@@ -209,6 +219,13 @@ export default {
     const options = { year: "numeric", month: "long", day: "numeric" };
     const currentDate = new Date();
     this.formattedDate = currentDate.toLocaleDateString(undefined, options);
+
+    // check if this is update operation or create operation
+    // if update, call get post info api to fill the post info
+    if (history.state.id) {
+      this.postId = history.state.id;
+      this.getPostInfoReq(this.postId);
+    }
   },
 
   computed: {
@@ -218,6 +235,65 @@ export default {
   },
 
   methods: {
+    createOrUpdateInfo() {
+      if (history.state.id) {
+        this.updatePostReq();
+      } else {
+        this.createPostReq();
+      }
+    },
+
+    async getPostInfoReq(id) {
+      const response = await getPostInfo(id);
+      if (response.status !== 200 || !response["data"]) {
+        // errorToastRef.value["showToast"]("Whoops! Something wrong!");
+        console.log(" get post info error occurs");
+      } else {
+        const data = response.data;
+        this.uploadedImages = data.images.split(",");
+        this.state.postId = data.id;
+        this.state.content = data.content;
+        this.state.area = data.area;
+        this.deliveryType = data.delivery_type;
+        this.nigotiable = data.negotiable;
+        this.state.title = data.title;
+        this.state.price = data.total_price;
+        this.itemNum = data.item_num;
+        console.log(data);
+      }
+    },
+    async updatePostReq() {
+      const createPostBody = {
+        post_id: this.state.postId,
+        title: this.state.title,
+        content: this.state.content,
+        area: this.state.area,
+        total_price: this.state.price,
+        delivery_type: this.deliveryType,
+        item_num: this.itemNum,
+        post_status: 0,
+        negotiable: this.nigotiable,
+        images: this.uploadedImages.join(","),
+      };
+      this.v$.$validate();
+
+      if (this.v$.$errors.length == 0) {
+        console.log("this is update req:  " + createPostBody);
+        try {
+          const response = await createPost(createPostBody);
+          console.log(response);
+          if (response.status !== 200 || !response["data"]) {
+            // errorToastRef.value["showToast"]("Whoops! Something wrong!");
+          } else {
+            router.push("/produceUp");
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      }
+      // errorToastRef.value["showToast"]("Whoops! Something wrong!");
+    },
+
     async createPostReq() {
       // let errorToastRef = ref(null);
       const createPostBody = {
@@ -234,8 +310,9 @@ export default {
       this.v$.$validate();
 
       if (this.v$.$errors.length == 0) {
-        console.log(createPostBody);
+        console.log("this is create req :    " + createPostBody);
         const response = await createPost(createPostBody);
+        console.log(response);
         if (response.status !== 200 || !response["data"]) {
           // errorToastRef.value["showToast"]("Whoops! Something wrong!");
         } else {
@@ -298,38 +375,23 @@ export default {
         // event.target.value = null;
       }
     },
-
-    // saveFields() {
-    //   // 当用户点击保存按钮时，将用户输入的字段保存到 savedFields 对象中
-
-    //   this.savedFields.title = this.title;
-    //   this.savedFields.content = this.content;
-    //   this.savedFields.price = this.price;
-    //   this.savedFields.area = this.area;
-    //   this.savedFields.phone = this.phone;
-    //   this.savedFields.selectedItem = this.selectedItem;
-
-    //   // 清空输入框以便用户输入下一组字段
-    //   this.title = "";
-    //   this.content = "";
-    //   this.price = "";
-    //   this.area = "";
-    //   this.selectedItem = "";
-    // },
   },
 };
 </script>
 
 <style>
+.warn {
+  color: crimson;
+}
 .changenew {
   margin-top: 200px;
 }
 .up-choosephoto {
   position: absolute;
   top: 370px;
-  margin-left: 30%;
+  margin-left: 35%;
   height: 300px;
-  width: 450px;
+  width: 300px;
   display: flex;
 }
 
@@ -378,9 +440,9 @@ export default {
 .imagechange {
   position: absolute;
   top: 370px;
-  margin-left: 30%;
+  margin-left: 35%;
   height: 300px;
-  width: 450px;
+  width: 300px;
 }
 
 nav ul {

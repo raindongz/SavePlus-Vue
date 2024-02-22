@@ -45,15 +45,14 @@
               </div>
             </div>
 
-            <RouterLink to="/p-information" class="Myprofile"
-              >My profile
-            </RouterLink>
+         
             <div v-if="token == '' || token == null">
               <RouterLink to="/signin">
                 <button class="pl-signin">Sign in</button>
               </RouterLink>
             </div>
             <div v-else>
+             
               <button @click="logout" class="pl-signin">log out</button>
             </div>
           </div>
@@ -68,51 +67,25 @@
             <div class="col-lg-8">
               <div class="row">
                 <!-- product list starts here  -->
-                <div
-                  class="col-md-4"
-                  v-for="item in dataFromServer"
-                  :key="item.id"
-                >
-                  <div class="product-item">
-                    <div class="product-title">
-                      <!--                  传入物品id-->
-                      <router-link
-                        :to="{ name: 'proInfo', query: { prod: this.address } }"
-                        >{{ item.title }}</router-link
-                      >
-                    </div>
+                <div class="col-md-4" v-for="item in dataFromServer" :key="item.id">
+              <div class="product-item">
+                <div class="product-title">
+                  <!--                  传入物品id-->
+                  <router-link :to="{ name: 'proInfo', query: { prod: this.address } }">{{ item.title }}</router-link>
+                </div>
 
-                    <div class="product-image">
-                      <a href="product-detail.html">
-                        <img src="item.images" alt="Product Image" />
-                      </a>
-                      <div class="product-action">
-                        <a href="#"><i class="fa fa-heart"></i></a>
-                        <a href="#"><i class="fa fa-search"></i></a>
-                      </div>
-                    </div>
-                    <div class="product-price">
-                      <h3><span>$</span>{{ item.total_price }}</h3>
-                      <div class="product-image">
-                        <a href="product-detail.html">
-                          <img src="item.images" alt="Product Image" />
-                        </a>
-
-                        <div v-if="item.liked === 0" class="product-action">
-                          <a href="#"><i class="fa fa-heart"></i></a>
-                          <a href="#"><i class="fa fa-search"></i></a>
-                        </div>
-                        <div v-else class="product-action1">
-                          <a href="#"><i class="fa fa-heart"></i></a>
-                          <a href="#"><i class="fa fa-search"></i></a>
-                        </div>
-                      </div>
-                      <div class="product-price">
-                        <h3><span>$</span>{{ item.total_price }}</h3>
-
-                        <h3 class="btn">{{ item.area }}</h3>
-                      </div>
-                    </div>
+                <div class="product-image">
+                  <a href="product-detail.html">
+                    <img :src="item.images.split(',')[0]" alt="Product Image"/>
+                  </a>
+                  
+                  <div v-if="item.liked === 0" class="product-action">
+                    <a href="#"><i class="fa fa-heart"></i></a>
+                    <a href="#"><i class="fa fa-search"></i></a>
+                  </div>
+                  <div v-else class="product-action1">
+                    <a href="#"><i class="fa fa-heart"></i></a>
+                    <a href="#"><i class="fa fa-search"></i></a>
                   </div>
                 </div>
                 <!-- Pagination Start -->

@@ -276,8 +276,12 @@ export default {
         images: this.uploadedImages.join(","),
       };
       this.v$.$validate();
+      if (this.uploadedImages.length === 0) {
+        alert("upload at least one image");
+        return;
+      }
 
-      if (this.v$.$errors.length == 0) {
+      if (this.v$.$errors.length === 0) {
         console.log("this is update req:  " + createPostBody);
         try {
           const response = await createPost(createPostBody);
@@ -307,6 +311,10 @@ export default {
         images: this.uploadedImages.join(","),
       };
       this.v$.$validate();
+      if (this.uploadedImages.length === 0) {
+        alert("upload at least one image");
+        return;
+      }
 
       if (this.v$.$errors.length == 0) {
         console.log("this is create req :    " + createPostBody);

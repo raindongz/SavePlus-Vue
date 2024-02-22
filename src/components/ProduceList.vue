@@ -45,14 +45,12 @@
               </div>
             </div>
 
-         
             <div v-if="token == '' || token == null">
               <RouterLink to="/signin">
                 <button class="pl-signin">Sign in</button>
               </RouterLink>
             </div>
             <div v-else>
-             
               <button @click="logout" class="pl-signin">log out</button>
             </div>
           </div>
@@ -67,28 +65,44 @@
             <div class="col-lg-8">
               <div class="row">
                 <!-- product list starts here  -->
-                <div class="col-md-4" v-for="item in dataFromServer" :key="item.id">
-              <div class="product-item">
-                <div class="product-title">
-                  <!--                  传入物品id-->
-                  <router-link :to="{ name: 'proInfo', query: { prod: this.address } }">{{ item.title }}</router-link>
-                </div>
+                <div
+                  class="col-md-4"
+                  v-for="item in dataFromServer"
+                  :key="item.id"
+                >
+                  <div class="product-item">
+                    <div class="product-title">
+                      <!--                  传入物品id-->
+                      <router-link
+                        :to="{ name: 'proInfo', query: { prod: this.address } }"
+                        >{{ item.title }}</router-link
+                      >
+                    </div>
 
-                <div class="product-image">
-                  <a href="product-detail.html">
-                    <img :src="item.images.split(',')[0]" alt="Product Image"/>
-                  </a>
-                  
-                  <div v-if="item.liked === 0" class="product-action">
-                    <a href="#"><i class="fa fa-heart"></i></a>
-                    <a href="#"><i class="fa fa-search"></i></a>
-                  </div>
-                  <div v-else class="product-action1">
-                    <a href="#"><i class="fa fa-heart"></i></a>
-                    <a href="#"><i class="fa fa-search"></i></a>
+                    <div class="product-image">
+                      <a href="product-detail.html">
+                        <img
+                          :src="item.images.split(',')[0]"
+                          alt="Product Image"
+                        />
+                      </a>
+
+                      <div v-if="item.liked === 0" class="product-action">
+                        <a @click="interest(item.id)"
+                          ><i class="fa fa-heart"></i
+                        ></a>
+                        <a href="#"><i class="fa fa-search"></i></a>
+                      </div>
+                      <div v-else class="product-action1">
+                        <a @click="interest(item.id)"
+                          ><i class="fa fa-heart"></i
+                        ></a>
+                        <a href="#"><i class="fa fa-search"></i></a>
+                      </div>
+                    </div>
+                    <!-- Pagination Start -->
                   </div>
                 </div>
-                <!-- Pagination Start -->
               </div>
 
               <!-- Side Bar Start -->
@@ -176,6 +190,7 @@
 import axios from "axios";
 
 import { getProductList } from "@/utils/product.info";
+import { interestOrUninterestPost } from "@/utils/product.operations";
 
 export default {
   data() {
@@ -203,6 +218,23 @@ export default {
     this.formattedDate = currentDate.toLocaleDateString(undefined, options);
   },
   methods: {
+    async interest(id) {
+      const body = {
+        post_id: id,
+      };
+      const response = await interestOrUninterestPost(body);
+      if (!response) {
+        console.log("response undefined");
+        return;
+      }
+
+      if (response.status !== 200 || !response.data) {
+        console.log("response return error");
+        return;
+      }
+
+      router.go();
+    },
     getData() {
       getProductList(this.currentPage)
         .then((response) => {

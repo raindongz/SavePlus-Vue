@@ -56,3 +56,15 @@ export async function getPostInfo(postId) {
     console.error("Error getPostInfo post:", error);
   }
 }
+
+/**
+ * interest/uninterest post
+ */
+export async function interestOrUninterestPost(body) {
+  try {
+    const response = await axios.post(baseUrl + "/post/interest", body);
+    return response;
+  } catch (error) {
+    console.error("Error interest post:", error);
+  }
+}

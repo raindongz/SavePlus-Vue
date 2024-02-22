@@ -38,8 +38,6 @@
       <div class="bottom-bar">
         <div class="container-fluid">
           <div class="row align-items-center">
-            
-
             <div class="col-md-6">
               <div class="search">
                 <input type="text" placeholder="Search" />
@@ -68,8 +66,6 @@
           <div class="row">
             <div class="col-lg-8">
               <div class="row">
-                
-
                 <!-- product list starts here  -->
                 <div class="col-md-4" v-for="item in dataFromServer" :key="item.id">
               <div class="product-item">
@@ -91,92 +87,95 @@
                     <a href="#"><i class="fa fa-heart"></i></a>
                     <a href="#"><i class="fa fa-search"></i></a>
                   </div>
-                  
                 </div>
-                <div class="product-price">
-                  <h3><span>$</span>{{ item.total_price }}</h3>
+                <!-- Pagination Start -->
+              </div>
 
-                  <h3 class="btn">{{ item.area }}</h3>
+              <!-- Side Bar Start -->
+              <div class="col-lg-4 sidebar">
+                <div class="sidebar-widget category">
+                  <h2 class="title">Category</h2>
+                  <nav class="navbar bg-light">
+                    <ul class="navbar-nav">
+                      <li class="nav-item">
+                        <a class="nav-link" href="#"
+                          ><i class="fa fa-female"></i>Fashion & Beauty</a
+                        >
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="#"
+                          ><i class="fa fa-child"></i>Kids & Babies Clothes</a
+                        >
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="#"
+                          ><i class="fa fa-tshirt"></i>Men & Women Clothes</a
+                        >
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="#"
+                          ><i class="fa fa-mobile-alt"></i>Gadgets &
+                          Accessories</a
+                        >
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="#"
+                          ><i class="fa fa-microchip"></i>Electronics &
+                          Accessories</a
+                        >
+                      </li>
+                    </ul>
+                  </nav>
                 </div>
               </div>
+              <!-- Side Bar End -->
             </div>
-            
-           
-          </div>
-              <!-- Pagination Start -->
-            </div>
-
-            <!-- Side Bar Start -->
-            <div class="col-lg-4 sidebar">
-              <div class="sidebar-widget category">
-                <h2 class="title">Category</h2>
-                <nav class="navbar bg-light">
-                  <ul class="navbar-nav">
-                    <li class="nav-item">
-                      <a class="nav-link" href="#"
-                        ><i class="fa fa-female"></i>Fashion & Beauty</a
-                      >
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="#"
-                        ><i class="fa fa-child"></i>Kids & Babies Clothes</a
-                      >
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="#"
-                        ><i class="fa fa-tshirt"></i>Men & Women Clothes</a
-                      >
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="#"
-                        ><i class="fa fa-mobile-alt"></i>Gadgets &
-                        Accessories</a
-                      >
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="#"
-                        ><i class="fa fa-microchip"></i>Electronics &
-                        Accessories</a
-                      >
-                    </li>
-                  </ul>
-                </nav>
-              </div>
-            </div>
-            <!-- Side Bar End -->
           </div>
         </div>
+        <!-- Product List End -->
+
+        <!-- Back to Top -->
+        <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
+
+        <div class="col-md-12">
+          <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+              <li class="page-item" :class="{ disabled: currentPage === 1 }">
+                <a
+                  class="page-link"
+                  href="#"
+                  @click.prevent="changePage(currentPage - 1)"
+                  tabindex="-1"
+                  >Previous</a
+                >
+              </li>
+              <!-- 动态生成分页项，这里只是示例 -->
+
+              <a class="page-link" href="#">{{ currentPage }}</a>
+
+              <li
+                class="page-item"
+                :class="{ disabled: currentPage === totalPages }"
+              >
+                <a
+                  class="page-link"
+                  href="#"
+                  @click.prevent="changePage(currentPage + 1)"
+                  >Next</a
+                >
+              </li>
+            </ul>
+          </nav>
+        </div>
       </div>
-      <!-- Product List End -->
-
-      <!-- Back to Top -->
-      <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
-
-      <div class="col-md-12">
-  <nav aria-label="Page navigation example">
-    <ul class="pagination justify-content-center">
-      <li class="page-item" :class="{ disabled: currentPage === 1 }">
-        <a class="page-link" href="#" @click.prevent="changePage(currentPage - 1)" tabindex="-1">Previous</a>
-      </li>
-      <!-- 动态生成分页项，这里只是示例 -->
-      
-        <a class="page-link" href="#">{{ currentPage}}</a>
- 
-      <li class="page-item" :class="{ disabled: currentPage === totalPages }">
-        <a class="page-link" href="#" @click.prevent="changePage(currentPage + 1)">Next</a>
-      </li>
-    </ul>
-  </nav>
-</div>
     </body>
-
   </html>
 </template>
 
 <script>
 import axios from "axios";
 
-import {getProductList} from "@/utils/product.info";
+import { getProductList } from "@/utils/product.info";
 
 export default {
   data() {
@@ -194,7 +193,7 @@ export default {
       selectedItem2: "",
       selectedItem3: "",
       savedFields: {}, // 用于保存多个字段的对象
-      dataFromServer:null,
+      dataFromServer: null,
       currentPage: 1,
     };
   },
@@ -205,22 +204,20 @@ export default {
   },
   methods: {
     getData() {
-       getProductList(this.currentPage)
-        .then((response) => {
+      getProductList(this.currentPage)
+        .then((response) => {
           this.dataFromServer = response.data;
         })
         .catch((error) => {
-          console.error('Request error:', error);
+          console.error("Request error:", error);
         });
-      },
+    },
 
-
-
-      changePage(pageNum) {
-        this.dataFromServer = null;
-        this.currentPage = pageNum;
-        this.getData(); 
-      },
+    changePage(pageNum) {
+      this.dataFromServer = null;
+      this.currentPage = pageNum;
+      this.getData();
+    },
 
     logout() {
       localStorage.removeItem("token");
@@ -281,16 +278,11 @@ export default {
       }
     },
   },
-  mounted() {   
+  mounted() {
     this.getData(); // 在组件挂载后调用获取数据的方法
   },
 };
-
-
 </script>
-
-
-
 
 <style scoped>
 /* newadd */
@@ -538,7 +530,6 @@ h2 {
     text-align: center;
     margin-bottom: 15px;
   }
-
 
   .bottom-bar .user {
     margin-bottom: 0;
@@ -926,7 +917,7 @@ h2 {
   transition: all 0.3s;
   margin-top: 50px;
 }
-.product-item .product-image .product-action1{
+.product-item .product-image .product-action1 {
   display: inline-block;
   width: 40px;
   height: 40px;
@@ -963,7 +954,7 @@ h2 {
   border: 1px solid #ff9901;
 }
 
-.product-item .product-image .product-action1 a:hover{
+.product-item .product-image .product-action1 a:hover {
   color: #ffffff;
   background: #ff9901;
   border: 1px solid #ffffff;

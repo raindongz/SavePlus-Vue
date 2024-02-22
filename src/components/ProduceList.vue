@@ -47,15 +47,14 @@
               </div>
             </div>
 
-            <RouterLink to="/p-information" class="Myprofile"
-              >My profile
-            </RouterLink>
+         
             <div v-if="token == '' || token == null">
               <RouterLink to="/signin">
                 <button class="pl-signin">Sign in</button>
               </RouterLink>
             </div>
             <div v-else>
+             
               <button @click="logout" class="pl-signin">log out</button>
             </div>
           </div>
@@ -81,7 +80,7 @@
 
                 <div class="product-image">
                   <a href="product-detail.html">
-                    <img src="item.images" alt="Product Image"/>
+                    <img :src="item.images.split(',')[0]" alt="Product Image"/>
                   </a>
                   
                   <div v-if="item.liked === 0" class="product-action">

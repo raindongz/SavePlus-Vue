@@ -42,8 +42,9 @@
       <div v-for="item in dataFromServer" :key="item.id" class="product-item">
 
         <RouterLink to="/pro-info">
-          <img :src="item.images" alt="Product Image" class="product-image" />
-
+          
+          <img :src="item.images.split(',')[0]" alt="Product Image" class="product-image" />
+         
           <div class="product-info">
             <h3 class="name">{{ item.title }}</h3>
             <p class="price">${{ item.total_price }}</p>

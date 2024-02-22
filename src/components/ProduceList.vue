@@ -99,11 +99,17 @@
                         ></a>
                         <a href="#"><i class="fa fa-search"></i></a>
                       </div>
+                      <div class="product-price">
+                  <h3><span>$</span>{{ item.total_price }}</h3>
+
+                  <h3 class="btn">{{ item.area }}</h3>
+                </div>
                     </div>
                     <!-- Pagination Start -->
                   </div>
                 </div>
               </div>
+            </div>
 
               <!-- Side Bar Start -->
               <div class="col-lg-4 sidebar">
@@ -143,7 +149,7 @@
                 </div>
               </div>
               <!-- Side Bar End -->
-            </div>
+            
           </div>
         </div>
         <!-- Product List End -->

@@ -50,6 +50,7 @@
             <span class="address">{{ item.area }}</span>
           </div>
         </RouterLink>
+        <button class="team1">unsubscribe</button>
       </div>
     </div>
     <div v-else>
@@ -118,7 +119,7 @@ export default {
       getProductIntest()
       // getProductList(1)
         .then((response) => {
-          this.dataFromServer = response.data;
+          this.dataFromServer = response.data.items;
         })
         .catch((error) => {
           console.error('Request error:', error);
@@ -152,6 +153,10 @@ export default {
 </script>
 
 <style scoped>
+
+.team1{
+  position: absolute;
+}
 .show {
 
   width: 300px;

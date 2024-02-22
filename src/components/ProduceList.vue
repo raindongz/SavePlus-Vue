@@ -93,6 +93,23 @@
                     </div>
                     <div class="product-price">
                       <h3><span>$</span>{{ item.total_price }}</h3>
+                <div class="product-image">
+                  <a href="product-detail.html">
+                    <img src="item.images" alt="Product Image"/>
+                  </a>
+                  
+                  <div v-if="item.liked === 0" class="product-action">
+                    <a href="#"><i class="fa fa-heart"></i></a>
+                    <a href="#"><i class="fa fa-search"></i></a>
+                  </div>
+                  <div v-else class="product-action1">
+                    <a href="#"><i class="fa fa-heart"></i></a>
+                    <a href="#"><i class="fa fa-search"></i></a>
+                  </div>
+                  
+                </div>
+                <div class="product-price">
+                  <h3><span>$</span>{{ item.total_price }}</h3>
 
                       <h3 class="btn">{{ item.area }}</h3>
                     </div>
@@ -908,6 +925,10 @@ h2 {
   opacity: 1;
 }
 
+.product-item:hover .product-image .product-action1 {
+  opacity: 1;
+}
+
 .product-item .product-image .product-action a {
   display: inline-block;
   width: 40px;
@@ -923,12 +944,34 @@ h2 {
   transition: all 0.3s;
   margin-top: 50px;
 }
+.product-item .product-image .product-action1 {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  margin-right: 5px;
+  padding: 7px 0 10px 0;
+  font-size: 16px;
+  text-align: center;
+  color: #ff9901;
+  background: #ffffff;
+  border: 1px solid #ff9901;
+  border-radius: 4px;
+  transition: all 0.3s;
+  margin-top: 50px;
+}
 
 .product-item:hover .product-image .product-action a {
   margin-top: 0;
 }
 
 .product-item .product-image .product-action a:last-child {
+  margin-right: 0;
+}
+.product-item:hover .product-image .product-action1 a {
+  margin-top: 0;
+}
+
+.product-item .product-image .product-action1 a:last-child {
   margin-right: 0;
 }
 
@@ -938,6 +981,11 @@ h2 {
   border: 1px solid #ff9901;
 }
 
+.product-item .product-image .product-action1 a:hover {
+  color: #ffffff;
+  background: #ff9901;
+  border: 1px solid #ffffff;
+}
 .product-item .product-price {
   padding: 20px;
   background: #000000;

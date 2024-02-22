@@ -1,7 +1,7 @@
 <template>
     <div id="app">
       <Topbar/>
-      <appnavbaravbar/>
+      <NavBar></NavBar>
       <success/>
       <feature/>
       <category/>
@@ -18,7 +18,7 @@
   
   <script>
   import Topbar from '@/components/Topbar.vue';
-  import appnavbaravbar from '@/components/appnavbar.vue';
+  import NavBar from '@/components/NavBar.vue';
   import success from '@/components/success.vue';
 
   import feature from '@/components/feature.vue'
@@ -36,7 +36,7 @@ import Success from '@/components/success.vue';
     name: 'App',
     components: {
     Topbar,
-    appnavbaravbar,
+    NavBar,
     success,
     feature,
     category,

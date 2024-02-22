@@ -9,16 +9,15 @@
 
                     <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                         <div class="navbar-nav mr-auto">
-                            <a href="" class="nav-item nav-link active">Home</a>
+                            <router-link to="/" class="nav-item nav-link">Home</router-link>
                             <a href="" class="nav-item nav-link">Products</a>
                             <a href="" class="nav-item nav-link">Product Detail</a>
                             <router-link to="/wishlist" class="nav-item nav-link">Wishlist</router-link>
 
-                            <router-link to="" class="nav-item nav-link">checkout</router-link>
                             <router-link to="/Visiting" class="nav-item nav-link">Visiting</router-link>
 
                             <div class="nav-item dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">More Pages</a>
+                            
                                 <div class="dropdown-menu">
                                     <router-link to="/wishlist" class="nav-item nav-link">Wishlist</router-link>
                                     <a href="" class="dropdown-item">Login & Register</a>
@@ -28,7 +27,7 @@
                         </div>
                         <div class="navbar-nav ml-auto">
                             <div class="nav-item dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">User Account</a>
+                                <router-link to="/myaccount" class="nav-item nav-link">My account</router-link>
                                 <div class="dropdown-menu">
                                     <a href="#" class="dropdown-item">Login</a>
                                     <a href="#" class="dropdown-item">Register</a>
@@ -43,6 +42,6 @@
 <script>
 export default {
     /* eslint-disable vue/multi-word-component-names */
-    name:"Navbar"
+    name:"NavBar"
 }
 </script>

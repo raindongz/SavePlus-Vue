@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import Home from '../views/Home.vue';
 import Visiting from '../views/Visiting.vue';
 import Wishlist from '../views/Wishlist.vue';
-
+import MyAccount from '../views/MyAccountpage.vue'
 const routes = [
   {
     path: '/',
@@ -18,6 +18,11 @@ const routes = [
     path: '/wishlist',
     name: 'Wishlist',
     component: Wishlist
+  },
+  {
+    path:'/myaccount',
+    name:MyAccount,
+    component:MyAccount
   }
 
 ];

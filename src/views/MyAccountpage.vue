@@ -4,8 +4,7 @@
       <nav-bar></nav-bar>
       <bottombar></bottombar>
       <Breadcrumb></Breadcrumb>
-      <wishlist></wishlist>
-      <search-bar></search-bar>
+      <Myaccount></Myaccount>
       <router-view></router-view>
       <footer-bar></footer-bar>
       <footerbottom></footerbottom>
@@ -15,24 +14,23 @@
   <script>
   import Topbar from '@/components/Topbar.vue';
   import NavBar from '@/components/NavBar.vue'
-  import SearchBar from '@/components/SearchBar.vue'
   import FooterBar from '@/components/Footer.vue'
   import Breadcrumb from '@/components/Breadcrumb.vue'
   import bottombar from '@/components/bottombar.vue';
-  import Wishlist from '@/components/Wishlist.vue'
+  import Myaccount from '@/components/Myaccount.vue';
   import Footerbottom from '@/components/footerbottom.vue';
   export default {
     name: 'App',
     components: {
-      Topbar,
-      NavBar,
-      SearchBar,
-      FooterBar,
-      Breadcrumb,
-      bottombar,
-      Wishlist,
-      Footerbottom,
-    }
+    Topbar,
+    NavBar,
+    Myaccount,
+    FooterBar,
+    Breadcrumb,
+    bottombar,
+    Footerbottom,
+    
+}
   }
   </script>
   

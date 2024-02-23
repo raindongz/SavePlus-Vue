@@ -108,13 +108,13 @@ export default {
     instance
       .post("api/user/getUserInfo", requestData)
       .then((response) => {
-        if (response.statusText == "OK") {
+        if (response.statusText === "OK" || response.status === 200) {
           console.log(response.data);
           (this.fullname = response.data.user_info.full_name),
             (this.phone = response.data.user_info.phone),
             (this.email = response.data.user_info.email),
             (this.avatar = response.data.user_info.avatar);
-        } else if (response.status == 401) {
+        } else if (response.status === 401) {
           localStorage.clear();
         }
       })

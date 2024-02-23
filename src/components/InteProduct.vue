@@ -80,7 +80,6 @@
 
     <body class="test">
         
-      {{ dataFromServer }}
     </body>
   </div>
 </template>

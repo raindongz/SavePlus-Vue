@@ -10,7 +10,7 @@
   </div>
 
   <div>
-    <img alt="userimg" class="uinform" src="@/assets/user.png" />
+    <img alt="userimg" class="uinform" src="@/assets/user.png"/>
     <h1 class="in-username">Username</h1>
   </div>
 
@@ -29,7 +29,7 @@
   <div class="allblank">
     <div v-if="edit">
       <div>
-        <input type="text" v-model="fullname" placeholder="Name" class="i-t" />
+        <input type="text" v-model="fullname" placeholder="Name" class="i-t"/>
       </div>
 
       <div>
@@ -108,13 +108,13 @@ export default {
     instance
         .post("api/user/getUserInfo", requestData)
         .then((response) => {
-          if (response.statusText === "OK" || response.status === 200) {
+          if (response.statusText == "OK") {
             console.log(response.data);
             (this.fullname = response.data.user_info.full_name),
                 (this.phone = response.data.user_info.phone),
                 (this.email = response.data.user_info.email),
                 (this.avatar = response.data.user_info.avatar);
-          } else if (response.status === 401) {
+          } else if (response.status == 401) {
             localStorage.clear();
           }
         })
@@ -156,6 +156,7 @@ export default {
 .allblank {
   margin-top: 100px;
 }
+
 .uinform {
   position: absolute;
   height: 200px;
@@ -199,6 +200,7 @@ export default {
   background-color: white;
   color: rgba(255, 166, 0, 0.649);
 }
+
 .in-m {
   position: absolute; /* 将元素定位为绝对定位 */
   width: 126px;

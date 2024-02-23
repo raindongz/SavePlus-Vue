@@ -200,7 +200,7 @@ export default {
           // avatar: "www.baidu.com",
         })
         .then(function (response) {
-          if (response.statusText == "OK") {
+          if (response.statusText === "OK" || response.status === 200) {
             router.push("/signin");
           }
         })

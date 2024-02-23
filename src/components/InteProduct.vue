@@ -39,14 +39,14 @@
 
 
     <div class="product-container" v-if="dataFromServer">
-      <div v-for="item in dataFromServer" :key="item.id" class="product-item">
+      <div v-for="item in dataFromServer" :key="item.postId" class="product-item">
 
         <RouterLink to="/pro-info">
-          <img :src="item.images.split(',')[0]" alt="Product Image" class="product-image" />
+          <img :src="item.images?.split(',')[0] || 'default_image_url'" alt="Product Image" class="product-image" />
 
           <div class="product-info">
             <h3 class="name">{{ item.title }}</h3>
-            <p class="price">${{ item.total_price }}</p>
+            <p class="price">${{ item.price }}</p>
             <span class="address">{{ item.area }}</span>
           </div>
         </RouterLink>
@@ -77,9 +77,10 @@
       </nav>
     </div>
 
+
     <body class="test">
-
-
+        
+      {{ dataFromServer }}
     </body>
   </div>
 </template>

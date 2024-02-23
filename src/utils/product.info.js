@@ -56,10 +56,7 @@ export async function getProductList(pageNum) {
  * @returns {Promise<void>}
  */
 export async function getProductIntest() {
-  return axios({
-    method: "get",
-    url: baseUrl + "/user/viewMyInterestList",
-  });
+
   return axios({
     method: "post",
     url: baseUrl + "/user/viewMyInterestList",

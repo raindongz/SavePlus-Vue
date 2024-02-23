@@ -239,7 +239,7 @@ export default {
         return;
       }
 
-      router.go();
+      this.getData();
     },
     getData() {
       getProductList(this.currentPage)
@@ -917,6 +917,22 @@ h2 {
 }
 
 .product-item .product-image .product-action {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #ff990180;
+  transition: all 0.3s;
+  font-size: 0;
+  z-index: 1;
+  opacity: 0;
+}
+
+.product-item .product-image .product-action1 {
   position: absolute;
   width: 100%;
   height: 100%;

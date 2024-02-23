@@ -18,7 +18,7 @@
     "js-md5": "^0.8.3",
     "uuid": "^9.0.1",
     "vue": "^3.4.19",
-    "vue-router": "^4.2.5"
+    "vue-router": "^4.3.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",

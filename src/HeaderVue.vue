@@ -1,22 +1,5 @@
 <script setup>
-import router from "@/main";
 
-function navigateToHome() {
-  router.push({
-    path: "/",
-  })
-}
-
-function navigateToProfile() {
-  router.push({
-    path: "/p-information"
-  })
-}
-
-
-function navigateToBack() {
-  router.back();
-}
 </script>
 
 <template>
@@ -26,8 +9,12 @@ function navigateToBack() {
     </div>
     <div class="right-area">
       <div class="btn-area">
-        <li><RouterLink to="/" class="shop">Home</RouterLink></li>
-        <li><RouterLink to="/p-information" class="Myprofile">My profile</RouterLink></li>
+        <li>
+          <RouterLink to="/" class="shop">Home</RouterLink>
+        </li>
+        <li>
+          <RouterLink to="/p-information" class="Myprofile">My profile</RouterLink>
+        </li>
       </div>
     </div>
   </div>
@@ -46,6 +33,7 @@ li a {
 li a:hover {
   color: orange; /* Changes link color on hover */
 }
+
 #header {
   width: 100%;
   height: 200px;
@@ -53,14 +41,15 @@ li a:hover {
   display: flex;
 }
 
-.logo{
-    width: 125px; /* 修改图片宽度 */
-    height: auto; /* 保持高度与宽度的比例 */
-    margin-left: 50px;
-    margin-top: 15px;
-    display: block; /* 让图片居中生效 */
-    backdrop-filter: blur(2px);
-  }
+.logo {
+  width: 125px; /* 修改图片宽度 */
+  height: auto; /* 保持高度与宽度的比例 */
+  margin-left: 50px;
+  margin-top: 15px;
+  display: block; /* 让图片居中生效 */
+  backdrop-filter: blur(2px);
+}
+
 .left-area {
   height: 100%;
   width: 300px;

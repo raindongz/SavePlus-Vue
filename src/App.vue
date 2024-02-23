@@ -11,10 +11,9 @@
 
 import {defineComponent} from "vue";
 import HeaderVue from "@/HeaderVue.vue";
-import FootVue from "@/FootVue.vue";
 
 export default defineComponent({
-  components: {FootVue, HeaderVue}
+  components: {HeaderVue}
 })
 </script>
 
@@ -42,6 +41,7 @@ body {
 
   color: #000000;
 }
+
 .time {
   position: absolute;
   width: 300px;

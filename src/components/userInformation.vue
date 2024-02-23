@@ -108,7 +108,7 @@ export default {
     instance
       .post("api/user/getUserInfo", requestData)
       .then((response) => {
-        if (response.statusText == "OK") {
+        if (response.statusText === "OK" || response.status === 200) {
           console.log(response.data);
           (this.fullname = response.data.user_info.full_name),
             (this.phone = response.data.user_info.phone),

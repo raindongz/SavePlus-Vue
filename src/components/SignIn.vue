@@ -108,7 +108,7 @@ export default {
           },
         })
         .then((response) => {
-          if (response.statusText == "OK") {
+          if (response.statusText === "OK") {
             console.log("success1");
             const token = JSON.stringify(response.data.accessToken);
             localStorage.setItem("token", token);

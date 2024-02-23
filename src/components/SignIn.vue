@@ -2,7 +2,6 @@
   <div class="page-container">
     <nav>
       <ul>
-        
         <RouterLink to="/">
           <button class="back-button">Back</button>
         </RouterLink>
@@ -61,9 +60,8 @@ import router from "./../main.js";
 import useValidate from "@vuelidate/core";
 import { required, email, minLength } from "@vuelidate/validators";
 import { reactive, computed } from "vue";
-const baseUrl = "/api"
+const baseUrl = "/api";
 export default {
-  
   setup() {
     const state = reactive({
       email: "",
@@ -115,7 +113,9 @@ export default {
             localStorage.setItem("token", token);
             axios.defaults.headers.common["Authorization"] =
               "Bearer " + JSON.parse(token);
+            console.log(token);
             router.push("/");
+            console.log("success");
           }
           this.userData = response.data;
         })
@@ -306,5 +306,4 @@ export default {
 .tosignup:hover {
   color: rgba(255, 166, 0, 0.649);
 }
-
 </style>

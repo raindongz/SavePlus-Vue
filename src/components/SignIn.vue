@@ -108,6 +108,7 @@ export default {
           },
         })
         .then((response) => {
+          console.log(response);
           if (response.statusText === "OK") {
             console.log("success1");
             const token = JSON.stringify(response.data.accessToken);

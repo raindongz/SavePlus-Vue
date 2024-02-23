@@ -114,7 +114,7 @@ export default {
             (this.phone = response.data.user_info.phone),
             (this.email = response.data.user_info.email),
             (this.avatar = response.data.user_info.avatar);
-        } else if (response.status == 401) {
+        } else if (response.status === 401) {
           localStorage.clear();
         }
       })

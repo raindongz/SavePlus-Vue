@@ -3,7 +3,7 @@
   <div id="app">
     <header-vue></header-vue>
     <router-view></router-view> <!-- 这里是用来渲染路由组件的地方 -->
-
+    <foot-vue></foot-vue>
   </div>
 </template>
 
@@ -11,9 +11,10 @@
 
 import {defineComponent} from "vue";
 import HeaderVue from "@/HeaderVue.vue";
+import FootVue from "@/FootVue.vue";
 
 export default defineComponent({
-  components: {HeaderVue}
+  components: {FootVue, HeaderVue}
 })
 </script>
 

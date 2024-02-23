@@ -1,5 +1,22 @@
 <script setup>
+import router from "@/main";
 
+function navigateToHome() {
+  router.push({
+    path: "/",
+  })
+}
+
+function navigateToProfile() {
+  router.push({
+    path: "/p-information"
+  })
+}
+
+
+function navigateToBack() {
+  router.back();
+}
 </script>
 
 <template>

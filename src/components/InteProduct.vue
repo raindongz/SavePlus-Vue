@@ -20,12 +20,12 @@
 
     <!-- <body class="show">
       <RouterLink to="/pro-info">
-    
+
       <img class="pro1" alt="pro1" src="../assets/logo.png">
       <p class="name">Table</p>
       <p class="price">$5.99</p>
       </RouterLink>
-  
+
   </body> -->
 
     <div class="product-container" v-if="dataFromServer">
@@ -87,6 +87,10 @@
       </nav>
     </div>
 
+    <body class="test">
+
+
+    </body>
     <body class="test"></body>
   </div>
 </template>

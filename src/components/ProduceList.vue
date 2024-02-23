@@ -1,83 +1,84 @@
 <template>
   <!DOCTYPE html>
   <html lang="en">
-    <head>
-      <meta charset="utf-8" />
-      <title>save plus</title>
-      <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-      <meta content="eCommerce HTML Template Free Download" name="keywords" />
-      <meta
+  <head>
+    <meta charset="utf-8"/>
+    <title>save plus</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <meta content="eCommerce HTML Template Free Download" name="keywords"/>
+    <meta
         content="eCommerce HTML Template Free Download"
         name="description"
-      />
+    />
 
-      <!-- Google Fonts -->
-      <link
+    <!-- Google Fonts -->
+    <link
         href="https://fonts.googleapis.com/css?family=Open+Sans:300,400|Source+Code+Pro:700,900&display=swap"
         rel="stylesheet"
-      />
+    />
 
-      <!-- CSS Libraries -->
-      <link
+    <!-- CSS Libraries -->
+    <link
         href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
         rel="stylesheet"
-      />
-      <link
+    />
+    <link
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
         rel="stylesheet"
-      />
-      <!-- <link href="lib/slick/slick.css" rel="stylesheet" />
-      <link href="lib/slick/slick-theme.css" rel="stylesheet" /> -->
+    />
+    <!-- <link href="lib/slick/slick.css" rel="stylesheet" />
+    <link href="lib/slick/slick-theme.css" rel="stylesheet" /> -->
 
-      <!-- Template Stylesheet -->
-      <!-- <link href="css/style.css" rel="stylesheet" /> -->
-    </head>
+    <!-- Template Stylesheet -->
+    <!-- <link href="css/style.css" rel="stylesheet" /> -->
+  </head>
 
-    <body>
-      <!-- Bottom Bar Start -->
-      <div class="bottom-bar">
-        <div class="container-fluid">
-          <div class="row align-items-center">
-            <div class="col-md-6">
-              <div class="search">
-                <input type="text" placeholder="Search" />
-                <button><i class="fa fa-search"></i></button>
-              </div>
-            </div>
-
-            <div v-if="token == '' || token == null">
-              <RouterLink to="/signin">
-                <button class="pl-signin">Sign in</button>
-              </RouterLink>
-            </div>
-            <div v-else>
-              <button @click="logout" class="pl-signin">log out</button>
-            </div>
+  <body>
+  <!-- Bottom Bar Start -->
+  <div class="bottom-bar">
+    <div class="container-fluid">
+      <div class="row align-items-center">
+        <div class="col-md-6">
+          <div class="search">
+            <input type="text" placeholder="Search"/>
+            <button><i class="fa fa-search"></i></button>
           </div>
         </div>
-      </div>
-      <!-- Bottom Bar End -->
 
-      <!-- Product List Start -->
-      <div class="product-view">
-        <div class="container-fluid">
+        <div v-if="token == '' || token == null">
+          <RouterLink to="/signin">
+            <button class="pl-signin">Sign in</button>
+          </RouterLink>
+        </div>
+        <div v-else>
+          <button @click="logout" class="pl-signin">log out</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Bottom Bar End -->
+
+  <!-- Product List Start -->
+  <div class="product-view">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-lg-8">
           <div class="row">
-            <div class="col-lg-8">
-              <div class="row">
-                <!-- product list starts here  -->
-                <div
-                  class="col-md-4"
-                  v-for="item in dataFromServer"
-                  :key="item.id"
-                >
-                  <div class="product-item">
-                    <div class="product-title">
-                      <!--                  传入物品id-->
-                      <router-link
-                        :to="{ name: 'proInfo', query: { prod: this.address } }"
-                        >{{ item.title }}</router-link
-                      >
-                    </div>
+            <!-- product list starts here  -->
+            <div
+                class="col-md-4"
+                v-for="item in dataFromServer"
+                :key="item.id"
+            >
+              <div class="product-item">
+                <div class="product-title">
+                  <!--                  传入物品id-->
+                  <router-link
+                      :to="{ name: 'proInfo', query: { prod: item.id } }"
+                  >{{ item.title }}
+                  </router-link
+                  >
+                </div>
 
                     <div class="product-image">
                       <a href="product-detail.html">
@@ -149,7 +150,7 @@
                 </div>
               </div>
               <!-- Side Bar End -->
-            
+
           </div>
         </div>
         <!-- Product List End -->
@@ -219,7 +220,7 @@ export default {
     };
   },
   created() {
-    const options = { year: "numeric", month: "long", day: "numeric" };
+    const options = {year: "numeric", month: "long", day: "numeric"};
     const currentDate = new Date();
     this.formattedDate = currentDate.toLocaleDateString(undefined, options);
   },
@@ -243,12 +244,12 @@ export default {
     },
     getData() {
       getProductList(this.currentPage)
-        .then((response) => {
-          this.dataFromServer = response.data;
-        })
-        .catch((error) => {
-          console.error("Request error:", error);
-        });
+          .then((response) => {
+            this.dataFromServer = response.data;
+          })
+          .catch((error) => {
+            console.error("Request error:", error);
+          });
     },
 
     changePage(pageNum) {
@@ -341,6 +342,7 @@ export default {
   text-align: center;
   border-radius: 10px;
 }
+
 .logo {
   width: 125px; /* 修改图片宽度 */
   height: auto; /* 保持高度与宽度的比例 */
@@ -349,6 +351,7 @@ export default {
   display: block; /* 让图片居中生效 */
   backdrop-filter: blur(2px);
 }
+
 body {
   color: #353535;
   font-family: "Open Sans", sans-serif;
@@ -971,6 +974,7 @@ h2 {
   transition: all 0.3s;
   margin-top: 50px;
 }
+
 .product-item .product-image .product-action1 a{
   display: inline-block;
   width: 40px;
@@ -994,6 +998,7 @@ h2 {
 .product-item .product-image .product-action a:last-child {
   margin-right: 0;
 }
+
 .product-item:hover .product-image .product-action1 a {
   margin-top: 0;
 }
@@ -1013,6 +1018,7 @@ h2 {
   background: #ff9901;
   border: 1px solid #ffffff;
 }
+
 .product-item .product-price {
   padding: 20px;
   background: #000000;

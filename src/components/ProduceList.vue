@@ -99,11 +99,17 @@
                         ></a>
                         <a href="#"><i class="fa fa-search"></i></a>
                       </div>
+                      <div class="product-price">
+                  <h3><span>$</span>{{ item.total_price }}</h3>
+
+                  <h3 class="btn">{{ item.area }}</h3>
+                </div>
                     </div>
                     <!-- Pagination Start -->
                   </div>
                 </div>
               </div>
+            </div>
 
               <!-- Side Bar Start -->
               <div class="col-lg-4 sidebar">
@@ -143,7 +149,7 @@
                 </div>
               </div>
               <!-- Side Bar End -->
-            </div>
+            
           </div>
         </div>
         <!-- Product List End -->
@@ -233,7 +239,7 @@ export default {
         return;
       }
 
-      router.go();
+      this.getData();
     },
     getData() {
       getProductList(this.currentPage)
@@ -926,6 +932,22 @@ h2 {
   opacity: 0;
 }
 
+.product-item .product-image .product-action1 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #ff990180;
+  transition: all 0.3s;
+  font-size: 0;
+  z-index: 1;
+  opacity: 0;
+}
+
 .product-item:hover .product-image .product-action {
   opacity: 1;
 }
@@ -949,7 +971,7 @@ h2 {
   transition: all 0.3s;
   margin-top: 50px;
 }
-.product-item .product-image .product-action1 {
+.product-item .product-image .product-action1 a{
   display: inline-block;
   width: 40px;
   height: 40px;

@@ -109,13 +109,14 @@ export default {
         })
         .then((response) => {
           if (response.statusText == "OK") {
+            console.log("success1");
             const token = JSON.stringify(response.data.accessToken);
             localStorage.setItem("token", token);
             axios.defaults.headers.common["Authorization"] =
               "Bearer " + JSON.parse(token);
             console.log(token);
             router.push("/");
-            console.log("success");
+            console.log("success2");
           }
           this.userData = response.data;
         })

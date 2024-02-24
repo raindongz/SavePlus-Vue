@@ -10,12 +10,7 @@
   </div>
 
   <div>
-    <img alt="userimg" class="uinform" src="@/assets/user.png"/>
-    <h1 class="in-username">Username</h1>
-  </div>
-
-  <div>
-    <button class="in-e" @click="handleButtonClick">Edit Profile</button>
+ 
     <RouterLink to="/produceUp">
       <button class="in-m">My Items</button>
     </RouterLink>

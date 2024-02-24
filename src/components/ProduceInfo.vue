@@ -68,7 +68,7 @@ async function fillProductDetailInfo() {
       <div class="left-area col-md-6 col-8">
         <!--      carrousel-->
         <div class="carrousel-area">
-          <img class="carrousel" src="@/assets/hhkb.jpeg" alt="loading...">
+          <img class="carrousel" :src="productDetailInfo.data.images" alt="loading...">
         </div>
         <!--      product details-->
         <div class="product-info-detail">
@@ -138,7 +138,7 @@ async function fillProductDetailInfo() {
           <div class="recommend-title">Recommendations for you</div>
           <div class="recommend-items">
             <div class="single-item">
-              <img src="@/assets/alienware.jpg" alt="loading">
+              <img src="@/assets/hhkb.jpeg" alt="loading">
             </div>
             <div class="single-item">
               <img src="@/assets/avalon.jpeg" alt="loading">

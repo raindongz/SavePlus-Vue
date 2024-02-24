@@ -9,32 +9,32 @@
     </nav>
 
     <body>
-      <header>
-        <h1 class="produce">Items</h1>
-        <div class="time">
-          {{ formattedDate }}
-        </div>
-      </header>
-      <div class="divider"></div>
+    <header>
+      <h1 class="produce">Items</h1>
+      <div class="time">
+        {{ formattedDate }}
+      </div>
+    </header>
+    <div class="divider"></div>
     </body>
 
     <!-- <body class="show">
         <RouterLink to="/pro-info">
-      
+
         <img class="pro1" alt="pro1" src="../assets/logo.png">
         <p class="name">Table</p>
         <p class="price">$5.99</p>
         </RouterLink>
-    
+
     </body> -->
 
     <div class="product-container" v-if="dataFromServer">
       <div v-for="item in dataFromServer" :key="item.id" class="product-item">
-        <RouterLink to="/pro-info">
+        <RouterLink :to="{ name: 'proInfo', query: { prod: item.id } }">
           <img
-            :src="item.images.split(',')[0]"
-            alt="Product Image"
-            class="product-image"
+              :src="item.images.split(',')[0]"
+              alt="Product Image"
+              class="product-image"
           />
 
           <div class="product-info">
@@ -45,8 +45,8 @@
         </RouterLink>
         <div class="thr">
           <button
-            class="team1"
-            @click="
+              class="team1"
+              @click="
               $router.push({ name: 'createProduct', state: { id: item.id } })
             "
           >
@@ -66,11 +66,11 @@
         <ul class="pagination justify-content-center">
           <li class="page-item" :class="{ disabled: currentPage === 1 }">
             <a
-              class="page-link"
-              href="#"
-              @click.prevent="changePage(currentPage - 1)"
-              tabindex="-1"
-              >Previous</a
+                class="page-link"
+                href="#"
+                @click.prevent="changePage(currentPage - 1)"
+                tabindex="-1"
+            >Previous</a
             >
           </li>
           <!-- 动态生成分页项，这里只是示例 -->
@@ -78,14 +78,14 @@
           <a class="page-link" href="#">{{ currentPage }}</a>
 
           <li
-            class="page-item"
-            :class="{ disabled: currentPage === totalPages }"
+              class="page-item"
+              :class="{ disabled: currentPage === totalPages }"
           >
             <a
-              class="page-link"
-              href="#"
-              @click.prevent="changePage(currentPage + 1)"
-              >Next</a
+                class="page-link"
+                href="#"
+                @click.prevent="changePage(currentPage + 1)"
+            >Next</a
             >
           </li>
         </ul>
@@ -99,8 +99,9 @@
 <script>
 // import { getProductList } from "@/utils/product.info";
 import axios from "axios";
-import { getProductHis } from "@/utils/product.info";
-import { DeletProduct } from "@/utils/product.info";
+import {getProductHis} from "@/utils/product.info";
+import {DeletProduct} from "@/utils/product.info";
+
 export default {
   data() {
     return {
@@ -114,7 +115,7 @@ export default {
     };
   },
   created() {
-    const options = { year: "numeric", month: "long", day: "numeric" };
+    const options = {year: "numeric", month: "long", day: "numeric"};
     const currentDate = new Date();
     this.formattedDate = currentDate.toLocaleDateString(undefined, options);
   },
@@ -128,22 +129,22 @@ export default {
     },
     deletData(item_id) {
       DeletProduct(item_id)
-        .then((response) => {
-          console.log("Product deleted successfully", response);
-        })
-        .catch((error) => {
-          console.error("Request error:", error);
-        });
+          .then((response) => {
+            console.log("Product deleted successfully", response);
+          })
+          .catch((error) => {
+            console.error("Request error:", error);
+          });
       this.getData();
     },
     getData() {
       getProductHis()
-        .then((response) => {
-          this.dataFromServer = response.data.post_list;
-        })
-        .catch((error) => {
-          console.error("Request error:", error);
-        });
+          .then((response) => {
+            this.dataFromServer = response.data.post_list;
+          })
+          .catch((error) => {
+            console.error("Request error:", error);
+          });
     },
     changePage(pageNum) {
       this.dataFromServer = null;
@@ -163,11 +164,13 @@ export default {
   border: 0.2px solid black;
   border-radius: 8px;
 }
+
 .thr {
   position: absolute;
   right: 0;
   bottom: 0;
 }
+
 .show {
   width: 300px;
   height: 330px;
@@ -407,10 +410,10 @@ button:hover {
 
 <!-- <script setup>
   import { ref } from 'vue'
-  
+
   const text = ref('')
   </script>
-  
+
   <template>
     <input v-model="text" placeholder="Type here">
     <p>{{ text }}</p>

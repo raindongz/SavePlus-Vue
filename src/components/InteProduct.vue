@@ -9,13 +9,13 @@
     </nav>
 
     <body>
-      <header>
-        <h1 class="produce">Interest</h1>
-        <div class="time">
-          {{ formattedDate }}
-        </div>
-      </header>
-      <div class="divider"></div>
+    <header>
+      <h1 class="produce">Interest</h1>
+      <div class="time">
+        {{ formattedDate }}
+      </div>
+    </header>
+    <div class="divider"></div>
     </body>
 
     <!-- <body class="show">
@@ -30,23 +30,15 @@
 
     <div class="product-container" v-if="dataFromServer">
       <div
-        v-for="item in dataFromServer"
-        :key="item.postId"
-        class="product-item"
+          v-for="item in dataFromServer"
+          :key="item.postId"
+          class="product-item"
       >
-        <RouterLink to="/pro-info">
-          <img
-            :src="item.images?.split(',')[0] || 'default_image_url'"
-            alt="Product Image"
-            class="product-image"
-          />
-
-          <div class="product-info">
-            <h3 class="name">{{ item.title }}</h3>
-            <p class="price">${{ item.price }}</p>
-            <span class="address">{{ item.area }}</span>
-          </div>
-        </RouterLink>
+        <router-link
+            :to="{ name: 'proInfo', query: { prod: item.postId } }"
+        >
+        </router-link
+        >
         <button class="team1" @click="interest(item.postId)">
           unsubscribe
         </button>
@@ -61,11 +53,11 @@
         <ul class="pagination justify-content-center">
           <li class="page-item" :class="{ disabled: currentPage === 1 }">
             <a
-              class="page-link"
-              href="#"
-              @click.prevent="changePage(currentPage - 1)"
-              tabindex="-1"
-              >Previous</a
+                class="page-link"
+                href="#"
+                @click.prevent="changePage(currentPage - 1)"
+                tabindex="-1"
+            >Previous</a
             >
           </li>
           <!-- 动态生成分页项，这里只是示例 -->
@@ -73,14 +65,14 @@
           <a class="page-link" href="#">{{ currentPage }}</a>
 
           <li
-            class="page-item"
-            :class="{ disabled: currentPage === totalPages }"
+              class="page-item"
+              :class="{ disabled: currentPage === totalPages }"
           >
             <a
-              class="page-link"
-              href="#"
-              @click.prevent="changePage(currentPage + 1)"
-              >Next</a
+                class="page-link"
+                href="#"
+                @click.prevent="changePage(currentPage + 1)"
+            >Next</a
             >
           </li>
         </ul>
@@ -96,10 +88,11 @@
 </template>
 
 <script>
-import { getProductList } from "@/utils/product.info";
+import {getProductList} from "@/utils/product.info";
 import axios from "axios";
-import { getProductIntest } from "@/utils/product.info";
-import { interestOrUninterestPost } from "@/utils/product.operations";
+import {getProductIntest} from "@/utils/product.info";
+import {interestOrUninterestPost} from "@/utils/product.operations";
+
 export default {
   data() {
     return {
@@ -113,7 +106,7 @@ export default {
     };
   },
   created() {
-    const options = { year: "numeric", month: "long", day: "numeric" };
+    const options = {year: "numeric", month: "long", day: "numeric"};
     const currentDate = new Date();
     this.formattedDate = currentDate.toLocaleDateString(undefined, options);
   },
@@ -144,13 +137,13 @@ export default {
 
     getData() {
       getProductIntest()
-        // getProductList(1)
-        .then((response) => {
-          this.dataFromServer = response.data.items;
-        })
-        .catch((error) => {
-          console.error("Request error:", error);
-        });
+          // getProductList(1)
+          .then((response) => {
+            this.dataFromServer = response.data.items;
+          })
+          .catch((error) => {
+            console.error("Request error:", error);
+          });
     },
 
     changePage(pageNum) {
@@ -177,6 +170,7 @@ export default {
 .team1 {
   position: absolute;
 }
+
 .show {
   width: 300px;
   height: 330px;

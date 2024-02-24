@@ -316,7 +316,7 @@ export default {
         return;
       }
 
-      if (this.v$.$errors.length == 0) {
+      if (this.v$.$errors.length === 0) {
         console.log("this is create req :    " + createPostBody);
         const response = await createPost(createPostBody);
         console.log(response);

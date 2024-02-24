@@ -10,7 +10,6 @@
   </div>
 
   <div>
- 
     <RouterLink to="/produceUp">
       <button class="in-m">My Items</button>
     </RouterLink>
@@ -24,24 +23,24 @@
   <div class="allblank">
     <div v-if="edit">
       <div>
-        <input type="text" v-model="fullname" placeholder="Name" class="i-t"/>
+        <input type="text" v-model="fullname" placeholder="Name" class="i-t" />
       </div>
 
       <div>
         <input
-            type="text"
-            v-model="phone"
-            placeholder="Phone number"
-            class="i-t"
+          type="text"
+          v-model="phone"
+          placeholder="Phone number"
+          class="i-t"
         />
       </div>
 
       <div>
         <input
-            type="text"
-            v-model="email"
-            placeholder="Email address"
-            class="i-t"
+          type="text"
+          v-model="email"
+          placeholder="Email address"
+          class="i-t"
         />
       </div>
       <button @click="saveFields" class="i-savebutton">Save</button>
@@ -49,31 +48,31 @@
     <div v-else>
       <div>
         <input
-            type="text"
-            disabled
-            v-model="fullname"
-            placeholder="Name"
-            class="i-t"
+          type="text"
+          disabled
+          v-model="fullname"
+          placeholder="Name"
+          class="i-t"
         />
       </div>
 
       <div>
         <input
-            type="text"
-            disabled
-            v-model="phone"
-            placeholder="Phone number"
-            class="i-t"
+          type="text"
+          disabled
+          v-model="phone"
+          placeholder="Phone number"
+          class="i-t"
         />
       </div>
 
       <div>
         <input
-            type="text"
-            disabled
-            v-model="email"
-            placeholder="Email address"
-            class="i-t"
+          type="text"
+          disabled
+          v-model="email"
+          placeholder="Email address"
+          class="i-t"
         />
       </div>
     </div>
@@ -101,21 +100,21 @@ export default {
     const requestData = {};
     const instance = axios.create();
     instance
-        .post("api/user/getUserInfo", requestData)
-        .then((response) => {
-          if (response.statusText == "OK") {
-            console.log(response.data);
-            (this.fullname = response.data.user_info.full_name),
-                (this.phone = response.data.user_info.phone),
-                (this.email = response.data.user_info.email),
-                (this.avatar = response.data.user_info.avatar);
-          } else if (response.status == 401) {
-            localStorage.clear();
-          }
-        })
-        .catch((error) => {
-          console.error("Error: ", error);
-        });
+      .post("api/user/getUserInfo", requestData)
+      .then((response) => {
+        if (response.statusText === "OK" || response.status === 200) {
+          console.log(response.data);
+          (this.fullname = response.data.user_info.full_name),
+            (this.phone = response.data.user_info.phone),
+            (this.email = response.data.user_info.email),
+            (this.avatar = response.data.user_info.avatar);
+        } else if (response.status == 401) {
+          localStorage.clear();
+        }
+      })
+      .catch((error) => {
+        console.error("Error: ", error);
+      });
   },
 
   methods: {

@@ -34,11 +34,19 @@
           :key="item.postId"
           class="product-item"
       >
-        <router-link
-            :to="{ name: 'proInfo', query: { prod: item.postId } }"
-        >
-        </router-link
-        >
+        <RouterLink :to="{ name: 'proInfo', query: { prod: item.postId } }">
+          <img
+              :src="item.images?.split(',')[0] || 'default_image_url'"
+              alt="Product Image"
+              class="product-image"
+          />
+
+          <div class="product-info">
+            <h3 class="name">{{ item.title }}</h3>
+            <p class="price">${{ item.price }}</p>
+            <span class="address">{{ item.area }}</span>
+          </div>
+        </RouterLink>
         <button class="team1" @click="interest(item.postId)">
           unsubscribe
         </button>

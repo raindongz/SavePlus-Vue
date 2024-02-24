@@ -104,7 +104,7 @@ async function fillProductDetailInfo() {
           </div>
           <div class="profile-other">
             <span class="info-title">Contact me</span>
-            <span class="info-value">nioliu@bu.edu</span>
+            <span class="info-value">{{ productDetailInfo.data['email']}}</span>
             <span class="info-title">Rating</span>
             <span class="info-value">⭐️️⭐️⭐️</span>
           </div>

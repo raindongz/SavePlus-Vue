@@ -38,6 +38,20 @@ const negotiable = computed(() => {
   return productDetailInfo.data['negotiable'] === 0 ? 'No' : 'Yes';
 })
 
+const delivery = computed(() => {
+  let deliveryName = "Ups";
+  switch (productDetailInfo.data['delivery_type']) {
+    case 0:
+      break
+    case 1:
+      deliveryName = "Amazon"
+      break
+    default:
+      deliveryName = "Usps"
+  }
+  return deliveryName
+})
+
 /**
  * get product info by server
  */
@@ -86,7 +100,7 @@ async function fillProductDetailInfo() {
               </div>
               <div class="single-card">
                 <div class="single-key">Delivery</div>
-                <div class="single-value">{{ productDetailInfo.data['delivery_type'] }}</div>
+                <div class="single-value">{{ delivery }}</div>
               </div>
               <div class="single-card">
                 <div class="single-key">Negotiable</div>
@@ -104,7 +118,7 @@ async function fillProductDetailInfo() {
           </div>
           <div class="profile-other">
             <span class="info-title">Contact me</span>
-            <span class="info-value">{{ productDetailInfo.data['email']}}</span>
+            <span class="info-value">{{ productDetailInfo.data['email'] }}</span>
             <span class="info-title">Rating</span>
             <span class="info-value">⭐️️⭐️⭐️</span>
           </div>
